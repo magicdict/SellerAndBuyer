@@ -10,7 +10,6 @@ namespace src
     {
         static void Main(string[] args)
         {
-
             var path = @"F:\基于买方意向的货物撮合交易\data\";
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
@@ -25,38 +24,53 @@ namespace src
 
             Parallel.ForEach(sellers.Select(x => x.品种).Distinct(), breed =>
             {
-                var sellers_Breed = sellers.Where(x => x.品种 == breed).ToList();
-                var buyers_Breed = buyers.Where(x => x.品种 == breed).ToList();
-                System.Console.WriteLine("品种：" + breed);
-                System.Console.WriteLine("卖家数：" + sellers_Breed.Count);
-                System.Console.WriteLine("买家数：" + buyers_Breed.Count);
-                List<Result> results = Assign(sellers_Breed, buyers_Breed);
-                results.Sort((x, y) => { return (x.买方客户 + x.卖方客户).CompareTo(y.买方客户 + y.卖方客户); });
-
-                int hope_score = results.Sum(x => x.hope_score);
-                //按照卖方进行GroupBy，然后Distinct仓库号
-                var t = results.GroupBy(x => x.买方客户).Select(y => new { 品种 = y.First().品种, 仓库数 = y.Select(z => z.仓库).Distinct().Count() });
-                int Diary_score = t.Sum(x =>
+                //if (breed == "SR")  //仅对CF/SR测试
                 {
-                    int score = 100;
-                    if (x.品种 == Utility.strCF)
+                    var sellers_Breed = sellers.Where(x => x.品种 == breed).ToList();
+                    var buyers_Breed = buyers.Where(x => x.品种 == breed).ToList();
+                    System.Console.WriteLine("品种：" + breed);
+                    System.Console.WriteLine("具有第一意向的客户数：" + buyers_Breed.Count(x => x.第一意向.Item1 != enmHope.无));
+                    System.Console.WriteLine("具有第二意向的客户数：" + buyers_Breed.Count(x => x.第二意向.Item1 != enmHope.无));
+                    System.Console.WriteLine("具有第三意向的客户数：" + buyers_Breed.Count(x => x.第三意向.Item1 != enmHope.无));
+                    System.Console.WriteLine("具有第四意向的客户数：" + buyers_Breed.Count(x => x.第四意向.Item1 != enmHope.无));
+                    System.Console.WriteLine("具有第五意向的客户数：" + buyers_Breed.Count(x => x.第五意向.Item1 != enmHope.无));
+                    System.Console.WriteLine("卖家数：" + sellers_Breed.Count);
+                    System.Console.WriteLine("买家数：" + buyers_Breed.Count);
+                    List<Result> results = Assign(sellers_Breed, buyers_Breed);
+                    results.Sort((x, y) => { return (x.买方客户 + x.卖方客户).CompareTo(y.买方客户 + y.卖方客户); });
+
+                    int hope_score = results.Sum(x => x.hope_score);
+                    //按照卖方进行GroupBy，然后Distinct仓库号
+                    var t = results.GroupBy(x => x.买方客户).Select(y => new { 品种 = y.First().品种, 仓库数 = y.Select(z => z.仓库).Distinct().Count() });
+                    int Diary_score = t.Sum(x =>
                     {
-                        score -= (x.仓库数 - 1) * 20;
-                    }
-                    else
-                    {
-                        score -= (x.仓库数 - 1) * 25;
-                    }
-                    return score;
-                });
-                int score = (int)(hope_score * 0.6 + Diary_score * 0.4);
-                System.Console.WriteLine("意向分数：" + hope_score);
-                System.Console.WriteLine("记录分数：" + Diary_score);
-                System.Console.WriteLine("总体分数：" + score);
-                int score_stardard = buyers_Breed.Count * 100;
-                System.Console.WriteLine("得分率：" + (score * 100 / score_stardard) + "%");
-                System.Console.WriteLine("总体贸易分单数：" + results.Count);
-                Result.AppendToCSV(path + "result.csv", results);
+                        int score = 100;
+                        if (x.品种 == Utility.strCF)
+                        {
+                            score -= (x.仓库数 - 1) * 20;
+                        }
+                        else
+                        {
+                            score -= (x.仓库数 - 1) * 25;
+                        }
+                        return score;
+                    });
+                    System.Console.WriteLine("==============================================================");
+                    System.Console.WriteLine("总体贸易分单数：" + results.Count);
+                    System.Console.WriteLine("==============================================================");
+                    int score = (int)(hope_score * 0.6 + Diary_score * 0.4);
+                    System.Console.WriteLine("获得意向分数：" + hope_score);
+                    int totalhopescore = buyers_Breed.Sum(x => x.TotalHopeScore);
+                    System.Console.WriteLine("最大意向分数：" + totalhopescore);
+                    System.Console.WriteLine("意向得分率：" + (hope_score * 100 / totalhopescore) + "%");
+                    System.Console.WriteLine("==============================================================");
+                    System.Console.WriteLine("记录分数：" + Diary_score);
+                    System.Console.WriteLine("总体分数：" + score);
+                    int score_stardard = buyers_Breed.Count * 100;
+                    System.Console.WriteLine("得分率：" + (score * 100 / score_stardard) + "%");
+                    System.Console.WriteLine("==============================================================");
+                    Result.AppendToCSV(path + "result.csv", results);
+                }
             });
         }
 
@@ -80,6 +94,22 @@ namespace src
                 }
                 else
                 {
+                    System.Console.WriteLine("有库存卖家人数:" + sellers.Count(x => !x.是否分配完毕));
+                    System.Console.WriteLine("有库存卖家货物数:" + sellers.Sum(x => x.剩余货物数量));
+                    System.Console.WriteLine("无意向买家人数:" + buyers.Count(x => !x.是否分配完毕));
+                    System.Console.WriteLine("无意向买家货物数:" + buyers.Sum(x => x.剩余货物数量));
+                    buyers_remain.Sort((x, y) =>
+                    {
+                        //意向分多的先分配，购物数少的先分配
+                        if (x.TotalHopeScore != y.TotalHopeScore)
+                        {
+                            return y.TotalHopeScore.CompareTo(x.TotalHopeScore);
+                        }
+                        else
+                        {
+                            return x.购买货物数量.CompareTo(y.购买货物数量);
+                        }
+                    });
                     foreach (var buyer in buyers_remain)
                     {
                         sellers_remain = sellers.Where(x => !x.是否分配完毕).ToList();
@@ -165,8 +195,47 @@ namespace src
                         System.Console.WriteLine("意向 " + grp.Key.Item1 + ":" + grp.Key.Item2 + " (" + grp.Count() + ")");
                         var buyers_grp = grp.ToList();
                         //按照平均持仓时间降序排列，保证时间长的优先匹配
-                        buyers_grp.Sort((x, y) => { return y.平均持仓时间.CompareTo(x.平均持仓时间); });
-                        var seller_matchhope = sellers.Where(x => x.IsMatchHope(grp.Key));
+                        if (hope_order == 1)
+                        {
+                            //第一意向的时候，必须以平均持仓时间降序排序！
+                            buyers_grp.Sort((x, y) =>
+                            {
+                                if (y.平均持仓时间 != x.平均持仓时间)
+                                {
+                                    return y.平均持仓时间.CompareTo(x.平均持仓时间);
+                                }
+                                else
+                                {
+                                    //意向分多的先分配，购物数少的先分配
+                                    if (x.TotalHopeScore != y.TotalHopeScore)
+                                    {
+                                        return y.TotalHopeScore.CompareTo(x.TotalHopeScore);
+                                    }
+                                    else
+                                    {
+                                        return x.购买货物数量.CompareTo(y.购买货物数量);
+                                    }
+                                }
+                            });
+                        }
+                        else
+                        {
+
+                            buyers_grp.Sort((x, y) =>
+                            {
+                                //意向分多的先分配，购物数少的先分配
+                                if (x.TotalHopeScore != y.TotalHopeScore)
+                                {
+                                    return y.TotalHopeScore.CompareTo(x.TotalHopeScore);
+                                }
+                                else
+                                {
+                                    return x.购买货物数量.CompareTo(y.购买货物数量);
+                                }
+                            });
+                        }
+                        //由于是并行，所以必须要限制卖家范围，不然会造成同时操作统一卖家的行为
+                        var seller_matchhope = sellers.Where(x => x.IsMatchHope(grp.Key));  
                         foreach (var buyer in buyers_grp)
                         {
                             //Seller选择 有货物的
@@ -179,7 +248,7 @@ namespace src
                                 results.Add(r);
                             }
                         }
-                        System.Console.WriteLine("意向 " + grp.Key.Item1 + ":" + grp.Key.Item2 + " (Complete)");
+                        System.Console.WriteLine("意向 " + grp.Key.Item1 + ":" + grp.Key.Item2 + " (Remain:" + buyers_grp.Count(x => !x.是否分配完毕) + ")");
                     });
             }
             return results.ToList();
@@ -190,13 +259,14 @@ namespace src
             //按照库存排序
             sellers_remain.Sort((x, y) =>
             {
+                //排序 仓库 + 满意度
                 if (x.仓库 != y.仓库)
                 {
                     return x.仓库.CompareTo(y.仓库);
                 }
                 else
                 {
-                    return y.剩余货物数量 - x.剩余货物数量;
+                    return y.Hope_Score(buyer).CompareTo(x.Hope_Score(buyer));
                 }
             });
             foreach (var seller in sellers_remain)

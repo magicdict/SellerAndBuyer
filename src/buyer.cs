@@ -12,6 +12,31 @@ public class Buyer
     public (enmHope, string) 第三意向 { get; set; }
     public (enmHope, string) 第四意向 { get; set; }
     public (enmHope, string) 第五意向 { get; set; }
+
+    public int TotalHopeScore
+    {
+        get
+        {
+            int score = 0;
+            if (品种 == Utility.strCF)
+            {
+                if (this.第一意向.Item1 != enmHope.无) score += 33;
+                if (this.第二意向.Item1 != enmHope.无) score += 27;
+                if (this.第三意向.Item1 != enmHope.无) score += 20;
+                if (this.第三意向.Item1 != enmHope.无) score += 13;
+                if (this.第五意向.Item1 != enmHope.无) score += 7;
+            }
+            else
+            {
+                if (this.第一意向.Item1 != enmHope.无) score += 40;
+                if (this.第二意向.Item1 != enmHope.无) score += 30;
+                if (this.第三意向.Item1 != enmHope.无) score += 20;
+                if (this.第三意向.Item1 != enmHope.无) score += 10;
+            }
+            return score;
+        }
+    }
+
     public int 已分配货物数量 { get; set; }
 
     public int 剩余货物数量

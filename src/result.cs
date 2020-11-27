@@ -25,10 +25,6 @@ public class Result
         return rtn.TrimEnd("-".ToCharArray());
     }
 
-
-  
-
-
     public static void AppendToCSV(string filename, List<Result> results)
     {
         var sw = new StreamWriter(filename, true, System.Text.Encoding.GetEncoding("GB2312"));

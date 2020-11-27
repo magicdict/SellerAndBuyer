@@ -61,7 +61,7 @@ public record Seller
         }
     }
 
-    int Hope_Score(Buyer buyer)
+    public int Hope_Score(Buyer buyer)
     {
         return Utility.GetHopeScore(buyer, this);
     }
