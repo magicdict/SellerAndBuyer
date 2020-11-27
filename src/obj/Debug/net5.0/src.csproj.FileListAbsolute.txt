@@ -1,0 +1,16 @@
+F:\基于买方意向的货物撮合交易\src\bin\Debug\net5.0\src.exe
+F:\基于买方意向的货物撮合交易\src\bin\Debug\net5.0\src.deps.json
+F:\基于买方意向的货物撮合交易\src\bin\Debug\net5.0\src.runtimeconfig.json
+F:\基于买方意向的货物撮合交易\src\bin\Debug\net5.0\src.runtimeconfig.dev.json
+F:\基于买方意向的货物撮合交易\src\bin\Debug\net5.0\src.dll
+F:\基于买方意向的货物撮合交易\src\bin\Debug\net5.0\ref\src.dll
+F:\基于买方意向的货物撮合交易\src\bin\Debug\net5.0\src.pdb
+F:\基于买方意向的货物撮合交易\src\obj\Debug\net5.0\src.csprojAssemblyReference.cache
+F:\基于买方意向的货物撮合交易\src\obj\Debug\net5.0\src.GeneratedMSBuildEditorConfig.editorconfig
+F:\基于买方意向的货物撮合交易\src\obj\Debug\net5.0\src.AssemblyInfoInputs.cache
+F:\基于买方意向的货物撮合交易\src\obj\Debug\net5.0\src.AssemblyInfo.cs
+F:\基于买方意向的货物撮合交易\src\obj\Debug\net5.0\src.csproj.CoreCompileInputs.cache
+F:\基于买方意向的货物撮合交易\src\obj\Debug\net5.0\src.dll
+F:\基于买方意向的货物撮合交易\src\obj\Debug\net5.0\ref\src.dll
+F:\基于买方意向的货物撮合交易\src\obj\Debug\net5.0\src.pdb
+F:\基于买方意向的货物撮合交易\src\obj\Debug\net5.0\src.genruntimeconfig.cache

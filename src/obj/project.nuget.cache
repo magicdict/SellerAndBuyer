@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "cz5p5+KotBd+B8xb+vFp9hwomgB7x9d4v45tcQIO6Bni3Jc+zp6VnoBO8U5nzz/I3ZrU7zMVr/X/oMS5wxSE6Q==",
+  "success": true,
+  "projectFilePath": "F:\\基于买方意向的货物撮合交易\\src\\src.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\scs\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
+    "C:\\Users\\scs\\.nuget\\packages\\system.text.encoding.codepages\\5.0.0\\system.text.encoding.codepages.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
