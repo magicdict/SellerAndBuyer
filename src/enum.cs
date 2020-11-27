@@ -29,9 +29,25 @@ public static class Utility
         }
     }
 
-    public static int HopeScore()
+    public static int GetHopeScore(Buyer buyer, Seller seller)
     {
-        return 0;
+        int score = 0;
+        if (buyer.品种 == Utility.strCF)
+        {
+            if (seller.IsMatchHope(buyer.第一意向)) score += 33;
+            if (seller.IsMatchHope(buyer.第二意向)) score += 27;
+            if (seller.IsMatchHope(buyer.第三意向)) score += 20;
+            if (seller.IsMatchHope(buyer.第四意向)) score += 13;
+            if (seller.IsMatchHope(buyer.第五意向)) score += 7;
+        }
+        else
+        {
+            if (seller.IsMatchHope(buyer.第一意向)) score += 40;
+            if (seller.IsMatchHope(buyer.第二意向)) score += 30;
+            if (seller.IsMatchHope(buyer.第三意向)) score += 20;
+            if (seller.IsMatchHope(buyer.第四意向)) score += 10;
+        }
+        return score;
     }
 
 }
