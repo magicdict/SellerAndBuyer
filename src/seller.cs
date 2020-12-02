@@ -61,12 +61,6 @@ public record Seller
         }
     }
 
-    public int Hope_Score(Buyer buyer)
-    {
-        return Utility.GetHopeScore(buyer, this);
-    }
-
-
     public static List<Seller> ReadSellerFile(string filename)
     {
         var sellers = new List<Seller>();

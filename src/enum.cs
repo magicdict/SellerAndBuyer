@@ -31,6 +31,7 @@ public static class Utility
 
     public static int GetHopeScore(Buyer buyer, Seller seller)
     {
+        if (buyer.HopeScoreDic.ContainsKey(seller.货物编号)) return buyer.HopeScoreDic[seller.货物编号];
         int score = 0;
         if (buyer.品种 == Utility.strCF)
         {
@@ -47,6 +48,7 @@ public static class Utility
             if (seller.IsMatchHope(buyer.第三意向)) score += 20;
             if (seller.IsMatchHope(buyer.第四意向)) score += 10;
         }
+        buyer.HopeScoreDic.Add(seller.货物编号, score);
         return score;
     }
 

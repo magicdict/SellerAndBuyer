@@ -13,6 +13,9 @@ public class Buyer
     public (enmHope, string) 第四意向 { get; set; }
     public (enmHope, string) 第五意向 { get; set; }
 
+    public Dictionary<string,int> HopeScoreDic = new Dictionary<string, int>(1024);
+
+
     public int TotalHopeScore
     {
         get
@@ -79,4 +82,26 @@ public class Buyer
         System.Console.WriteLine("买家件数：" + buyers.Count);
         return buyers;
     }
+    #region Sort
+
+    public static System.Comparison<Buyer> Hope_1st_comparison = (x, y) =>
+    {
+        if (y.平均持仓时间 != x.平均持仓时间)
+        {
+            return y.平均持仓时间.CompareTo(x.平均持仓时间);
+        }
+        else
+        {
+            //意向分多的先分配，购物数少的先分配
+            if (x.TotalHopeScore != y.TotalHopeScore)
+            {
+                return y.TotalHopeScore.CompareTo(x.TotalHopeScore);
+            }
+            else
+            {
+                return x.购买货物数量.CompareTo(y.购买货物数量);
+            }
+        }
+    };
+    #endregion
 }

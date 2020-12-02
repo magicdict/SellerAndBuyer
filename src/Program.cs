@@ -24,7 +24,8 @@ namespace src
 
             Parallel.ForEach(sellers.Select(x => x.品种).Distinct(), breed =>
             {
-                //if (breed == "SR")  //仅对CF/SR测试
+                //if (breed == "SR")  //仅对SR测试
+                //if (breed == "CF")  //仅对CF测试
                 {
                     var sellers_Breed = sellers.Where(x => x.品种 == breed).ToList();
                     var buyers_Breed = buyers.Where(x => x.品种 == breed).ToList();
@@ -65,6 +66,9 @@ namespace src
                     System.Console.WriteLine("意向得分率：" + (hope_score * 100 / totalhopescore) + "%");
                     System.Console.WriteLine("==============================================================");
                     System.Console.WriteLine("记录分数：" + Diary_score);
+                    System.Console.WriteLine("最大记录分数：" + 100 * buyers_Breed.Count);
+                    System.Console.WriteLine("记录得分率：" + (Diary_score / buyers_Breed.Count) + "%");
+                    System.Console.WriteLine("==============================================================");
                     System.Console.WriteLine("总体分数：" + score);
                     int score_stardard = buyers_Breed.Count * 100;
                     System.Console.WriteLine("得分率：" + (score * 100 / score_stardard) + "%");
@@ -171,22 +175,23 @@ namespace src
             IEnumerable<IGrouping<(enmHope, string), Buyer>> 等级_hope_group = hope_group.Where(x => x.Key.Item1 == enmHope.等级);
             IEnumerable<IGrouping<(enmHope, string), Buyer>> 类别_hope_group = hope_group.Where(x => x.Key.Item1 == enmHope.类别);
 
-            System.Console.WriteLine("产地_hope_group:" + 产地_hope_group.Count());
-            System.Console.WriteLine("仓库_hope_group:" + 仓库_hope_group.Count());
-            System.Console.WriteLine("品牌_hope_group:" + 品牌_hope_group.Count());
-            System.Console.WriteLine("年度_hope_group:" + 年度_hope_group.Count());
-            System.Console.WriteLine("等级_hope_group:" + 等级_hope_group.Count());
-            System.Console.WriteLine("类别_hope_group:" + 类别_hope_group.Count());
+            System.Console.WriteLine("产地_hope_group:" + 产地_hope_group.Count() + " 缺口：" + GetHopeNeedGap(产地_hope_group, sellers));
+            System.Console.WriteLine("仓库_hope_group:" + 仓库_hope_group.Count() + " 缺口：" + GetHopeNeedGap(仓库_hope_group, sellers));
+            System.Console.WriteLine("品牌_hope_group:" + 品牌_hope_group.Count() + " 缺口：" + GetHopeNeedGap(品牌_hope_group, sellers));
+            System.Console.WriteLine("年度_hope_group:" + 年度_hope_group.Count() + " 缺口：" + GetHopeNeedGap(年度_hope_group, sellers));
+            System.Console.WriteLine("等级_hope_group:" + 等级_hope_group.Count() + " 缺口：" + GetHopeNeedGap(等级_hope_group, sellers));
+            System.Console.WriteLine("类别_hope_group:" + 类别_hope_group.Count() + " 缺口：" + GetHopeNeedGap(类别_hope_group, sellers));
 
             var classfied_hope_group = new List<IEnumerable<IGrouping<(enmHope, string), Buyer>>>();
             classfied_hope_group.Add(等级_hope_group);
             classfied_hope_group.Add(类别_hope_group);
-            classfied_hope_group.Add(品牌_hope_group);
             classfied_hope_group.Add(年度_hope_group);
             classfied_hope_group.Add(产地_hope_group);
-            classfied_hope_group.Sort((x, y) => y.Count().CompareTo(x.Count()));
-            //仓库最优先
-            classfied_hope_group.Insert(0, 仓库_hope_group);
+            classfied_hope_group.Add(品牌_hope_group);
+            classfied_hope_group.Add(仓库_hope_group);
+            //按照稀缺性进行排序
+            classfied_hope_group.Sort((x, y) => { return GetHopeNeedGap(y, sellers).CompareTo(GetHopeNeedGap(x, sellers)); });
+
             var results = new ConcurrentBag<Result>();
             foreach (var hopegrp in classfied_hope_group)
             {
@@ -194,33 +199,14 @@ namespace src
                     {
                         System.Console.WriteLine("意向 " + grp.Key.Item1 + ":" + grp.Key.Item2 + " (" + grp.Count() + ")");
                         var buyers_grp = grp.ToList();
-                        //按照平均持仓时间降序排列，保证时间长的优先匹配
                         if (hope_order == 1)
                         {
+                            //按照平均持仓时间降序排列，保证时间长的优先匹配
                             //第一意向的时候，必须以平均持仓时间降序排序！
-                            buyers_grp.Sort((x, y) =>
-                            {
-                                if (y.平均持仓时间 != x.平均持仓时间)
-                                {
-                                    return y.平均持仓时间.CompareTo(x.平均持仓时间);
-                                }
-                                else
-                                {
-                                    //意向分多的先分配，购物数少的先分配
-                                    if (x.TotalHopeScore != y.TotalHopeScore)
-                                    {
-                                        return y.TotalHopeScore.CompareTo(x.TotalHopeScore);
-                                    }
-                                    else
-                                    {
-                                        return x.购买货物数量.CompareTo(y.购买货物数量);
-                                    }
-                                }
-                            });
+                            buyers_grp.Sort(Buyer.Hope_1st_comparison);
                         }
                         else
                         {
-
                             buyers_grp.Sort((x, y) =>
                             {
                                 //意向分多的先分配，购物数少的先分配
@@ -234,8 +220,8 @@ namespace src
                                 }
                             });
                         }
-                        //由于是并行，所以必须要限制卖家范围，不然会造成同时操作统一卖家的行为
-                        var seller_matchhope = sellers.Where(x => x.IsMatchHope(grp.Key));  
+                        //由于是并行，所以必须要限制卖家范围，不然会造成同时操作同一卖家的行为
+                        var seller_matchhope = sellers.Where(x => x.IsMatchHope(grp.Key));
                         foreach (var buyer in buyers_grp)
                         {
                             //Seller选择 有货物的
@@ -266,7 +252,7 @@ namespace src
                 }
                 else
                 {
-                    return y.Hope_Score(buyer).CompareTo(x.Hope_Score(buyer));
+                    return Utility.GetHopeScore(buyer, y).CompareTo(Utility.GetHopeScore(buyer, x));
                 }
             });
             foreach (var seller in sellers_remain)
@@ -301,7 +287,21 @@ namespace src
                     break;
                 }
             }
+            if (buyer.是否分配完毕) buyer.HopeScoreDic = null;
             return rs;
+        }
+
+        static int GetHopeNeedGap(IEnumerable<IGrouping<(enmHope, string), Buyer>> grps, List<Seller> sellers)
+        {
+            if (grps.Count() == 0) return 0;
+            int NeedGap = 0;
+            foreach (var item in grps)
+            {
+                int Need = item.Sum(x => x.剩余货物数量);
+                int Support = sellers.Where(x => x.IsMatchHope(item.Key)).Sum(x => x.剩余货物数量);
+                if (Need > Support) NeedGap += (Need - Support);
+            }
+            return NeedGap;
         }
     }
 }

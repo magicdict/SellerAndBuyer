@@ -25,10 +25,12 @@ public class Result
         return rtn.TrimEnd("-".ToCharArray());
     }
 
+
     public static void AppendToCSV(string filename, List<Result> results)
     {
+        var isNeedTitle = !System.IO.File.Exists(filename);
         var sw = new StreamWriter(filename, true, System.Text.Encoding.GetEncoding("GB2312"));
-        sw.WriteLine(header);
+        if (isNeedTitle) sw.WriteLine(header);
         foreach (var result in results)
         {
             sw.Write(result.买方客户 + ",");
