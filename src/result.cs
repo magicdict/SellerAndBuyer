@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 public class Result
 {
@@ -24,6 +25,45 @@ public class Result
         if (rtn == "") return "0";
         return rtn.TrimEnd("-".ToCharArray());
     }
+
+    public static void Score(List<Result> results,List<Buyer> buyers_Breed)
+    {
+        results.Sort((x, y) => { return (x.买方客户 + x.卖方客户).CompareTo(y.买方客户 + y.卖方客户); });
+        int hope_score = results.Sum(x => x.hope_score);
+        //按照卖方进行GroupBy，然后Distinct仓库号
+        var t = results.GroupBy(x => x.买方客户).Select(y => new { 品种 = y.First().品种, 仓库数 = y.Select(z => z.仓库).Distinct().Count() });
+        int Diary_score = t.Sum(x =>
+        {
+            int score = 100;
+            if (x.品种 == Utility.strCF)
+            {
+                score -= (x.仓库数 - 1) * 20;
+            }
+            else
+            {
+                score -= (x.仓库数 - 1) * 25;
+            }
+            return score;
+        });
+        System.Console.WriteLine("==============================================================");
+        System.Console.WriteLine("总体贸易分单数：" + results.Count);
+        System.Console.WriteLine("==============================================================");
+        int score = (int)(hope_score * 0.6 + Diary_score * 0.4);
+        System.Console.WriteLine("获得意向分数：" + hope_score);
+        int totalhopescore = buyers_Breed.Sum(x => x.TotalHopeScore);
+        System.Console.WriteLine("最大意向分数：" + totalhopescore);
+        System.Console.WriteLine("意向得分率：" + (hope_score * 100 / totalhopescore) + "%");
+        System.Console.WriteLine("==============================================================");
+        System.Console.WriteLine("记录分数：" + Diary_score);
+        System.Console.WriteLine("最大记录分数：" + 100 * buyers_Breed.Count);
+        System.Console.WriteLine("记录得分率：" + (Diary_score / buyers_Breed.Count) + "%");
+        System.Console.WriteLine("==============================================================");
+        System.Console.WriteLine("总体分数：" + score);
+        int score_stardard = buyers_Breed.Count * 100;
+        System.Console.WriteLine("得分率：" + (score * 100 / score_stardard) + "%");
+        System.Console.WriteLine("==============================================================");
+    }
+
 
     /// <summary>
     /// 读取初排结果

@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+
 public enum enmHope
 {
     无,
@@ -27,6 +30,34 @@ public static class Utility
             default:
                 throw new System.Exception("未知意向：" + str);
         }
+    }
+
+    static Dictionary<string, int> strHopeDic = new Dictionary<string, int>();
+
+
+    public static int GetHopeScore(string Hope, string kbn)
+    {
+        if (Hope == "0") return 0;
+        if (strHopeDic.ContainsKey(Hope + kbn)) return strHopeDic[Hope + kbn];
+        int score = 0;
+        var hopes = Hope.Split("-").ToList();
+        if (kbn == Utility.strCF)
+        {
+            if (hopes.Contains("1")) score += 33;
+            if (hopes.Contains("2")) score += 27;
+            if (hopes.Contains("3")) score += 20;
+            if (hopes.Contains("4")) score += 13;
+            if (hopes.Contains("5")) score += 7;
+        }
+        else
+        {
+            if (hopes.Contains("1")) score += 40;
+            if (hopes.Contains("2")) score += 30;
+            if (hopes.Contains("3")) score += 20;
+            if (hopes.Contains("4")) score += 10;
+        }
+        strHopeDic.Add(Hope + kbn, score);
+        return score;
     }
 
     public static int GetHopeScore(Buyer buyer, Seller seller)
