@@ -188,13 +188,28 @@ namespace src
             classfied_hope_group.Add(年度_hope_group);
             classfied_hope_group.Add(产地_hope_group);
             classfied_hope_group.Add(品牌_hope_group);
-            classfied_hope_group.Add(仓库_hope_group);
             //按照稀缺性进行排序
-            classfied_hope_group.Sort((x, y) => { return GetHopeNeedGap(y, sellers).CompareTo(GetHopeNeedGap(x, sellers)); });
+            classfied_hope_group.Sort(
+                (x, y) =>
+                {
+                    return GetHopeNeedGap(y, sellers).CompareTo(GetHopeNeedGap(x, sellers));
+                }
+            );
 
+            if (GetHopeNeedGap(classfied_hope_group.First(), sellers) > GetHopeNeedGap(仓库_hope_group, sellers))
+            {
+                //首位缺口大于仓库，仓库排第二
+                classfied_hope_group.Insert(1, 仓库_hope_group);
+            }
+            else
+            {
+                //仓库排第一优化
+                classfied_hope_group.Insert(0, 仓库_hope_group);
+            }
             var results = new ConcurrentBag<Result>();
             foreach (var hopegrp in classfied_hope_group)
             {
+                //下面的代码之所以可以并行，因为按照大类的条件进行卖家约束了
                 Parallel.ForEach(hopegrp, grp =>
                     {
                         System.Console.WriteLine("意向 " + grp.Key.Item1 + ":" + grp.Key.Item2 + " (" + grp.Count() + ")");
@@ -207,18 +222,7 @@ namespace src
                         }
                         else
                         {
-                            buyers_grp.Sort((x, y) =>
-                            {
-                                //意向分多的先分配，购物数少的先分配
-                                if (x.TotalHopeScore != y.TotalHopeScore)
-                                {
-                                    return y.TotalHopeScore.CompareTo(x.TotalHopeScore);
-                                }
-                                else
-                                {
-                                    return x.购买货物数量.CompareTo(y.购买货物数量);
-                                }
-                            });
+                            buyers_grp.Sort(Buyer.Hope_comparison);
                         }
                         //由于是并行，所以必须要限制卖家范围，不然会造成同时操作同一卖家的行为
                         var seller_matchhope = sellers.Where(x => x.IsMatchHope(grp.Key));
@@ -236,6 +240,7 @@ namespace src
                         }
                         System.Console.WriteLine("意向 " + grp.Key.Item1 + ":" + grp.Key.Item2 + " (Remain:" + buyers_grp.Count(x => !x.是否分配完毕) + ")");
                     });
+                System.GC.Collect();
             }
             return results.ToList();
         }
@@ -291,6 +296,12 @@ namespace src
             return rs;
         }
 
+        /// <summary>
+        /// 供求缺口
+        /// </summary>
+        /// <param name="grps"></param>
+        /// <param name="sellers"></param>
+        /// <returns></returns>
         static int GetHopeNeedGap(IEnumerable<IGrouping<(enmHope, string), Buyer>> grps, List<Seller> sellers)
         {
             if (grps.Count() == 0) return 0;

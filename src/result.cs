@@ -25,7 +25,29 @@ public class Result
         return rtn.TrimEnd("-".ToCharArray());
     }
 
-
+    /// <summary>
+    /// 读取初排结果
+    /// </summary>
+    public static List<Result> ReadFromCSV(string filename)
+    {
+        var sr = new StreamReader(filename, System.Text.Encoding.GetEncoding("GB2312"));
+        sr.ReadLine();  //去除标题
+        var results = new List<Result>();
+        while (!sr.EndOfStream)
+        {
+            var info = sr.ReadLine().Split(",".ToCharArray());
+            var r = new Result();
+            r.买方客户 = info[0];
+            r.卖方客户 = info[1];
+            r.品种 = info[2];
+            r.货物编号 = info[3];
+            r.仓库 = info[4];
+            r.分配货物数量 = int.Parse(info[5]);
+            r.对应意向顺序 = info[6];
+            results.Add(r);
+        }
+        return results;
+    }
     public static void AppendToCSV(string filename, List<Result> results)
     {
         var isNeedTitle = !System.IO.File.Exists(filename);

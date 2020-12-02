@@ -13,7 +13,7 @@ public class Buyer
     public (enmHope, string) 第四意向 { get; set; }
     public (enmHope, string) 第五意向 { get; set; }
 
-    public Dictionary<string,int> HopeScoreDic = new Dictionary<string, int>(1024);
+    public Dictionary<string, int> HopeScoreDic = new Dictionary<string, int>(1024);
 
 
     public int TotalHopeScore
@@ -92,16 +92,23 @@ public class Buyer
         }
         else
         {
-            //意向分多的先分配，购物数少的先分配
-            if (x.TotalHopeScore != y.TotalHopeScore)
-            {
-                return y.TotalHopeScore.CompareTo(x.TotalHopeScore);
-            }
-            else
-            {
-                return x.购买货物数量.CompareTo(y.购买货物数量);
-            }
+            return Hope_comparison(x,y);
         }
     };
+
+
+    public static System.Comparison<Buyer> Hope_comparison = (x, y) =>
+    {
+        //意向分多的先分配，购物数少的先分配
+        if (x.TotalHopeScore != y.TotalHopeScore)
+        {
+            return y.TotalHopeScore.CompareTo(x.TotalHopeScore);
+        }
+        else
+        {
+            return x.购买货物数量.CompareTo(y.购买货物数量);
+        }
+    };
+
     #endregion
 }
