@@ -1,4 +1,3 @@
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,10 +20,11 @@ public static class Adjust
         var sellers_CF = selleers.Where(x => x.品种 == Utility.strCF).ToList();
         var sellers_SR = selleers.Where(x => x.品种 == Utility.strSR).ToList();
 
-        System.Console.WriteLine("开始优化CF数据：");
-        Optiomize(rs_CF, buyer_CF, sellers_CF);
         System.Console.WriteLine("开始优化SR数据：");
         Optiomize(rs_SR, buyer_SR, sellers_SR);
+
+        System.Console.WriteLine("开始优化CF数据：");
+        Optiomize(rs_CF, buyer_CF, sellers_CF);
     }
 
 

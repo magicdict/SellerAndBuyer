@@ -135,6 +135,29 @@ public class Buyer
         return buyers;
     }
 
+    public static void SaveBuyerAssignNumber(string filename, List<Buyer> buyers)
+    {
+        var sw = new StreamWriter(filename, true, System.Text.Encoding.GetEncoding("GB2312"));
+        foreach (var buyer in buyers)
+        {
+            sw.WriteLine(buyer.买方客户 + "," + buyer.已分配货物数量);
+        }
+        sw.Close();
+    }
+
+    public static List<(string 买方客户, int 已分配货物数量)> LoadBuyerAssignNumber(string filename)
+    {
+        var sr = new StreamReader(filename, System.Text.Encoding.GetEncoding("GB2312"));
+        var rtn = new List<(string 买方客户, int 已分配货物数量)>();
+        while (!sr.EndOfStream)
+        {
+            var info = sr.ReadLine().Split(",");
+            rtn.Add((info[0], int.Parse(info[1])));
+        }
+        sr.Close();
+        return rtn;
+    }
+
     #region Sort
 
     public static System.Comparison<Buyer> Hope_1st_comparison = (x, y) =>
