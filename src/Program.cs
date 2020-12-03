@@ -10,7 +10,7 @@ namespace src
     {
         static void Main(string[] args)
         {
-            var IsAdjust = true;
+            var IsAdjust = false;
 
             var path = @"F:\基于买方意向的货物撮合交易\data\";
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
@@ -20,8 +20,9 @@ namespace src
 
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 
-            if (IsAdjust){
-                Adjust.Run(path);    
+            if (IsAdjust)
+            {
+                Adjust.Run(path);
                 return;
             }
 
@@ -33,7 +34,7 @@ namespace src
             Parallel.ForEach(sellers.Select(x => x.品种).Distinct(), breed =>
             {
                 //if (breed == "SR")  //仅对SR测试
-                //if (breed == "CF")  //仅对CF测试
+                if (breed == "CF")  //仅对CF测试
                 {
                     var sellers_Breed = sellers.Where(x => x.品种 == breed).ToList();
                     var buyers_Breed = buyers.Where(x => x.品种 == breed).ToList();
@@ -46,7 +47,7 @@ namespace src
                     System.Console.WriteLine("卖家数：" + sellers_Breed.Count);
                     System.Console.WriteLine("买家数：" + buyers_Breed.Count);
                     List<Result> results = Assign(sellers_Breed, buyers_Breed);
-                    Result.Score(results,buyers_Breed);
+                    Result.Score(results, buyers_Breed);
                     Result.AppendToCSV(path + "result.csv", results);
                 }
             });
@@ -62,39 +63,14 @@ namespace src
             System.Console.WriteLine("卖家所有货物数：" + sellers.Sum(x => x.货物数量));
             System.Console.WriteLine("买家所有货物数：" + buyers.Sum(x => x.购买货物数量));
             var results = new List<Result>();
-            for (int i = 1; i < 7; i++)
-            {
-                var sellers_remain = sellers.Where(x => !x.是否分配完毕).ToList();
-                var buyers_remain = buyers.Where(x => !x.是否分配完毕).ToList();
-                if (i != 6)
-                {
-                    results.AddRange(AssignWithHope(sellers_remain, buyers_remain, i));
-                }
-                else
-                {
-                    System.Console.WriteLine("有库存卖家人数:" + sellers.Count(x => !x.是否分配完毕));
-                    System.Console.WriteLine("有库存卖家货物数:" + sellers.Sum(x => x.剩余货物数量));
-                    System.Console.WriteLine("无意向买家人数:" + buyers.Count(x => !x.是否分配完毕));
-                    System.Console.WriteLine("无意向买家货物数:" + buyers.Sum(x => x.剩余货物数量));
-                    buyers_remain.Sort((x, y) =>
-                    {
-                        //意向分多的先分配，购物数少的先分配
-                        if (x.TotalHopeScore != y.TotalHopeScore)
-                        {
-                            return y.TotalHopeScore.CompareTo(x.TotalHopeScore);
-                        }
-                        else
-                        {
-                            return x.购买货物数量.CompareTo(y.购买货物数量);
-                        }
-                    });
-                    foreach (var buyer in buyers_remain)
-                    {
-                        sellers_remain = sellers.Where(x => !x.是否分配完毕).ToList();
-                        results.AddRange(AssignItem(buyer, sellers_remain));
-                    }
-                }
-            }
+            var sellers_remain = sellers.Where(x => !x.是否分配完毕).ToList();
+            var buyers_remain = buyers.Where(x => !x.是否分配完毕).ToList();
+            results.AddRange(AssignFirstHope(sellers_remain, buyers_remain));
+            System.Console.WriteLine("第一意向分配后买家有剩余（人数）:" + buyers.Count(x => !x.是否分配完毕));
+            System.Console.WriteLine("第一意向分配后买家有剩余（货物数）:" + buyers.Sum(x => x.剩余货物数量));
+            sellers_remain = sellers.Where(x => !x.是否分配完毕).ToList();
+            buyers_remain = buyers.Where(x => !x.是否分配完毕).ToList();
+            results.AddRange(AssignOthers(sellers_remain, buyers_remain));
 
             //最后的确认
             if (sellers.Count(x => !x.是否分配完毕) != 0)
@@ -110,37 +86,11 @@ namespace src
             return results;
         }
 
-        static List<Result> AssignWithHope(List<Seller> sellers, List<Buyer> buyers, int hope_order)
+        static List<Result> AssignFirstHope(List<Seller> sellers, List<Buyer> buyers)
         {
 
             //按照第一意向 + 值 进行分组
-            IEnumerable<IGrouping<(enmHope, string), Buyer>> hope_group = null;
-            switch (hope_order)
-            {
-                case 1:
-                    hope_group = buyers.GroupBy(x => x.第一意向);
-                    System.Console.WriteLine("第一意向 类别数：" + hope_group.Count());
-                    break;
-                case 2:
-                    hope_group = buyers.GroupBy(x => x.第二意向);
-                    System.Console.WriteLine("第二意向 类别数：" + hope_group.Count());
-                    break;
-                case 3:
-                    hope_group = buyers.GroupBy(x => x.第三意向);
-                    System.Console.WriteLine("第三意向 类别数：" + hope_group.Count());
-                    break;
-                case 4:
-                    hope_group = buyers.GroupBy(x => x.第四意向);
-                    System.Console.WriteLine("第四意向 类别数：" + hope_group.Count());
-                    break;
-                case 5:
-                    hope_group = buyers.GroupBy(x => x.第五意向);
-                    System.Console.WriteLine("第五意向 类别数：" + hope_group.Count());
-                    break;
-                default:
-                    break;
-            }
-
+            IEnumerable<IGrouping<(enmHope, string), Buyer>> hope_group = buyers.GroupBy(x => x.第一意向);
             //对于意向进行分组
             IEnumerable<IGrouping<(enmHope, string), Buyer>> 产地_hope_group = hope_group.Where(x => x.Key.Item1 == enmHope.产地);
             IEnumerable<IGrouping<(enmHope, string), Buyer>> 仓库_hope_group = hope_group.Where(x => x.Key.Item1 == enmHope.仓库);
@@ -188,16 +138,9 @@ namespace src
                     {
                         System.Console.WriteLine("意向 " + grp.Key.Item1 + ":" + grp.Key.Item2 + " (" + grp.Count() + ")");
                         var buyers_grp = grp.ToList();
-                        if (hope_order == 1)
-                        {
-                            //按照平均持仓时间降序排列，保证时间长的优先匹配
-                            //第一意向的时候，必须以平均持仓时间降序排序！
-                            buyers_grp.Sort(Buyer.Hope_1st_comparison);
-                        }
-                        else
-                        {
-                            buyers_grp.Sort(Buyer.Hope_comparison);
-                        }
+                        //按照平均持仓时间降序排列，保证时间长的优先匹配
+                        //第一意向的时候，必须以平均持仓时间降序排序！
+                        buyers_grp.Sort(Buyer.Hope_1st_comparison);
                         //由于是并行，所以必须要限制卖家范围，不然会造成同时操作同一卖家的行为
                         var seller_matchhope = sellers.Where(x => x.IsMatchHope(grp.Key));
                         foreach (var buyer in buyers_grp)
@@ -218,6 +161,46 @@ namespace src
             }
             return results.ToList();
         }
+
+
+        static List<Result> AssignOthers(List<Seller> sellers, List<Buyer> buyers)
+        {
+            var results = new ConcurrentBag<Result>();
+            var sellers_remain = sellers.Where(x => !x.是否分配完毕).ToList();
+            buyers.Sort((x, y) =>
+            {
+                //意向分多的先分配，购物数少的先分配
+                if (x.TotalHopeScore != y.TotalHopeScore)
+                {
+                    return y.TotalHopeScore.CompareTo(x.TotalHopeScore);
+                }
+                else
+                {
+                    return x.购买货物数量.CompareTo(y.购买货物数量);
+                }
+            });
+            int total_cnt = buyers.Count;
+            int process_cnt = 0;
+            foreach (var buyer in buyers)
+            {
+                //Seller选择 有货物的
+                sellers_remain = sellers_remain.Where(x => !x.是否分配完毕).ToList();
+                //如果有第一意向，为了防止意外，错开第一意向匹配的,避免出现持仓时间的违规
+                if (buyer.第一意向.Item1 != enmHope.无)
+                {
+                    sellers_remain = sellers_remain.Where(x => !x.IsMatchHope(buyer.第一意向)).ToList();
+                }
+                //如果没有的话，按照其他意愿来分配,这个第一意向组不用再做了
+                foreach (var r in AssignItem(buyer, sellers_remain))
+                {
+                    results.Add(r);
+                }
+                process_cnt++;
+                if (process_cnt % 50 == 0) System.Console.WriteLine("Process:" + process_cnt + "/" + total_cnt);
+            }
+            System.GC.Collect();
+            return results.ToList();
+        }
         static List<Result> AssignItem(Buyer buyer, List<Seller> sellers_remain)
         {
             var rs = new List<Result>();
@@ -225,13 +208,13 @@ namespace src
             sellers_remain.Sort((x, y) =>
             {
                 //排序 仓库 + 满意度
-                if (x.仓库 != y.仓库)
+                if (buyer.GetHopeScore(y) != buyer.GetHopeScore(x))
                 {
-                    return x.仓库.CompareTo(y.仓库);
+                    return buyer.GetHopeScore(y).CompareTo(buyer.GetHopeScore(x));
                 }
                 else
                 {
-                    return Utility.GetHopeScore(buyer, y).CompareTo(Utility.GetHopeScore(buyer, x));
+                    return x.仓库.CompareTo(y.仓库);
                 }
             });
             foreach (var seller in sellers_remain)
@@ -251,7 +234,7 @@ namespace src
                     buyer.已分配货物数量 += quantity;
                     seller.已分配货物数量 += quantity;
                     r.分配货物数量 = quantity;
-                    r.hope_score = Utility.GetHopeScore(buyer, seller) * quantity / buyer.购买货物数量;
+                    r.hope_score = buyer.GetHopeScore(seller) * quantity / buyer.购买货物数量;
                     rs.Add(r);
                 }
                 else
@@ -261,12 +244,12 @@ namespace src
                     seller.已分配货物数量 += quantity;
                     buyer.已分配货物数量 += quantity;
                     r.分配货物数量 = quantity;
-                    r.hope_score = Utility.GetHopeScore(buyer, seller) * quantity / buyer.购买货物数量;
+                    r.hope_score = buyer.GetHopeScore(seller) * quantity / buyer.购买货物数量;
                     rs.Add(r);
                     break;
                 }
             }
-            if (buyer.是否分配完毕) buyer.HopeScoreDic = null;
+            if (buyer.是否分配完毕) buyer.Seller_Buyer_HopeScoreDic = null;
             return rs;
         }
 

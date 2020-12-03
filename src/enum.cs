@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,7 +17,7 @@ public static class Utility
 {
 
     public const string strCF = "CF";
-
+    public const string strSR = "SR";
     public static enmHope GetHope(string str)
     {
         switch (str)
@@ -32,10 +33,10 @@ public static class Utility
         }
     }
 
-    static Dictionary<string, int> strHopeDic = new Dictionary<string, int>();
+    static ConcurrentDictionary<string, int> strHopeDic = new ConcurrentDictionary<string, int>();
 
 
-    public static int GetHopeScore(string Hope, string kbn)
+    public static int ConvertHopeStr2Score(string Hope, string kbn)
     {
         if (Hope == "0") return 0;
         if (strHopeDic.ContainsKey(Hope + kbn)) return strHopeDic[Hope + kbn];
@@ -56,32 +57,11 @@ public static class Utility
             if (hopes.Contains("3")) score += 20;
             if (hopes.Contains("4")) score += 10;
         }
-        strHopeDic.Add(Hope + kbn, score);
+        strHopeDic.TryAdd(Hope + kbn, score);
         return score;
     }
 
-    public static int GetHopeScore(Buyer buyer, Seller seller)
-    {
-        if (buyer.HopeScoreDic.ContainsKey(seller.货物编号)) return buyer.HopeScoreDic[seller.货物编号];
-        int score = 0;
-        if (buyer.品种 == Utility.strCF)
-        {
-            if (seller.IsMatchHope(buyer.第一意向)) score += 33;
-            if (seller.IsMatchHope(buyer.第二意向)) score += 27;
-            if (seller.IsMatchHope(buyer.第三意向)) score += 20;
-            if (seller.IsMatchHope(buyer.第四意向)) score += 13;
-            if (seller.IsMatchHope(buyer.第五意向)) score += 7;
-        }
-        else
-        {
-            if (seller.IsMatchHope(buyer.第一意向)) score += 40;
-            if (seller.IsMatchHope(buyer.第二意向)) score += 30;
-            if (seller.IsMatchHope(buyer.第三意向)) score += 20;
-            if (seller.IsMatchHope(buyer.第四意向)) score += 10;
-        }
-        buyer.HopeScoreDic.Add(seller.货物编号, score);
-        return score;
-    }
+    
 
 }
 

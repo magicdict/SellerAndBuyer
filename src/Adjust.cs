@@ -9,47 +9,74 @@ public static class Adjust
     {
         var rs = Result.ReadFromCSV(path + "result.csv");
         //按照卖家信息GroupBy
-        var rs_CF = rs.Where(x => x.品种 == "CF").ToList();
-        var rs_SR = rs.Where(x => x.品种 == "SR").ToList();
+        var rs_CF = rs.Where(x => x.品种 == Utility.strCF).ToList();
+        var rs_SR = rs.Where(x => x.品种 == Utility.strSR).ToList();
 
         var buyers = Buyer.ReadBuyerFile(path + "buyer.csv");
+        var selleers = Seller.ReadSellerFile(path + "seller.csv");
 
+        var buyer_CF = buyers.Where(x => x.品种 == Utility.strCF).ToList();
+        var buyer_SR = buyers.Where(x => x.品种 == Utility.strSR).ToList();
+
+        var sellers_CF = selleers.Where(x => x.品种 == Utility.strCF).ToList();
+        var sellers_SR = selleers.Where(x => x.品种 == Utility.strSR).ToList();
 
         System.Console.WriteLine("开始优化CF数据：");
-        Optiomize(rs_CF, buyers.Where(x => x.品种 == "CF").ToList());
+        Optiomize(rs_CF, buyer_CF, sellers_CF);
         System.Console.WriteLine("开始优化SR数据：");
-        Optiomize(rs_SR, buyers.Where(x => x.品种 == "SR").ToList());
+        Optiomize(rs_SR, buyer_SR, sellers_SR);
     }
 
-    static void Optiomize(List<Result> rs, List<Buyer> buyer)
+
+    static void Optiomize(List<Result> rs, List<Buyer> buyers, List<Seller> sellers)
     {
-        var strKb = rs.First().品种;
-        var quantityDict = new ConcurrentDictionary<string, int>();
-        Parallel.ForEach(
-            rs, r =>
-            {
-                //区分已经在上层过滤了
-                int quantity = 0;
-                if (quantityDict.ContainsKey(r.买方客户))
-                {
-                    quantity = quantityDict[r.买方客户];
-                }
-                else
-                {
-                    quantity = buyer.Where(x => x.买方客户 == r.买方客户).First().购买货物数量;
-                    quantityDict.TryAdd(r.买方客户, quantity);
-                }
-                r.hope_score = Utility.GetHopeScore(r.对应意向顺序, strKb) * r.分配货物数量 / quantity;
-            }
-        );
-        Result.Score(rs, buyer);
         var rs_buyers = rs.GroupBy(x => x.买方客户);
         //使用多个仓库的买家数
         var multi_repo_cnt = rs_buyers.Count(x => x.ToList().Select(x => x.仓库).Distinct().Count() > 1);
         System.Console.WriteLine("使用多个仓库的买家数：" + multi_repo_cnt);
         //得分为0的记录数
         var hope_zero_point = rs.Where(x => x.对应意向顺序 == "0").Sum(x => x.分配货物数量);
-        System.Console.WriteLine("意向为0的货物数：" + hope_zero_point);
-        //在不违背第一意向的前提下，是否能够进行货物兑换提升意向分？
+        System.Console.WriteLine("意向得分为0的货物数：" + hope_zero_point);
+
+        Parallel.ForEach(
+            rs_buyers, grp =>
+            {
+                var b = buyers.Where(x => x.买方客户 == grp.Key).First();
+                b.results = grp.ToList();
+                b.fill_results_hopescore();
+            }
+        );
+        Result.Score(rs, buyers);
+
+        //无意向的记录
+        var buyer_without_hope = buyers.Where(x => x.TotalHopeScore == 0).ToList();
+        var rs_for_exchange = new List<Result>();
+        foreach (var buyer in buyer_without_hope)
+        {
+            rs_for_exchange.AddRange(buyer.results);
+        }
+        System.Console.WriteLine("无意向的买家数：" + buyer_without_hope.Count);
+        System.Console.WriteLine("无意向的买家记录明细数：" + rs_for_exchange.Count);
+        System.Console.WriteLine("无意向的买家记录货物数量：" + buyer_without_hope.Sum(x => x.购买货物数量));
+
+        //需要进行交换的货物记录
+        var buyer_need_exchange = buyers.Where(x => x.TotalHopeScore != 0 && x.Result_HopeScore == 0);
+        var GoodNumDict = new Dictionary<string, Seller>();
+        foreach (var buyer in buyer_need_exchange)
+        {
+            foreach (var result in rs_for_exchange)
+            {
+                if (!GoodNumDict.ContainsKey(result.货物编号))
+                {
+                    GoodNumDict.Add(result.货物编号, sellers.Where(x => result.货物编号 == x.货物编号).First());
+                }
+                var s = GoodNumDict[result.货物编号];
+                if (buyer.GetHopeScore(s) != 0)
+                {
+                    var 出让方_分配货物数量 = result.分配货物数量;
+                    break;
+                }
+            }
+        }
     }
 }
