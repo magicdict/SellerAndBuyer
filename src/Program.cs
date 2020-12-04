@@ -32,7 +32,7 @@ namespace src
                 bool RunFirstStep = false;
                 bool RunSecondStep = true;
                 //if (breed == "SR")  //仅对SR测试
-                //if (breed == "CF")  //仅对CF测试
+                if (breed == "CF")  //仅对CF测试
                 {
                     var sellers_Breed = sellers.Where(x => x.品种 == breed).ToList();
                     var buyers_Breed = buyers.Where(x => x.品种 == breed).ToList();
@@ -68,12 +68,12 @@ namespace src
             if (RunFirstStep)
             {
                 results.AddRange(AssignFirstHope(sellers_remain, buyers_remain));
-                sellers_remain = sellers.Where(x => !x.是否分配完毕).ToList();
-                buyers_remain = buyers.Where(x => !x.是否分配完毕).ToList();
-                //序列化结果
+                if (System.IO.File.Exists(path + "FirstHoep_" + strKbn + ".csv")) System.IO.File.Delete(path + "FirstHoep_" + strKbn + ".csv");
                 Result.AppendToCSV(path + "FirstHoep_" + strKbn + ".csv", results);
                 Buyer.SaveBuyerAssignNumber(path + "Buyer_Assign_" + strKbn + ".csv", buyers_remain.ToList());
                 Seller.SaveSellerAssignNumber(path + "Seller_Assign_" + strKbn + ".csv", sellers_remain.ToList());
+                sellers_remain = sellers.Where(x => !x.是否分配完毕).ToList();
+                buyers_remain = buyers.Where(x => !x.是否分配完毕).ToList();
                 System.Console.WriteLine("第一意向分配后买家有剩余（人数）:" + buyers.Count(x => !x.是否分配完毕));
                 System.Console.WriteLine("第一意向分配后买家有剩余（货物数）:" + buyers.Sum(x => x.剩余货物数量));
             }
@@ -82,17 +82,6 @@ namespace src
             {
                 if (!RunFirstStep)
                 {
-                    //直接第二步骤的情况
-
-                    //所有记录都变成分配完成
-                    foreach (var item in sellers_remain)
-                    {
-                        item.已分配货物数量 = item.货物数量;
-                    }
-                    foreach (var item in buyers_remain)
-                    {
-                        item.已分配货物数量 = item.购买货物数量;
-                    }
                     //恢复数据
                     var buyer_assign = Buyer.LoadBuyerAssignNumber(path + "Buyer_Assign_" + strKbn + ".csv");
                     var seller_assign = Seller.LoadSellerAssignNumber(path + "Seller_Assign_" + strKbn + ".csv");
@@ -102,14 +91,19 @@ namespace src
                     });
                     Parallel.ForEach(seller_assign, seller =>
                     {
-                        sellers_remain.Find(x => x.卖方客户 == seller.卖方客户 && x.货物编号 == seller.货物编号).已分配货物数量 = seller.已分配货物数量;
+                        //有重复数据，相同货号，但是货物数量不同....不知道为什么不合并
+                        sellers_remain.Find(x => x.卖方客户 == seller.卖方客户 &&
+                                            x.货物数量 == seller.货物数量 &&
+                                            x.货物编号 == seller.货物编号).已分配货物数量 = seller.已分配货物数量;
                     });
                     //恢复明细记录
                     results = Result.ReadFromCSV(path + "FirstHoep_" + strKbn + ".csv");
                     Parallel.ForEach(results, r =>
                     {
-                        r.hope_score = Utility.ConvertHopeStr2Score(r.对应意向顺序, strKbn) * r.分配货物数量 / (buyers_remain.Find(x => x.买方客户 == r.买方客户).购买货物数量);
+                        int m = (buyers_remain.Find(x => x.买方客户 == r.买方客户).购买货物数量);
+                        r.hope_score = Utility.ConvertHopeStr2Score(r.对应意向顺序, strKbn) * r.分配货物数量 / m;
                     });
+                    System.Console.WriteLine("hope_score:" + results.Sum(x => x.hope_score));
                     sellers_remain = sellers.Where(x => !x.是否分配完毕).ToList();
                     buyers_remain = buyers.Where(x => !x.是否分配完毕).ToList();
                 }

@@ -90,22 +90,22 @@ public record Seller
 
     public static void SaveSellerAssignNumber(string filename, List<Seller> sellers)
     {
-        var sw = new StreamWriter(filename, true, System.Text.Encoding.GetEncoding("GB2312"));
+        var sw = new StreamWriter(filename, false, System.Text.Encoding.GetEncoding("GB2312"));
         foreach (var seller in sellers)
         {
-            sw.WriteLine(seller.卖方客户 + "," + seller.货物编号 + "," + seller.已分配货物数量);
+            sw.WriteLine(seller.卖方客户 + "," + seller.货物编号 + "," + seller.货物数量 + "," + seller.已分配货物数量);
         }
         sw.Close();
     }
 
-    public static List<(string 卖方客户, string 货物编号, int 已分配货物数量)> LoadSellerAssignNumber(string filename)
+    public static List<(string 卖方客户, string 货物编号,int 货物数量,int 已分配货物数量)> LoadSellerAssignNumber(string filename)
     {
         var sr = new StreamReader(filename, System.Text.Encoding.GetEncoding("GB2312"));
-        var rtn = new List<(string 卖方客户, string 货物编号, int 已分配货物数量)>();
+        var rtn = new List<(string 卖方客户, string 货物编号, int 货物数量,int 已分配货物数量)>();
         while (!sr.EndOfStream)
         {
             var info = sr.ReadLine().Split(",");
-            rtn.Add((info[0], info[1], int.Parse(info[2])));
+            rtn.Add((info[0], info[1], int.Parse(info[2]),int.Parse(info[3])));
         }
         sr.Close();
         return rtn;

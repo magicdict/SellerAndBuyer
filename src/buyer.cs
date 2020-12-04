@@ -137,7 +137,7 @@ public class Buyer
 
     public static void SaveBuyerAssignNumber(string filename, List<Buyer> buyers)
     {
-        var sw = new StreamWriter(filename, true, System.Text.Encoding.GetEncoding("GB2312"));
+        var sw = new StreamWriter(filename, false, System.Text.Encoding.GetEncoding("GB2312"));
         foreach (var buyer in buyers)
         {
             sw.WriteLine(buyer.买方客户 + "," + buyer.已分配货物数量);
