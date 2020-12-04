@@ -26,7 +26,7 @@ public class Result
         return rtn.TrimEnd("-".ToCharArray());
     }
 
-    public static void Score(List<Result> results,List<Buyer> buyers_Breed)
+    public static void Score(List<Result> results, List<Buyer> buyers_Breed)
     {
         results.Sort((x, y) => { return (x.买方客户 + x.卖方客户).CompareTo(y.买方客户 + y.卖方客户); });
         int hope_score = results.Sum(x => x.hope_score);
@@ -59,6 +59,7 @@ public class Result
         System.Console.WriteLine("记录得分率：" + (Diary_score / buyers_Breed.Count) + "%");
         System.Console.WriteLine("==============================================================");
         System.Console.WriteLine("总体分数：" + score);
+        System.Console.WriteLine("标准分数：" + (double)score / buyers_Breed.Count);
         int score_stardard = buyers_Breed.Count * 100;
         System.Console.WriteLine("得分率：" + (score * 100 / score_stardard) + "%");
         System.Console.WriteLine("==============================================================");

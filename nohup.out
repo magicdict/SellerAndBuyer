@@ -1,0 +1,31 @@
+Could not execute because the application was not found or a compatible .NET SDK is not installed.
+Possible reasons for this include:
+  * You intended to execute a .NET program:
+      The application 'run' does not exist.
+  * You intended to execute a .NET SDK command:
+      It was not possible to find any installed .NET SDKs.
+      Install a .NET SDK from:
+        https://aka.ms/dotnet-download
+卖家件数：429679
+买家件数：100000
+品种：CF
+具有第一意向的客户数：49151
+具有第二意向的客户数：45913
+具有第三意向的客户数：42652
+具有第四意向的客户数：39294
+具有第五意向的客户数：36018
+卖家数：399837
+买家数：50000
+卖家所有货物数：2000000
+买家所有货物数：2000000
+意向 仓库:311 (2612)
+意向 仓库:325 (2596)
+意向 仓库:324 (2644)
+意向 仓库:313 (2581)
+意向 仓库:301 (2544)
+意向 仓库:304 (2679)
+意向 仓库:313 (Remain:1031)
+意向 仓库:304 (Remain:1110)
+意向 仓库:301 (Remain:956)
+意向 仓库:325 (Remain:949)
+意向 仓库:324 (Remain:946)

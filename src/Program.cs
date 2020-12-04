@@ -29,11 +29,10 @@ namespace src
             //按照品种进行分组
             Parallel.ForEach(sellers.Select(x => x.品种).Distinct(), breed =>
             {
-                bool RunFirstStep = false;
-                bool RunSecondStep = false;
+                bool RunFirstStep = true;
+                bool RunSecondStep = true;
                 bool RunThreeStep = true;
-                if (breed == "SR")  //仅对SR测试
-                //if (breed == "CF")  //仅对CF测试
+                if (breed == args[0])  //仅对SR测试
                 {
                     var sellers_Breed = sellers.Where(x => x.品种 == breed).ToList();
                     var buyers_Breed = buyers.Where(x => x.品种 == breed).ToList();
@@ -168,136 +167,91 @@ namespace src
 
         static List<Result> AssignFirstHope_Gap(List<Seller> sellers, List<Buyer> buyers)
         {
-
             //按照第一意向 + 值 进行分组
             IEnumerable<IGrouping<(enmHope, string), Buyer>> hope_group = buyers.GroupBy(x => x.第一意向);
-            //对于意向进行分组
-            IEnumerable<IGrouping<(enmHope, string), Buyer>> 产地_hope_group = hope_group.Where(x => x.Key.Item1 == enmHope.产地);
-            IEnumerable<IGrouping<(enmHope, string), Buyer>> 仓库_hope_group = hope_group.Where(x => x.Key.Item1 == enmHope.仓库);
-            IEnumerable<IGrouping<(enmHope, string), Buyer>> 品牌_hope_group = hope_group.Where(x => x.Key.Item1 == enmHope.品牌);
-            IEnumerable<IGrouping<(enmHope, string), Buyer>> 年度_hope_group = hope_group.Where(x => x.Key.Item1 == enmHope.年度);
-            IEnumerable<IGrouping<(enmHope, string), Buyer>> 等级_hope_group = hope_group.Where(x => x.Key.Item1 == enmHope.等级);
-            IEnumerable<IGrouping<(enmHope, string), Buyer>> 类别_hope_group = hope_group.Where(x => x.Key.Item1 == enmHope.类别);
-
-            System.Console.WriteLine("产地_hope_group:" + 产地_hope_group.Count() + " 缺口：" + GetHopeNeedGap(产地_hope_group, sellers));
-            System.Console.WriteLine("仓库_hope_group:" + 仓库_hope_group.Count() + " 缺口：" + GetHopeNeedGap(仓库_hope_group, sellers));
-            System.Console.WriteLine("品牌_hope_group:" + 品牌_hope_group.Count() + " 缺口：" + GetHopeNeedGap(品牌_hope_group, sellers));
-            System.Console.WriteLine("年度_hope_group:" + 年度_hope_group.Count() + " 缺口：" + GetHopeNeedGap(年度_hope_group, sellers));
-            System.Console.WriteLine("等级_hope_group:" + 等级_hope_group.Count() + " 缺口：" + GetHopeNeedGap(等级_hope_group, sellers));
-            System.Console.WriteLine("类别_hope_group:" + 类别_hope_group.Count() + " 缺口：" + GetHopeNeedGap(类别_hope_group, sellers));
-
-            var gap_hope_group = new List<IEnumerable<IGrouping<(enmHope, string), Buyer>>>();
-
+            var gap_hope_group = new List<IGrouping<(enmHope, string), Buyer>>();
             //如果有缺口则先处理
-            if (GetHopeNeedGap(仓库_hope_group, sellers) > 0) { gap_hope_group.Add(仓库_hope_group); }
-            if (GetHopeNeedGap(等级_hope_group, sellers) > 0) { gap_hope_group.Add(等级_hope_group); }
-            if (GetHopeNeedGap(类别_hope_group, sellers) > 0) { gap_hope_group.Add(类别_hope_group); }
-            if (GetHopeNeedGap(年度_hope_group, sellers) > 0) { gap_hope_group.Add(年度_hope_group); }
-            if (GetHopeNeedGap(产地_hope_group, sellers) > 0) { gap_hope_group.Add(产地_hope_group); }
-            if (GetHopeNeedGap(品牌_hope_group, sellers) > 0) { gap_hope_group.Add(品牌_hope_group); }
-
-            var results = new ConcurrentBag<Result>();
-            foreach (var hopegrp in gap_hope_group)
+            foreach (var grp in hope_group)
             {
-                //下面的代码之所以可以并行，因为按照大类的条件进行卖家约束了
-                Parallel.ForEach(hopegrp, grp =>
-                    {
-                        System.Console.WriteLine("意向 " + grp.Key.Item1 + ":" + grp.Key.Item2 + " (" + grp.Count() + ")");
-                        var buyers_grp = grp.ToList();
-                        //按照平均持仓时间降序排列，保证时间长的优先匹配
-                        //第一意向的时候，必须以平均持仓时间降序排序！
-                        buyers_grp.Sort(Buyer.Hope_1st_comparison);
-                        //由于是并行，所以必须要限制卖家范围，不然会造成同时操作同一卖家的行为
-                        var seller_matchhope = sellers.Where(x => x.IsMatchHope(grp.Key));
-                        foreach (var buyer in buyers_grp)
-                        {
-                            //Seller选择 有货物的
-                            var sellers_remain = seller_matchhope.Where(x => !x.是否分配完毕).ToList();
-                            //如果没有的话，按照其他意愿来分配,这个第一意向组不用再做了
-                            if (sellers_remain.Count == 0) break;
-                            //如果有的话，按照顺序
-                            foreach (var r in AssignItem(buyer, sellers_remain))
-                            {
-                                results.Add(r);
-                            }
-                        }
-                        System.Console.WriteLine("意向 " + grp.Key.Item1 + ":" + grp.Key.Item2 + " (Remain:" + buyers_grp.Count(x => !x.是否分配完毕) + ")");
-                    });
-
-                System.GC.Collect();
+                if (grp.Key.Item1 == enmHope.无) continue;
+                if (GetHopeNeedGap(grp, sellers) > 0) { gap_hope_group.Add(grp); }
             }
-
+            var results = new ConcurrentBag<Result>();
+            //下面的代码之所以可以并行，实际数据中都是某一个大类的问题
+            Parallel.ForEach(gap_hope_group, grp =>
+            {
+                System.Console.WriteLine("意向 " + grp.Key.Item1 + ":" + grp.Key.Item2 + " (" + grp.Count() + ")");
+                var buyers_grp = grp.ToList();
+                //按照平均持仓时间降序排列，保证时间长的优先匹配
+                //第一意向的时候，必须以平均持仓时间降序排序！
+                buyers_grp.Sort(Buyer.Hope_1st_comparison);
+                //由于是并行，所以必须要限制卖家范围，不然会造成同时操作同一卖家的行为
+                var seller_matchhope = sellers.Where(x => x.IsMatchHope(grp.Key));
+                foreach (var buyer in buyers_grp)
+                {
+                    //Seller选择 有货物的
+                    var sellers_remain = seller_matchhope.Where(x => !x.是否分配完毕).ToList();
+                    //如果没有的话，按照其他意愿来分配,这个第一意向组不用再做了
+                    if (sellers_remain.Count == 0) break;
+                    //如果有的话，按照顺序
+                    foreach (var r in AssignItem(buyer, sellers_remain))
+                    {
+                        results.Add(r);
+                    }
+                }
+                System.Console.WriteLine("意向 " + grp.Key.Item1 + ":" + grp.Key.Item2 + " (Remain:" + buyers_grp.Count(x => !x.是否分配完毕) + ")");
+            });
+            System.GC.Collect();
             return results.ToList();
         }
-
 
         static List<Result> AssignFirstHope(List<Seller> sellers, List<Buyer> buyers)
         {
             //除去Gap处理阶段结束的任务
-            sellers = sellers.Where(x => !x.是否分配完毕).ToList();
-            buyers = buyers.Where(x => !x.是否分配完毕).ToList();
+            var sellers_remain = sellers.Where(x => !x.是否分配完毕).ToList();
+            var buyers_remain = buyers.Where(x => !x.是否分配完毕).ToList();
             //按照第一意向 + 值 进行分组
-            IEnumerable<IGrouping<(enmHope, string), Buyer>> hope_group = buyers.GroupBy(x => x.第一意向);
+            IEnumerable<IGrouping<(enmHope, string), Buyer>> hope_group = buyers_remain.GroupBy(x => x.第一意向);
+            //除去没有第一意向和根本无法满足需求的
+            hope_group = hope_group.Where(x => x.Key.Item1 != enmHope.无 && GetHopeNeedGap(x, sellers_remain) == 0);
+
+            var buyer_groups = new List<BuyerGroup>();
+
             //对于意向进行分组
-            IEnumerable<IGrouping<(enmHope, string), Buyer>> 产地_hope_group = hope_group.Where(x => x.Key.Item1 == enmHope.产地);
-            IEnumerable<IGrouping<(enmHope, string), Buyer>> 仓库_hope_group = hope_group.Where(x => x.Key.Item1 == enmHope.仓库);
-            IEnumerable<IGrouping<(enmHope, string), Buyer>> 品牌_hope_group = hope_group.Where(x => x.Key.Item1 == enmHope.品牌);
-            IEnumerable<IGrouping<(enmHope, string), Buyer>> 年度_hope_group = hope_group.Where(x => x.Key.Item1 == enmHope.年度);
-            IEnumerable<IGrouping<(enmHope, string), Buyer>> 等级_hope_group = hope_group.Where(x => x.Key.Item1 == enmHope.等级);
-            IEnumerable<IGrouping<(enmHope, string), Buyer>> 类别_hope_group = hope_group.Where(x => x.Key.Item1 == enmHope.类别);
-
-            System.Console.WriteLine("产地_hope_group:" + 产地_hope_group.Count() + " 缺口：" + GetHopeNeedGap(产地_hope_group, sellers));
-            System.Console.WriteLine("仓库_hope_group:" + 仓库_hope_group.Count() + " 缺口：" + GetHopeNeedGap(仓库_hope_group, sellers));
-            System.Console.WriteLine("品牌_hope_group:" + 品牌_hope_group.Count() + " 缺口：" + GetHopeNeedGap(品牌_hope_group, sellers));
-            System.Console.WriteLine("年度_hope_group:" + 年度_hope_group.Count() + " 缺口：" + GetHopeNeedGap(年度_hope_group, sellers));
-            System.Console.WriteLine("等级_hope_group:" + 等级_hope_group.Count() + " 缺口：" + GetHopeNeedGap(等级_hope_group, sellers));
-            System.Console.WriteLine("类别_hope_group:" + 类别_hope_group.Count() + " 缺口：" + GetHopeNeedGap(类别_hope_group, sellers));
-
-            var nopag_hope_group = new List<IEnumerable<IGrouping<(enmHope, string), Buyer>>>();
-            if (GetHopeNeedGap(仓库_hope_group, sellers) == 0) { nopag_hope_group.Add(仓库_hope_group); }
-            if (GetHopeNeedGap(等级_hope_group, sellers) == 0) { nopag_hope_group.Add(等级_hope_group); }
-            if (GetHopeNeedGap(类别_hope_group, sellers) == 0) { nopag_hope_group.Add(类别_hope_group); }
-            if (GetHopeNeedGap(年度_hope_group, sellers) == 0) { nopag_hope_group.Add(年度_hope_group); }
-            if (GetHopeNeedGap(产地_hope_group, sellers) == 0) { nopag_hope_group.Add(产地_hope_group); }
-            if (GetHopeNeedGap(品牌_hope_group, sellers) == 0) { nopag_hope_group.Add(品牌_hope_group); }
-
-            var results = new ConcurrentBag<Result>();
-            //上一个阶段，存在缺口的，能分配完成的都分配完成了，有缺口的，这里也不可能有机会填补缺口了
-            //所以这些买家放到下一个阶段考虑
-            foreach (var hopegrp in nopag_hope_group)
+            foreach (var item in hope_group)
             {
-                //下面的代码之所以可以并行，因为按照大类的条件进行卖家约束了
-                Parallel.ForEach(hopegrp, grp =>
-                    {
-                        System.Console.WriteLine("意向 " + grp.Key.Item1 + ":" + grp.Key.Item2 + " (" + grp.Count() + ")");
-                        var buyers_grp = grp.ToList();
-                        //按照平均持仓时间降序排列，保证时间长的优先匹配
-                        //第一意向的时候，必须以平均持仓时间降序排序！
-                        buyers_grp.Sort(Buyer.Hope_1st_comparison);
-                        //由于是并行，所以必须要限制卖家范围，不然会造成同时操作同一卖家的行为
-                        var seller_matchhope = sellers.Where(x => x.IsMatchHope(grp.Key));
-                        foreach (var buyer in buyers_grp)
-                        {
-                            //Seller选择 有货物的
-                            var sellers_remain = seller_matchhope.Where(x => !x.是否分配完毕).ToList();
-                            //如果没有的话，按照其他意愿来分配,这个第一意向组不用再做了
-                            if (sellers_remain.Count == 0) break;
-                            //如果有的话，按照顺序
-                            foreach (var r in AssignItem(buyer, sellers_remain))
-                            {
-                                results.Add(r);
-                            }
-                        }
-                        System.Console.WriteLine("意向 " + grp.Key.Item1 + ":" + grp.Key.Item2 + " (Remain:" + buyers_grp.Count(x => !x.是否分配完毕) + ")");
-                    });
-
-                System.GC.Collect();
+                var bg = new BuyerGroup(item.Key, item.ToList());
+                BuyerGroup.RemainDict.Add(item.Key, sellers_remain.Where(x => x.IsMatchHope(item.Key)).Sum(x => x.剩余货物数量));
+                System.Console.WriteLine(item.Key.Item1 + " " + item.Key.Item2 + ":" + bg.SupportNeedRate + " (" + BuyerGroup.RemainDict[item.Key] + ")");
+                buyer_groups.Add(bg);
             }
+            var results = new ConcurrentBag<Result>();
 
-
-
-
-            //各组，按照时间再分组，有缺口的组也参与
+            int assign_cnt = 0;
+            while (buyer_groups.Count(x => !x.IsFinished) != 0)
+            {
+                //按照供求比率降序排序,不用实时，
+                if (assign_cnt % 100 == 0)
+                {
+                    buyer_groups.Sort((x, y) => { return x.SupportNeedRate.CompareTo(y.SupportNeedRate); });
+                    System.Console.WriteLine(assign_cnt + "/" + buyers.Count);
+                }
+                //弹出栈顶元素
+                var buyer = buyer_groups.First().GetBuyer();
+                //寻找最好的卖家
+                foreach (var r in AssignItem(buyer, sellers_remain, true))
+                {
+                    results.Add(r);
+                }
+                sellers_remain = sellers.Where(x => !x.是否分配完毕).ToList();
+                if (buyer_groups.First().IsFinished)
+                {
+                    //强制更新一下
+                    buyer_groups.Sort((x, y) => { return x.SupportNeedRate.CompareTo(y.SupportNeedRate); });
+                    System.Console.WriteLine("Finished：" + buyer.第一意向.Item1 + buyer.第一意向.Item2);
+                }
+                assign_cnt++;
+            }
             return results.ToList();
         }
 
@@ -339,7 +293,7 @@ namespace src
             System.GC.Collect();
             return results.ToList();
         }
-        static List<Result> AssignItem(Buyer buyer, List<Seller> sellers_remain)
+        static List<Result> AssignItem(Buyer buyer, List<Seller> sellers_remain, bool IsNeedRefreshBuyGroup = false)
         {
             var rs = new List<Result>();
             //按照库存排序
@@ -373,6 +327,7 @@ namespace src
                     seller.已分配货物数量 += quantity;
                     r.分配货物数量 = quantity;
                     r.hope_score = buyer.GetHopeScore(seller) * quantity / buyer.购买货物数量;
+                    if (IsNeedRefreshBuyGroup) BuyerGroup.RefreshRemainDict(seller, quantity);
                     rs.Add(r);
                 }
                 else
@@ -383,6 +338,7 @@ namespace src
                     buyer.已分配货物数量 += quantity;
                     r.分配货物数量 = quantity;
                     r.hope_score = buyer.GetHopeScore(seller) * quantity / buyer.购买货物数量;
+                    if (IsNeedRefreshBuyGroup) BuyerGroup.RefreshRemainDict(seller, quantity);
                     rs.Add(r);
                     break;
                 }
@@ -397,16 +353,13 @@ namespace src
         /// <param name="grps"></param>
         /// <param name="sellers"></param>
         /// <returns></returns>
-        static int GetHopeNeedGap(IEnumerable<IGrouping<(enmHope, string), Buyer>> grps, List<Seller> sellers)
+        static int GetHopeNeedGap(IGrouping<(enmHope, string), Buyer> grps, List<Seller> sellers)
         {
             if (grps.Count() == 0) return 0;
             int NeedGap = 0;
-            foreach (var item in grps)
-            {
-                int Need = item.Sum(x => x.剩余货物数量);
-                int Support = sellers.Where(x => x.IsMatchHope(item.Key)).Sum(x => x.剩余货物数量);
-                if (Need > Support) NeedGap += (Need - Support);
-            }
+            int Need = grps.Sum(x => x.剩余货物数量);
+            int Support = sellers.Where(x => x.IsMatchHope(grps.Key)).Sum(x => x.剩余货物数量);
+            if (Need > Support) NeedGap += (Need - Support);
             return NeedGap;
         }
     }
