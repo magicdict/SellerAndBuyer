@@ -13,9 +13,13 @@ namespace src
         {
             var IsAdjust = false;
 
-            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
                 path = "";
+            }
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                path = "/Users/hu/Downloads/SellerAndBuyer-master/";
             }
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
             if (IsAdjust)
@@ -32,7 +36,8 @@ namespace src
                 bool RunFirstStep = true;
                 bool RunSecondStep = true;
                 bool RunThreeStep = true;
-                if (breed == args[0])  //仅对SR测试
+                //if (breed == args[0])
+                if (breed == "SR")  //仅对SR测试
                 {
                     var sellers_Breed = sellers.Where(x => x.品种 == breed).ToList();
                     var buyers_Breed = buyers.Where(x => x.品种 == breed).ToList();
@@ -239,6 +244,7 @@ namespace src
                 //弹出栈顶元素
                 var buyer = buyer_groups.First().GetBuyer();
                 //寻找最好的卖家
+                sellers_remain = sellers_remain.Where(x => x.IsMatchHope(buyer.第一意向)).ToList();
                 foreach (var r in AssignItem(buyer, sellers_remain, true))
                 {
                     results.Add(r);
@@ -249,6 +255,8 @@ namespace src
                     //强制更新一下
                     buyer_groups.Sort((x, y) => { return x.SupportNeedRate.CompareTo(y.SupportNeedRate); });
                     System.Console.WriteLine("Finished：" + buyer.第一意向.Item1 + buyer.第一意向.Item2);
+                    System.Console.WriteLine("RemainDict:" + BuyerGroup.RemainDict[buyer.第一意向]);
+                    System.Console.WriteLine("RemainBuyerCnt:" + buyer_groups.First().RemainBuyerCnt);
                 }
                 assign_cnt++;
             }

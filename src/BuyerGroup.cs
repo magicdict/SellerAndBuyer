@@ -47,6 +47,12 @@ public class BuyerGroup
         get { return RemainDict[hope]; }
     }
 
+    public int RemainBuyerCnt{
+        get{
+            return lines.Count;
+        }
+    }
+
     /// <summary>
     /// 无法或者无需分配了
     /// </summary>
