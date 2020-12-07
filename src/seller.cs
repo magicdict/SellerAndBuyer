@@ -40,7 +40,7 @@ public record Seller
     //类别
     public string 类别 { get; set; }
 
-    public bool IsMatchHope((enmHope, string) hope)
+    public bool IsMatchHope((enmHope, string) hope, bool EmptyAsTrue = false)
     {
         switch (hope.Item1)
         {
@@ -57,7 +57,8 @@ public record Seller
             case enmHope.类别:
                 return 类别.Equals(hope.Item2);
             default:
-                return false;
+                //意向为无时，无条件满足
+                return EmptyAsTrue;
         }
     }
 
@@ -98,14 +99,14 @@ public record Seller
         sw.Close();
     }
 
-    public static List<(string 卖方客户, string 货物编号,int 货物数量,int 已分配货物数量)> LoadSellerAssignNumber(string filename)
+    public static List<(string 卖方客户, string 货物编号, int 货物数量, int 已分配货物数量)> LoadSellerAssignNumber(string filename)
     {
         var sr = new StreamReader(filename, System.Text.Encoding.GetEncoding("GB2312"));
-        var rtn = new List<(string 卖方客户, string 货物编号, int 货物数量,int 已分配货物数量)>();
+        var rtn = new List<(string 卖方客户, string 货物编号, int 货物数量, int 已分配货物数量)>();
         while (!sr.EndOfStream)
         {
             var info = sr.ReadLine().Split(",");
-            rtn.Add((info[0], info[1], int.Parse(info[2]),int.Parse(info[3])));
+            rtn.Add((info[0], info[1], int.Parse(info[2]), int.Parse(info[3])));
         }
         sr.Close();
         return rtn;

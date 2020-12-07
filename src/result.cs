@@ -4,7 +4,6 @@ using System.Linq;
 
 public class Result
 {
-    const string header = "买方客户,卖方客户,品种,货物编号,仓库,分配货物数量,对应意向顺序";
     public string 买方客户 { get; set; }
     public string 卖方客户 { get; set; }
     public string 品种 { get; set; }
@@ -17,11 +16,11 @@ public class Result
     public static string GetHope(Buyer buyer, Seller seller)
     {
         string rtn = "";
-        if (seller.IsMatchHope(buyer.第一意向)) rtn += "1-";
-        if (seller.IsMatchHope(buyer.第二意向)) rtn += "2-";
-        if (seller.IsMatchHope(buyer.第三意向)) rtn += "3-";
-        if (seller.IsMatchHope(buyer.第四意向)) rtn += "4-";
-        if (seller.IsMatchHope(buyer.第五意向)) rtn += "5-";
+        if (buyer.第一意向.Item1 != enmHope.无 && seller.IsMatchHope(buyer.第一意向)) rtn += "1-";
+        if (buyer.第二意向.Item1 != enmHope.无 && seller.IsMatchHope(buyer.第二意向)) rtn += "2-";
+        if (buyer.第三意向.Item1 != enmHope.无 && seller.IsMatchHope(buyer.第三意向)) rtn += "3-";
+        if (buyer.第四意向.Item1 != enmHope.无 && seller.IsMatchHope(buyer.第四意向)) rtn += "4-";
+        if (buyer.第五意向.Item1 != enmHope.无 && seller.IsMatchHope(buyer.第五意向)) rtn += "5-";
         if (rtn == "") return "0";
         return rtn.TrimEnd("-".ToCharArray());
     }
@@ -89,11 +88,11 @@ public class Result
         }
         return results;
     }
-    public static void AppendToCSV(string filename, List<Result> results)
+    public static void WriteToCSV(string filename, List<Result> results)
     {
-        var isNeedTitle = !System.IO.File.Exists(filename);
-        var sw = new StreamWriter(filename, true, System.Text.Encoding.GetEncoding("GB2312"));
-        if (isNeedTitle) sw.WriteLine(header);
+        var sw = new StreamWriter(filename, false, System.Text.Encoding.GetEncoding("GB2312"));
+        string header = "买方客户,卖方客户,品种,货物编号,仓库,分配货物数量,对应意向顺序";
+        sw.WriteLine(header);
         foreach (var result in results)
         {
             sw.Write(result.买方客户 + ",");

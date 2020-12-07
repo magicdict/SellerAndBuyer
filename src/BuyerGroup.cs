@@ -6,24 +6,7 @@ public class BuyerGroup
     /// <summary>
     /// 各个意向剩余量
     /// </summary>
-    /// <param name="RemainDict"></param>
-    /// <typeparam name="(enmHope"></typeparam>
-    /// <typeparam name="string)"></typeparam>
-    /// <typeparam name="int"></typeparam>
-    public static Dictionary<(enmHope, string), int> RemainDict = new Dictionary<(enmHope, string), int>();
-    /// <summary>
-    /// 更新剩余量字典
-    /// </summary>
-    /// <param name="seller"></param>
-    /// <param name="quantity"></param>
-    public static void RefreshRemainDict(Seller seller, int quantity)
-    {
-        foreach (var item in RemainDict)
-        {
-            if (seller.IsMatchHope(item.Key)) RemainDict[item.Key] -= quantity;
-        }
-    }
-
+    public Dictionary<(enmHope, string), int> RemainDict;
     Stack<Buyer> lines = new Stack<Buyer>();
     /// <summary>
     /// 供求比例
@@ -37,9 +20,24 @@ public class BuyerGroup
         }
     }
 
+    public double TotalHopeScore_AVG
+    {
+        get
+        {
+            if (IsFinished) return double.MaxValue;
+            return lines.Average(x => x.TotalHopeScore);
+        }
+    }
+
+
     public Buyer GetBuyer()
     {
         return lines.Pop();
+    }
+
+    public Buyer EvaluateBuyer()
+    {
+        return lines.Peek();
     }
 
     private int match_count
@@ -47,8 +45,10 @@ public class BuyerGroup
         get { return RemainDict[hope]; }
     }
 
-    public int RemainBuyerCnt{
-        get{
+    public int RemainBuyerCnt
+    {
+        get
+        {
             return lines.Count;
         }
     }
@@ -78,4 +78,40 @@ public class BuyerGroup
             lines.Push(Buyers[i]);
         }
     }
+
+    public static List<Seller> Sellers_Remain;
+
+    public static System.Comparison<BuyerGroup> Evalute_1 = (x, y) =>
+    {
+        int x_total = x.EvaluateBuyer().TotalHopeScore;
+        int y_total = y.EvaluateBuyer().TotalHopeScore;
+        double x_total_rate = x.EvaluateBuyer().TotalHopeSatisfyRate(Sellers_Remain);
+        double y_total_rate = y.EvaluateBuyer().TotalHopeSatisfyRate(Sellers_Remain);
+        if (x_total != y_total)
+        {
+            //可获得最大意向值升序
+            //CF：73.68198
+            return y_total.CompareTo(x_total);
+        }
+        else
+        {
+            if (x_total_rate != y_total_rate)
+            {
+                return y_total_rate.CompareTo(x_total_rate);
+            }
+            else
+            {
+                //供求比降序
+                return x.SupportNeedRate.CompareTo(y.SupportNeedRate);
+            }
+        }
+    };
+
+    public static System.Comparison<BuyerGroup> Evalute_Best = (x, y) =>
+       {
+           //SR:79.30704
+           //CF:73.72274
+           return x.SupportNeedRate.CompareTo(y.SupportNeedRate);
+       };
+
 }

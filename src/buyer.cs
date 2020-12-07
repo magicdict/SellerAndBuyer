@@ -109,6 +109,18 @@ public class Buyer
         }
     }
 
+    public double TotalHopeSatisfyRate(List<Seller> sellers)
+    {
+        if (this.第一意向.Item1 != enmHope.无) sellers = sellers.Where(x => x.IsMatchHope(this.第一意向)).ToList();
+        if (this.第二意向.Item1 != enmHope.无) sellers = sellers.Where(x => x.IsMatchHope(this.第二意向)).ToList();
+        if (this.第三意向.Item1 != enmHope.无) sellers = sellers.Where(x => x.IsMatchHope(this.第三意向)).ToList();
+        if (this.第四意向.Item1 != enmHope.无) sellers = sellers.Where(x => x.IsMatchHope(this.第四意向)).ToList();
+        if (this.第五意向.Item1 != enmHope.无) sellers = sellers.Where(x => x.IsMatchHope(this.第五意向)).ToList();
+        var total_qutities = sellers.Sum(x => x.剩余货物数量);
+        if (total_qutities >= this.剩余货物数量) return 1;
+        return total_qutities / this.剩余货物数量;
+    }
+
     public static List<Buyer> ReadBuyerFile(string filename)
     {
         var buyers = new List<Buyer>();
