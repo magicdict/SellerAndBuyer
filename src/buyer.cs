@@ -8,11 +8,11 @@ public class Buyer
     public int 平均持仓时间 { get; set; }
     public int 购买货物数量 { get; set; }
     public string 品种 { get; set; }
-    public (enmHope, string) 第一意向 { get; set; }
-    public (enmHope, string) 第二意向 { get; set; }
-    public (enmHope, string) 第三意向 { get; set; }
-    public (enmHope, string) 第四意向 { get; set; }
-    public (enmHope, string) 第五意向 { get; set; }
+    public (enmHope hopeType, string hopeValue) 第一意向 { get; set; }
+    public (enmHope hopeType, string hopeValue) 第二意向 { get; set; }
+    public (enmHope hopeType, string hopeValue) 第三意向 { get; set; }
+    public (enmHope hopeType, string hopeValue) 第四意向 { get; set; }
+    public (enmHope hopeType, string hopeValue) 第五意向 { get; set; }
 
     public Dictionary<string, int> Seller_Buyer_HopeScoreDic = new Dictionary<string, int>(1024);
 
@@ -46,18 +46,18 @@ public class Buyer
             int score = 0;
             if (品种 == Utility.strCF)
             {
-                if (this.第一意向.Item1 != enmHope.无) score += 33;
-                if (this.第二意向.Item1 != enmHope.无) score += 27;
-                if (this.第三意向.Item1 != enmHope.无) score += 20;
-                if (this.第三意向.Item1 != enmHope.无) score += 13;
-                if (this.第五意向.Item1 != enmHope.无) score += 7;
+                if (this.第一意向.hopeType != enmHope.无) score += 33;
+                if (this.第二意向.hopeType != enmHope.无) score += 27;
+                if (this.第三意向.hopeType != enmHope.无) score += 20;
+                if (this.第三意向.hopeType != enmHope.无) score += 13;
+                if (this.第五意向.hopeType != enmHope.无) score += 7;
             }
             else
             {
-                if (this.第一意向.Item1 != enmHope.无) score += 40;
-                if (this.第二意向.Item1 != enmHope.无) score += 30;
-                if (this.第三意向.Item1 != enmHope.无) score += 20;
-                if (this.第三意向.Item1 != enmHope.无) score += 10;
+                if (this.第一意向.hopeType != enmHope.无) score += 40;
+                if (this.第二意向.hopeType != enmHope.无) score += 30;
+                if (this.第三意向.hopeType != enmHope.无) score += 20;
+                if (this.第三意向.hopeType != enmHope.无) score += 10;
             }
             return score;
         }
@@ -138,11 +138,11 @@ public class Buyer
 
     public double TotalHopeSatisfyRate(List<Seller> sellers)
     {
-        if (this.第一意向.Item1 != enmHope.无) sellers = sellers.Where(x => x.IsMatchHope(this.第一意向)).ToList();
-        if (this.第二意向.Item1 != enmHope.无) sellers = sellers.Where(x => x.IsMatchHope(this.第二意向)).ToList();
-        if (this.第三意向.Item1 != enmHope.无) sellers = sellers.Where(x => x.IsMatchHope(this.第三意向)).ToList();
-        if (this.第四意向.Item1 != enmHope.无) sellers = sellers.Where(x => x.IsMatchHope(this.第四意向)).ToList();
-        if (this.第五意向.Item1 != enmHope.无) sellers = sellers.Where(x => x.IsMatchHope(this.第五意向)).ToList();
+        if (this.第一意向.hopeType != enmHope.无) sellers = sellers.Where(x => x.IsMatchHope(this.第一意向)).ToList();
+        if (this.第二意向.hopeType != enmHope.无) sellers = sellers.Where(x => x.IsMatchHope(this.第二意向)).ToList();
+        if (this.第三意向.hopeType != enmHope.无) sellers = sellers.Where(x => x.IsMatchHope(this.第三意向)).ToList();
+        if (this.第四意向.hopeType != enmHope.无) sellers = sellers.Where(x => x.IsMatchHope(this.第四意向)).ToList();
+        if (this.第五意向.hopeType != enmHope.无) sellers = sellers.Where(x => x.IsMatchHope(this.第五意向)).ToList();
         var total_qutities = sellers.Sum(x => x.剩余货物数量);
         if (total_qutities >= this.剩余货物数量) return 1;
         return total_qutities / this.剩余货物数量;

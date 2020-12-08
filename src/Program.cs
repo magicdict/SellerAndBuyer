@@ -24,16 +24,16 @@ namespace src
                 path = "/Users/hu/Downloads/SellerAndBuyer-master/";
             }
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-            var IsAdjust = true;
+            var IsAdjust = false;
             if (IsAdjust)
             {
                 Adjust.Optiomize(path, "result_SR_99.csv","SR");
-                //Adjust.Optiomize(path, "result_CF_99.csv");
+                Adjust.Run(path, "result_CF_99.csv");
                 return;
             }
             //按照品种进行分组
             var strategylist = new int[] { 99 };
-            var kblist = new string[] { "CF", "SR" };
+            var kblist = new string[] { "CF" };
 
             foreach (var strategy in strategylist)
             {
@@ -47,11 +47,11 @@ namespace src
                     var sellers_Breed = sellers.Where(x => x.品种 == strKb).ToList();
                     var buyers_Breed = buyers.Where(x => x.品种 == strKb).ToList();
                     System.Console.WriteLine("品种：" + strKb);
-                    System.Console.WriteLine("具有第一意向的客户数：" + buyers_Breed.Count(x => x.第一意向.Item1 != enmHope.无));
-                    System.Console.WriteLine("具有第二意向的客户数：" + buyers_Breed.Count(x => x.第二意向.Item1 != enmHope.无));
-                    System.Console.WriteLine("具有第三意向的客户数：" + buyers_Breed.Count(x => x.第三意向.Item1 != enmHope.无));
-                    System.Console.WriteLine("具有第四意向的客户数：" + buyers_Breed.Count(x => x.第四意向.Item1 != enmHope.无));
-                    System.Console.WriteLine("具有第五意向的客户数：" + buyers_Breed.Count(x => x.第五意向.Item1 != enmHope.无));
+                    System.Console.WriteLine("具有第一意向的客户数：" + buyers_Breed.Count(x => x.第一意向.hopeType != enmHope.无));
+                    System.Console.WriteLine("具有第二意向的客户数：" + buyers_Breed.Count(x => x.第二意向.hopeType != enmHope.无));
+                    System.Console.WriteLine("具有第三意向的客户数：" + buyers_Breed.Count(x => x.第三意向.hopeType != enmHope.无));
+                    System.Console.WriteLine("具有第四意向的客户数：" + buyers_Breed.Count(x => x.第四意向.hopeType != enmHope.无));
+                    System.Console.WriteLine("具有第五意向的客户数：" + buyers_Breed.Count(x => x.第五意向.hopeType != enmHope.无));
                     System.Console.WriteLine("卖家数：" + sellers_Breed.Count);
                     System.Console.WriteLine("买家数：" + buyers_Breed.Count);
                     List<Result> results = Assign(sellers_Breed, buyers_Breed, RunFirstStep, RunSecondStep, RunThreeStep, strategy);
@@ -188,18 +188,18 @@ namespace src
         {
             //按照第一意向 + 值 进行分组
             var hope_group = buyers.GroupBy(x => x.第一意向);
-            var gap_hope_group = new List<IGrouping<(enmHope, string), Buyer>>();
+            var gap_hope_group = new List<IGrouping<(enmHope hopeType, string hopeValue), Buyer>>();
             //如果有缺口则先处理
             foreach (var grp in hope_group)
             {
-                if (grp.Key.Item1 == enmHope.无) continue;
+                if (grp.Key.hopeType == enmHope.无) continue;
                 if (GetHopeNeedGap(grp, sellers) > 0) { gap_hope_group.Add(grp); }
             }
             var results = new ConcurrentBag<Result>();
             //下面的代码之所以可以并行，实际数据中都是某一个大类的问题
             Parallel.ForEach(gap_hope_group, grp =>
             {
-                System.Console.WriteLine("意向 " + grp.Key.Item1 + ":" + grp.Key.Item2 + " (" + grp.Count() + ")");
+                System.Console.WriteLine("意向 " + grp.Key.hopeType + ":" + grp.Key.hopeValue + " (" + grp.Count() + ")");
                 var buyers_grp = grp.ToList();
                 //按照平均持仓时间降序排列，保证时间长的优先匹配
                 //第一意向的时候，必须以平均持仓时间降序排序！
@@ -218,7 +218,7 @@ namespace src
                         results.Add(r);
                     }
                 }
-                System.Console.WriteLine("意向 " + grp.Key.Item1 + ":" + grp.Key.Item2 + " (Remain:" + buyers_grp.Count(x => !x.是否分配完毕) + ")");
+                System.Console.WriteLine("意向 " + grp.Key.hopeType + ":" + grp.Key.hopeValue + " (Remain:" + buyers_grp.Count(x => !x.是否分配完毕) + ")");
             });
             System.GC.Collect();
             return results.ToList();
@@ -232,17 +232,17 @@ namespace src
             //按照第一意向 + 值 进行分组
             var hope_group = buyers_remain.GroupBy(x => x.第一意向);
             //除去没有第一意向和根本无法满足需求的
-            hope_group = hope_group.Where(x => x.Key.Item1 != enmHope.无 && GetHopeNeedGap(x, sellers_remain) == 0);
+            hope_group = hope_group.Where(x => x.Key.hopeType != enmHope.无 && GetHopeNeedGap(x, sellers_remain) == 0);
             var buyer_groups = new List<BuyerGroup>();
             //对于意向进行分组
-            var RemainDict = new Dictionary<(enmHope, string), int>();
+            var RemainDict = new Dictionary<(enmHope hopeType, string hopeValue), int>();
             RemainDict.Clear();
             foreach (var item in hope_group)
             {
                 var buyergroup = new BuyerGroup(item.Key, item.ToList());
                 buyergroup.RemainDict = RemainDict;
                 RemainDict.Add(item.Key, sellers_remain.Where(x => x.IsMatchHope(item.Key)).Sum(x => x.剩余货物数量));
-                System.Console.WriteLine(item.Key.Item1 + " " + item.Key.Item2 + ":" + buyergroup.SupportNeedRate + " (" + RemainDict[item.Key] + ")");
+                System.Console.WriteLine(item.Key.hopeType + " " + item.Key.hopeValue + ":" + buyergroup.SupportNeedRate + " (" + RemainDict[item.Key] + ")");
                 buyer_groups.Add(buyergroup);
             }
             var results = new List<Result>();
@@ -272,7 +272,7 @@ namespace src
                 if (buyer_groups.First().IsFinished)
                 {
                     //强制更新一下
-                    System.Console.WriteLine("Finished：" + buyer.第一意向.Item1 + "-" + buyer.第一意向.Item2);
+                    System.Console.WriteLine("Finished：" + buyer.第一意向.hopeType + "-" + buyer.第一意向.hopeValue);
                     System.Console.WriteLine("RemainDict:" + RemainDict[buyer.第一意向]);
                     System.Console.WriteLine("RemainBuyerCnt:" + buyer_groups.First().RemainBuyerCnt);
                     buyer_groups = buyer_groups.Where(x => !x.IsFinished).ToList();
@@ -309,7 +309,7 @@ namespace src
                 //Seller选择 有货物的
                 sellers_remain = sellers_remain.Where(x => !x.是否分配完毕).ToList();
                 //如果有第一意向，为了防止意外，错开第一意向匹配的,避免出现持仓时间的违规
-                if (buyer.第一意向.Item1 != enmHope.无)
+                if (buyer.第一意向.hopeType != enmHope.无)
                 {
                     sellers_remain = sellers_remain.Where(x => !x.IsMatchHope(buyer.第一意向)).ToList();
                 }
@@ -324,7 +324,7 @@ namespace src
             System.GC.Collect();
             return results.ToList();
         }
-        static List<Result> AssignItem(Buyer buyer, List<Seller> sellers_remain, Dictionary<(enmHope, string), int> RemainDict = null)
+        static List<Result> AssignItem(Buyer buyer, List<Seller> sellers_remain, Dictionary<(enmHope hopeType, string hopeValue), int> RemainDict = null)
         {
             var rs = new List<Result>();
             //按照库存排序
@@ -396,7 +396,7 @@ namespace src
         /// <param name="grps"></param>
         /// <param name="sellers"></param>
         /// <returns></returns>
-        static int GetHopeNeedGap(IGrouping<(enmHope, string), Buyer> grps, List<Seller> sellers)
+        static int GetHopeNeedGap(IGrouping<(enmHope hopeType, string hopeValue), Buyer> grps, List<Seller> sellers)
         {
             if (grps.Count() == 0) return 0;
             int NeedGap = 0;

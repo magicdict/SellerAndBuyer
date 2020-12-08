@@ -16,11 +16,11 @@ public class Result
     public static string GetHope(Buyer buyer, Goods goods)
     {
         string rtn = "";
-        if (buyer.第一意向.Item1 != enmHope.无 && goods.IsMatchHope(buyer.第一意向)) rtn += "1-";
-        if (buyer.第二意向.Item1 != enmHope.无 && goods.IsMatchHope(buyer.第二意向)) rtn += "2-";
-        if (buyer.第三意向.Item1 != enmHope.无 && goods.IsMatchHope(buyer.第三意向)) rtn += "3-";
-        if (buyer.第四意向.Item1 != enmHope.无 && goods.IsMatchHope(buyer.第四意向)) rtn += "4-";
-        if (buyer.第五意向.Item1 != enmHope.无 && goods.IsMatchHope(buyer.第五意向)) rtn += "5-";
+        if (buyer.第一意向.hopeType != enmHope.无 && goods.IsMatchHope(buyer.第一意向)) rtn += "1-";
+        if (buyer.第二意向.hopeType != enmHope.无 && goods.IsMatchHope(buyer.第二意向)) rtn += "2-";
+        if (buyer.第三意向.hopeType != enmHope.无 && goods.IsMatchHope(buyer.第三意向)) rtn += "3-";
+        if (buyer.第四意向.hopeType != enmHope.无 && goods.IsMatchHope(buyer.第四意向)) rtn += "4-";
+        if (buyer.第五意向.hopeType != enmHope.无 && goods.IsMatchHope(buyer.第五意向)) rtn += "5-";
         if (rtn == "") return "0";
         return rtn.TrimEnd("-".ToCharArray());
     }

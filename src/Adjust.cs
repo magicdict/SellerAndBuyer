@@ -112,7 +112,7 @@ public static class Adjust
         var first_hoep_grp = buyers.GroupBy(x => x.第一意向).ToList();
         foreach (var grp in first_hoep_grp)
         {
-            if (grp.Key.Item1 == enmHope.无) continue;
+            if (grp.Key.hopeType == enmHope.无) continue;
             //按照持仓时间排序
             var same_hope_buyers = grp.ToList();
             same_hope_buyers.Sort((x, y) => { return y.平均持仓时间.CompareTo(x.平均持仓时间); });
@@ -133,8 +133,8 @@ public static class Adjust
                     //整条记录都满足
                     if (!isMatch)
                     {
-                        System.Console.WriteLine(buyer.第一意向.Item1 + ":" + buyer.第一意向.Item2);
-                        return false;
+                        System.Console.WriteLine(buyer.第一意向.hopeType + ":" + buyer.第一意向.hopeValue);
+                        //return false;
                     }
                 }
                 else
@@ -185,11 +185,11 @@ public static class Adjust
         }
 
         //每种第一意向，满足的最新持仓时间的记录
-        var MinHoldTime = new Dictionary<(enmHope, string), int>();
+        var MinHoldTime = new Dictionary<(enmHope hopeType, string hopeValue), int>();
         var first_hope_group = buyers.GroupBy(x => x.第一意向);
         foreach (var item in first_hope_group)
         {
-            if (item.Key.Item1 == enmHope.无) continue;
+            if (item.Key.hopeType == enmHope.无) continue;
             var grp = item.Where(x => !x.IsFirstHopeSatisfy()).ToList();  //所有没有全部满足第一意向的记录
             if (grp.Count == 0)
             {
@@ -232,7 +232,6 @@ public static class Adjust
             }
         }
         System.Console.WriteLine("Up:" + Up_Cnt);
-        return;
         CheckResult(rs, buyers, sellers);   //检查结果
         Result.Score(rs, buyers);           //计算得分
     }

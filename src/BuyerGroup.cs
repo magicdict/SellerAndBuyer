@@ -6,7 +6,7 @@ public class BuyerGroup
     /// <summary>
     /// 各个意向剩余量
     /// </summary>
-    public Dictionary<(enmHope, string), int> RemainDict;
+    public Dictionary<(enmHope hopeType, string hopeValue), int> RemainDict;
     Stack<Buyer> lines = new Stack<Buyer>();
     /// <summary>
     /// 供求比例
@@ -65,13 +65,13 @@ public class BuyerGroup
             return lines.Count == 0;
         }
     }
-    (enmHope, string) hope = (enmHope.无, string.Empty);
-    public BuyerGroup((enmHope, string) Hope, List<Buyer> Buyers)
+    (enmHope hopeType, string hopeValue) hope = (enmHope.无, string.Empty);
+    public BuyerGroup((enmHope hopeType, string hopeValue) Hope, List<Buyer> Buyers)
     {
         hope = Hope;
         Buyers.Sort((x, y) =>
         {
-            return y.平均持仓时间.CompareTo(x.平均持仓时间);
+            return x.平均持仓时间.CompareTo(y.平均持仓时间);
         });
         for (int i = 0; i < Buyers.Count; i++)
         {

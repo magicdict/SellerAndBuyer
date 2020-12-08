@@ -41,22 +41,22 @@ public record Goods
         return score;
     }
 
-    public bool IsMatchHope((enmHope, string) hope, bool EmptyAsTrue = false)
+    public bool IsMatchHope((enmHope hopeType, string hopeValue) hope, bool EmptyAsTrue = false)
     {
-        switch (hope.Item1)
+        switch (hope.hopeType)
         {
             case enmHope.仓库:
-                return 仓库.Equals(hope.Item2);
+                return 仓库.Equals(hope.hopeValue);
             case enmHope.品牌:
-                return 品牌.Equals(hope.Item2);
+                return 品牌.Equals(hope.hopeValue);
             case enmHope.产地:
-                return 产地.Equals(hope.Item2);
+                return 产地.Equals(hope.hopeValue);
             case enmHope.年度:
-                return 年度.Equals(hope.Item2);
+                return 年度.Equals(hope.hopeValue);
             case enmHope.等级:
-                return 等级.Equals(hope.Item2);
+                return 等级.Equals(hope.hopeValue);
             case enmHope.类别:
-                return 类别.Equals(hope.Item2);
+                return 类别.Equals(hope.hopeValue);
             default:
                 //意向为无时，无条件满足
                 return EmptyAsTrue;
