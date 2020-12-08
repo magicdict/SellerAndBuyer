@@ -113,5 +113,4 @@ public class BuyerGroup
            //CF:73.72274
            return x.SupportNeedRate.CompareTo(y.SupportNeedRate);
        };
-
 }

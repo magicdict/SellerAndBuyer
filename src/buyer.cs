@@ -80,6 +80,8 @@ public class Buyer
         }
     }
 
+    #region 具体供货信息明细
+
     /// <summary>
     /// 具体供货信息明细
     /// </summary>
@@ -93,6 +95,7 @@ public class Buyer
     /// </summary>
     public void fill_results_hopescore()
     {
+        if (is_filled_results_hopescore) return;
         foreach (var r in results)
         {
             r.hope_score = Utility.ConvertHopeStr2Score(r.对应意向顺序, 品种) * r.分配货物数量 / 购买货物数量;
@@ -108,6 +111,30 @@ public class Buyer
             return results.Sum(x => x.hope_score);
         }
     }
+
+    /// <summary>
+    /// 是否完全满足第一意向
+    /// </summary>
+    /// <returns></returns>
+    public bool IsFirstHopeSatisfy()
+    {
+        foreach (var r in results)
+        {
+            if (!r.对应意向顺序.StartsWith("1")) return false;
+        }
+        return true;
+    }
+
+    public double Score
+    {
+        get
+        {
+            fill_results_hopescore();
+            return Result.Score(results, this);
+        }
+    }
+
+    #endregion
 
     public double TotalHopeSatisfyRate(List<Seller> sellers)
     {

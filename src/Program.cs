@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -11,6 +12,9 @@ namespace src
         static string path = @"F:\基于买方意向的货物撮合交易\data\";
         static void Main(string[] args)
         {
+            AppDomain currentDomain = AppDomain.CurrentDomain;
+            currentDomain.UnhandledException += new UnhandledExceptionEventHandler(MyHandler);
+
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
                 path = "";
@@ -20,18 +24,20 @@ namespace src
                 path = "/Users/hu/Downloads/SellerAndBuyer-master/";
             }
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-            var IsAdjust = false;
+            var IsAdjust = true;
             if (IsAdjust)
             {
-                Adjust.Run(path, "result1207.csv");
+                Adjust.Optiomize(path, "result_SR_99.csv","SR");
+                //Adjust.Optiomize(path, "result_CF_99.csv");
                 return;
             }
             //按照品种进行分组
-            var strategylist = new int[] { 1, 99 };
-            var kblist = new string[] { "SR", "CF" };
-            Parallel.ForEach(strategylist, strategy =>
+            var strategylist = new int[] { 99 };
+            var kblist = new string[] { "CF", "SR" };
+
+            foreach (var strategy in strategylist)
             {
-                Parallel.ForEach(kblist, strKb =>
+                foreach (var strKb in kblist)
                 {
                     bool RunFirstStep = true;
                     bool RunSecondStep = true;
@@ -49,11 +55,20 @@ namespace src
                     System.Console.WriteLine("卖家数：" + sellers_Breed.Count);
                     System.Console.WriteLine("买家数：" + buyers_Breed.Count);
                     List<Result> results = Assign(sellers_Breed, buyers_Breed, RunFirstStep, RunSecondStep, RunThreeStep, strategy);
-                    System.Console.WriteLine("strategy:" + strategy);
+                    System.Console.WriteLine("======策略号:" + strategy);
+                    System.Console.WriteLine("======区分:" + strKb);
                     Result.Score(results, buyers_Breed);
                     if (RunThreeStep) Result.WriteToCSV(path + "result_" + strKb + "_" + strategy + ".csv", results);
-                });
-            });
+                    System.GC.Collect();
+                }
+            }
+        }
+
+        static void MyHandler(object sender, UnhandledExceptionEventArgs args)
+        {
+            Exception e = (Exception)args.ExceptionObject;
+            Console.WriteLine("MyHandler caught : " + e.Message);
+            Console.WriteLine("Runtime terminating: {0}", args.IsTerminating);
         }
 
         /// <summary>

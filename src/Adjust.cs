@@ -11,13 +11,13 @@ public static class Adjust
         var rs_SR = rs.Where(x => x.品种 == Utility.strSR).ToList();
 
         var buyers = Buyer.ReadBuyerFile(path + "buyer.csv");
-        var selleers = Seller.ReadSellerFile(path + "seller.csv");
+        var sellers = Seller.ReadSellerFile(path + "seller.csv");
 
         var buyer_CF = buyers.Where(x => x.品种 == Utility.strCF).ToList();
         var buyer_SR = buyers.Where(x => x.品种 == Utility.strSR).ToList();
 
-        var sellers_CF = selleers.Where(x => x.品种 == Utility.strCF).ToList();
-        var sellers_SR = selleers.Where(x => x.品种 == Utility.strSR).ToList();
+        var sellers_CF = sellers.Where(x => x.品种 == Utility.strCF).ToList();
+        var sellers_SR = sellers.Where(x => x.品种 == Utility.strSR).ToList();
 
         if (rs_SR.Count != 0)
         {
@@ -150,8 +150,11 @@ public static class Adjust
         return true;
     }
 
-    static void Optiomize(List<Result> rs, List<Buyer> buyers, List<Seller> sellers)
+    public static void Optiomize(string path, string resultfilename, string strKbn)
     {
+        var buyers = Buyer.ReadBuyerFile(path + "buyer.csv").Where(x => x.品种 == strKbn).ToList(); ;
+        var sellers = Seller.ReadSellerFile(path + "seller.csv").Where(x => x.品种 == strKbn).ToList(); ;
+        var rs = Result.ReadFromCSV(path + resultfilename);
         var rs_buyers = rs.GroupBy(x => x.买方客户);
         //使用多个仓库的买家数
         var multi_repo_cnt = rs_buyers.Count(x => x.ToList().Select(x => x.仓库).Distinct().Count() > 1);
@@ -160,37 +163,77 @@ public static class Adjust
         var hope_zero_point = rs.Where(x => x.对应意向顺序 == "0").Sum(x => x.分配货物数量);
         System.Console.WriteLine("意向得分为0的货物数：" + hope_zero_point);
 
-        Result.Score(rs, buyers);
+        //明细和买家绑定
+        Parallel.ForEach(
+            rs_buyers, grp =>
+            {
+                var buyer = buyers.Where(x => x.买方客户 == grp.Key).First();
+                buyer.results = grp.ToList();
+                buyer.fill_results_hopescore();
+            }
+        );
+
+        var beforeScore = Result.Score(rs, buyers);       //计算得分
+
+
+        //货物属性字典的建立
+        Goods.GoodsDict.Clear();
+        var goods_grp = sellers.GroupBy(x => x.货物编号);
+        foreach (var item in goods_grp)
+        {
+            Goods.GoodsDict.Add(item.Key, item.First());
+        }
+
+        //每种第一意向，满足的最新持仓时间的记录
+        var MinHoldTime = new Dictionary<(enmHope, string), int>();
+        var first_hope_group = buyers.GroupBy(x => x.第一意向);
+        foreach (var item in first_hope_group)
+        {
+            if (item.Key.Item1 == enmHope.无) continue;
+            var grp = item.Where(x => !x.IsFirstHopeSatisfy()).ToList();  //所有没有全部满足第一意向的记录
+            if (grp.Count == 0)
+            {
+                MinHoldTime.Add(item.Key, -1);
+                continue;
+            }
+            grp.Sort((x, y) => { return y.平均持仓时间.CompareTo(x.平均持仓时间); });
+            //寻找到第一个意向没有全部满足的记录
+            MinHoldTime.Add(item.Key, grp.First().平均持仓时间);
+        }
+
+        //需要进行交换的货物记录:
+        //STEP1:将无意向的买家货物和有意向但是完全无法满足的记录进行交换
 
         //无意向的记录
         var buyer_without_hope = buyers.Where(x => x.TotalHopeScore == 0).ToList();
-        var rs_for_exchange = new List<Result>();
-        foreach (var buyer in buyer_without_hope)
-        {
-            rs_for_exchange.AddRange(buyer.results);
-        }
-        System.Console.WriteLine("无意向的买家数：" + buyer_without_hope.Count);
-        System.Console.WriteLine("无意向的买家记录明细数：" + rs_for_exchange.Count);
-        System.Console.WriteLine("无意向的买家记录货物数量：" + buyer_without_hope.Sum(x => x.购买货物数量));
+        //意向未得分的记录
+        var buyer_zero_hopeScore = buyers.Where(x => x.TotalHopeScore != 0 && x.Result_HopeScore == 0).ToList();
 
-        //需要进行交换的货物记录
-        var buyer_need_exchange = buyers.Where(x => x.TotalHopeScore != 0 && x.Result_HopeScore == 0);
-        var GoodNumDict = new Dictionary<string, Seller>();
-        foreach (var buyer in buyer_need_exchange)
+        System.Console.WriteLine("无意向的买家数：" + buyer_without_hope.Count);
+        System.Console.WriteLine("无意向分数的买家数：" + buyer_zero_hopeScore.Count);
+        int Up_Cnt= 0;
+        foreach (var buyer_need in buyer_zero_hopeScore)
         {
-            foreach (var result in rs_for_exchange)
+            foreach (var buyer_support in buyer_without_hope)
             {
-                if (!GoodNumDict.ContainsKey(result.货物编号))
+                //如果该明细能够满足以下条件则进行交货
+                //0.意向得分为0的，多少可以拿点意向分
+                //1.防止交换之后，原来无法满意任何意向的记录，满足了第一意向，造成约束违反
+                //2.交换之后，双方总体分数增加（可能造成仓库问题）
+                //3.交换之后，意向顺序需要重置
+                foreach (var r in buyer_support.results)
                 {
-                    GoodNumDict.Add(result.货物编号, sellers.Where(x => result.货物编号 == x.货物编号).First());
-                }
-                var s = GoodNumDict[result.货物编号];
-                if (buyer.GetHopeScore(s) != 0)
-                {
-                    var 出让方_分配货物数量 = result.分配货物数量;
-                    break;
+                    if (Goods.GoodsDict[r.货物编号].GetHopeScore(buyer_need) > 0)
+                    {
+                        //0.意向得分为0的，多少可以拿点意向分
+                        Up_Cnt++;
+                    }
                 }
             }
         }
+        System.Console.WriteLine("Up:" + Up_Cnt);
+        return;
+        CheckResult(rs, buyers, sellers);   //检查结果
+        Result.Score(rs, buyers);           //计算得分
     }
 }
