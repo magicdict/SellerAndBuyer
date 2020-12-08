@@ -24,15 +24,15 @@ namespace src
                 path = "/Users/hu/Downloads/SellerAndBuyer-master/";
             }
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-            var IsAdjust = false;
+            var IsAdjust = true;
             if (IsAdjust)
             {
+                //Adjust.Optiomize(path, "result_SR_2.csv", "SR");
                 Adjust.Optiomize(path, "result_SR_99.csv","SR");
-                Adjust.Run(path, "result_CF_99.csv");
                 return;
             }
             //按照品种进行分组
-            var strategylist = new int[] { 99 };
+            var strategylist = new int[] { 1, 2, 99 };
             var kblist = new string[] { "CF" };
 
             foreach (var strategy in strategylist)
@@ -242,7 +242,21 @@ namespace src
                 var buyergroup = new BuyerGroup(item.Key, item.ToList());
                 buyergroup.RemainDict = RemainDict;
                 RemainDict.Add(item.Key, sellers_remain.Where(x => x.IsMatchHope(item.Key)).Sum(x => x.剩余货物数量));
-                System.Console.WriteLine(item.Key.hopeType + " " + item.Key.hopeValue + ":" + buyergroup.SupportNeedRate + " (" + RemainDict[item.Key] + ")");
+                switch (strategy)
+                {
+                    case 1:
+                        System.Console.WriteLine("Sort By RemainBuyerCnt");
+                        System.Console.WriteLine(item.Key.hopeType + " " + item.Key.hopeValue + ":" + buyergroup.RemainBuyerCnt);
+                        break;
+                    case 2:
+                        System.Console.WriteLine("Sort By TotalHopeScore_AVG");
+                        System.Console.WriteLine(item.Key.hopeType + " " + item.Key.hopeValue + ":" + buyergroup.TotalHopeScore_AVG);
+                        break;
+                    default:
+                        System.Console.WriteLine("Sort By SupportNeedRate");
+                        System.Console.WriteLine(item.Key.hopeType + " " + item.Key.hopeValue + ":" + buyergroup.SupportNeedRate + " (" + RemainDict[item.Key] + ")");
+                        break;
+                }
                 buyer_groups.Add(buyergroup);
             }
             var results = new List<Result>();
@@ -253,8 +267,10 @@ namespace src
                 switch (strategy)
                 {
                     case 1:
-                        BuyerGroup.Sellers_Remain = sellers_remain;
                         buyer_groups.Sort(BuyerGroup.Evalute_1);
+                        break;
+                    case 2:
+                        buyer_groups.Sort(BuyerGroup.Evalute_2);
                         break;
                     default:
                         buyer_groups.Sort(BuyerGroup.Evalute_Best);

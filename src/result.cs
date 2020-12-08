@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -23,6 +24,11 @@ public class Result
         if (buyer.第五意向.hopeType != enmHope.无 && goods.IsMatchHope(buyer.第五意向)) rtn += "5-";
         if (rtn == "") return "0";
         return rtn.TrimEnd("-".ToCharArray());
+    }
+
+    internal Result Clone()
+    {
+        return this.MemberwiseClone() as Result;
     }
 
     public static double Score(List<Result> results, Buyer buyer)

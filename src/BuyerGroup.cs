@@ -79,34 +79,17 @@ public class BuyerGroup
         }
     }
 
-    public static List<Seller> Sellers_Remain;
 
     public static System.Comparison<BuyerGroup> Evalute_1 = (x, y) =>
     {
-        int x_total = x.EvaluateBuyer().TotalHopeScore;
-        int y_total = y.EvaluateBuyer().TotalHopeScore;
-        double x_total_rate = x.EvaluateBuyer().TotalHopeSatisfyRate(Sellers_Remain);
-        double y_total_rate = y.EvaluateBuyer().TotalHopeSatisfyRate(Sellers_Remain);
-        if (x_total != y_total)
-        {
-            //可获得最大意向值升序
-            //CF：73.68198
-            return y_total.CompareTo(x_total);
-        }
-        else
-        {
-            if (x_total_rate != y_total_rate)
-            {
-                return y_total_rate.CompareTo(x_total_rate);
-            }
-            else
-            {
-                //供求比降序
-                return x.SupportNeedRate.CompareTo(y.SupportNeedRate);
-            }
-        }
+        return y.RemainBuyerCnt.CompareTo(x.RemainBuyerCnt);
     };
-
+    public static System.Comparison<BuyerGroup> Evalute_2 = (x, y) =>
+       {
+           //SR:79.30704
+           //CF:73.72274
+           return y.TotalHopeScore_AVG.CompareTo(x.TotalHopeScore_AVG);
+       };
     public static System.Comparison<BuyerGroup> Evalute_Best = (x, y) =>
        {
            //SR:79.30704

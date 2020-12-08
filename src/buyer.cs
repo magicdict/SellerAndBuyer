@@ -16,6 +16,18 @@ public class Buyer
 
     public Dictionary<string, int> Seller_Buyer_HopeScoreDic = new Dictionary<string, int>(1024);
 
+    public Buyer Clone()
+    {
+        var clone = this.MemberwiseClone() as Buyer;
+        clone.results = new List<Result>();
+        foreach (var r in results)
+        {
+            //results原有数据也必须Clone保护，不能修改
+            clone.results.Add(r.Clone());
+        }
+        return clone;
+    }
+
     public int GetHopeScore(Seller seller)
     {
         if (Seller_Buyer_HopeScoreDic.ContainsKey(seller.货物编号)) return Seller_Buyer_HopeScoreDic[seller.货物编号];
@@ -116,13 +128,16 @@ public class Buyer
     /// 是否完全满足第一意向
     /// </summary>
     /// <returns></returns>
-    public bool IsFirstHopeSatisfy()
+    public bool IsFirstHopeSatisfy
     {
-        foreach (var r in results)
+        get
         {
-            if (!r.对应意向顺序.StartsWith("1")) return false;
+            foreach (var r in results)
+            {
+                if (!r.对应意向顺序.StartsWith("1")) return false;
+            }
+            return true;
         }
-        return true;
     }
 
     public double Score
@@ -131,6 +146,14 @@ public class Buyer
         {
             fill_results_hopescore();
             return Result.Score(results, this);
+        }
+    }
+
+    public int RepoCnt
+    {
+        get
+        {
+            return results.Select(x => x.仓库).Distinct().Count();
         }
     }
 
