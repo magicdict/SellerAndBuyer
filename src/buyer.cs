@@ -61,7 +61,7 @@ public class Buyer
                 if (this.第一意向.hopeType != enmHope.无) score += 33;
                 if (this.第二意向.hopeType != enmHope.无) score += 27;
                 if (this.第三意向.hopeType != enmHope.无) score += 20;
-                if (this.第三意向.hopeType != enmHope.无) score += 13;
+                if (this.第四意向.hopeType != enmHope.无) score += 13;
                 if (this.第五意向.hopeType != enmHope.无) score += 7;
             }
             else
@@ -69,7 +69,7 @@ public class Buyer
                 if (this.第一意向.hopeType != enmHope.无) score += 40;
                 if (this.第二意向.hopeType != enmHope.无) score += 30;
                 if (this.第三意向.hopeType != enmHope.无) score += 20;
-                if (this.第三意向.hopeType != enmHope.无) score += 10;
+                if (this.第四意向.hopeType != enmHope.无) score += 10;
             }
             return score;
         }
@@ -140,6 +140,33 @@ public class Buyer
         }
     }
 
+    public bool IsAllHopeSatisfied{
+        
+        get{
+            string strHope = "0";
+            if (品种 == Utility.strCF)
+            {
+                if (this.第一意向.hopeType != enmHope.无) strHope = "1";
+                if (this.第二意向.hopeType != enmHope.无) strHope = "1-2";
+                if (this.第三意向.hopeType != enmHope.无) strHope = "1-2-3";
+                if (this.第四意向.hopeType != enmHope.无) strHope = "1-2-3-4";
+                if (this.第五意向.hopeType != enmHope.无) strHope = "1-2-3-4-5";
+            }
+            else
+            {
+                if (this.第一意向.hopeType != enmHope.无) strHope = "1";
+                if (this.第二意向.hopeType != enmHope.无) strHope = "1-2";
+                if (this.第三意向.hopeType != enmHope.无) strHope = "1-2-3";
+                if (this.第四意向.hopeType != enmHope.无) strHope = "1-2-3-4";
+            }
+            foreach (var r in results)
+            {
+                if (!r.对应意向顺序.Equals(strHope)) return false;
+            }
+            return true;
+        }
+    }
+
     public double Score
     {
         get
@@ -156,6 +183,11 @@ public class Buyer
             return results.Select(x => x.仓库).Distinct().Count();
         }
     }
+    /// <summary>
+    /// 是否第一意向被锁定
+    /// </summary>
+    /// <value></value>
+    public bool IsLockFirstHope{get;set;}
 
     #endregion
 

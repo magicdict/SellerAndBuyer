@@ -32,7 +32,7 @@ namespace src
                 return;
             }
             //按照品种进行分组
-            var strategylist = new int[] { 1, 2, 99 };
+            var strategylist = new int[] { 1, 2 };
             var kblist = new string[] { "CF" };
 
             foreach (var strategy in strategylist)

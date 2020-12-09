@@ -33,7 +33,6 @@ public class Result
 
     public static double Score(List<Result> results, Buyer buyer)
     {
-        results.Sort((x, y) => { return (x.买方客户 + x.卖方客户).CompareTo(y.买方客户 + y.卖方客户); });
         int hope_score = results.Sum(x => x.hope_score);
         //按照卖方进行GroupBy，然后Distinct仓库号
         var repo = results.GroupBy(x => x.买方客户).Select(y => new { 品种 = y.First().品种, 仓库数 = y.Select(z => z.仓库).Distinct().Count() });
