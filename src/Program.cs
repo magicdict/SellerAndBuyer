@@ -27,8 +27,8 @@ namespace src
             var IsAdjust = true;
             if (IsAdjust)
             {
-                //Adjust.Optiomize(path, "result_SR_2.csv", "SR");
                 Adjust.Optiomize(path, "result_SR_99.csv","SR");
+                Adjust.Optiomize(path, "result_CF_99.csv","CF");
                 return;
             }
             //按照品种进行分组
@@ -340,7 +340,7 @@ namespace src
             System.GC.Collect();
             return results.ToList();
         }
-        static List<Result> AssignItem(Buyer buyer, List<Seller> sellers_remain, Dictionary<(enmHope hopeType, string hopeValue), int> RemainDict = null)
+        public static List<Result> AssignItem(Buyer buyer, List<Seller> sellers_remain, Dictionary<(enmHope hopeType, string hopeValue), int> RemainDict = null)
         {
             var rs = new List<Result>();
             //按照库存排序

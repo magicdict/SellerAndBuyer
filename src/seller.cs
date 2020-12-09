@@ -23,6 +23,23 @@ public record Seller : Goods
             return 剩余货物数量 == 0;
         }
     }
+    public Seller(){
+        
+    }
+    public Seller(Result r)
+    {
+        var g = Goods.GoodsDict[r.货物编号];
+        产地 = g.产地;
+        仓库 = g.仓库;
+        品牌 = g.品牌;
+        品种 = g.品种;
+        年度 = g.年度;
+        等级 = g.等级;
+        类别 = g.类别;
+        货物编号 = r.货物编号;
+        货物数量 = r.分配货物数量;
+        卖方客户 = r.卖方客户;
+    }
 
     public static List<Seller> ReadSellerFile(string filename)
     {

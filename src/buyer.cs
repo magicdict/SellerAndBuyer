@@ -140,9 +140,23 @@ public class Buyer
         }
     }
 
-    public bool IsAllHopeSatisfied{
-        
-        get{
+    public bool IsContainFirstSatify
+    {
+        get
+        {
+            foreach (var r in results)
+            {
+                if (!r.对应意向顺序.StartsWith("1")) return true;
+            }
+            return false;
+        }
+    }
+
+    public bool IsAllHopeSatisfied
+    {
+
+        get
+        {
             string strHope = "0";
             if (品种 == Utility.strCF)
             {
@@ -187,7 +201,9 @@ public class Buyer
     /// 是否第一意向被锁定
     /// </summary>
     /// <value></value>
-    public bool IsLockFirstHope{get;set;}
+    public bool IsLockFirstHope { get; set; }
+
+    public bool IsOptiomized { get; set; }
 
     #endregion
 

@@ -204,79 +204,44 @@ public static class Adjust
         {
             if (item.第一意向.hopeType != enmHope.无)
             {
-                if (item.平均持仓时间 >= MinHoldTime[item.第一意向]) item.IsLockFirstHope = true;
+                //MinHoldTime表示从这个时间开始就出现不满足的记录，所以，这里取 > ,如果是 = 的话，也是不用约束的
+                if (item.平均持仓时间 > MinHoldTime[item.第一意向]) item.IsLockFirstHope = true;
             }
         }
 
-        //需要进行交换的货物记录:
-        //STEP1:将无意向的买家货物和有意向但是完全无法满足的记录进行交换
-        //无意向的记录
-        var buyer_without_hope = buyers.Where(x => x.TotalHopeScore == 0).ToList();
-        //意向分缺失
-        var buyer_not_full_hopeScore = buyers.Where(x => x.TotalHopeScore != 0 && !x.IsAllHopeSatisfied).ToList();
-        System.Console.WriteLine("无意向的买家数：" + buyer_without_hope.Count);
-        System.Console.WriteLine("意向分缺失的买家数：" + buyer_not_full_hopeScore.Count);
-        int Cnt = 0;
-        for (int need_idx = 0; need_idx < buyer_not_full_hopeScore.Count; need_idx++)
+        //单一仓库  无第一意向 有第一意向，不完美 
+        var buyer_target = buyers.Where(x => x.RepoCnt == 1).ToList();
+        buyer_target = buyer_target.Where(
+            x => (x.TotalHopeScore == 0) ||
+                (x.TotalHopeScore != 0 && !x.IsAllHopeSatisfied)
+        ).ToList();
+        //按照仓库分组
+        var repo_grp = buyer_target.GroupBy(x => x.results.First().仓库);
+        int UpScore = 0;
+        Parallel.ForEach(repo_grp, grp =>
         {
-            var buyer_need = buyer_not_full_hopeScore[need_idx];
-            if (buyer_need.RepoCnt != 1) continue;
-            var RepoNum = buyer_need.results.First().仓库;
-            for (int support_idx = 0; support_idx < buyer_without_hope.Count; support_idx++)
+            //保证相同唯一仓库的在一起
+            var buyer_target_grp = grp.ToList();
+            for (int need_idx = 0; need_idx < buyer_target_grp.Count; need_idx++)
             {
-                var buyer_support = buyer_without_hope[support_idx];
-                //如果该明细能够满足以下条件则进行交货
-                //0.意向得分不满的，多少可以拿点意向分
-                //1.防止交换之后，原来无法满意任何意向的记录，满足了第一意向，造成约束违反
-                //2.交换之后，意向顺序需要重置
-                //3.交换之后，双方总体分数增加（可能造成仓库问题）
-                //var buyer_support = buyer_support.Clone();
-                for (int i = 0; i < buyer_support.results.Count; i++)
+                var buyer_need = buyer_target_grp[need_idx];
+                for (int support_idx = 0; support_idx < buyer_target_grp.Count; support_idx++)
                 {
-                    var r = buyer_support.results[i];
-                    if (Goods.GoodsDict[r.货物编号].GetHopeScore(buyer_need) == buyer_need.TotalHopeScore)
+                    if (need_idx == support_idx) continue;   //自己不和自己交换
+                    var buyer_support = buyer_target_grp[support_idx];
+                    buyer_support.Seller_Buyer_HopeScoreDic = new Dictionary<string, int>();
+                    buyer_need.Seller_Buyer_HopeScoreDic = new Dictionary<string, int>(); ;
+                    var up = IsExchangeBuyerResult_V2(buyer_need, buyer_support);
+                    if (up != 0)
                     {
-                        //单个可能满分的货物明细，在不考虑仓库的情况下，应该能够加分
-                        if (RepoNum == r.仓库)
-                        {
-                            var before_buyer_support_分配货物数量 = buyer_support.results.Sum(x => x.分配货物数量);
-                            var before_buyer_need_分配货物数量 = buyer_need.results.Sum(x => x.分配货物数量);
-                            //Score方法会改变 Result的顺序，不要用
-
-                            var new_rs = Exchange(r, buyer_need);
-                            buyer_support.results.RemoveAt(i);
-                            buyer_support.results.AddRange(new_rs);
-
-                            //2.交换之后，意向顺序需要重置
-                            foreach (var r_s in buyer_support.results)
-                            {
-                                //供给方为无意向买家
-                                r_s.对应意向顺序 = "0";
-                                r_s.买方客户 = buyer_support.买方客户;
-                            }
-                            foreach (var r_n in buyer_need.results)
-                            {
-                                r_n.对应意向顺序 = Result.GetHope(buyer_need, Goods.GoodsDict[r_n.货物编号]);
-                                r_n.买方客户 = buyer_need.买方客户;
-                            }
-                            //3.交换之后，双方总体分数增加（可能造成仓库问题）
-                            var after_buyer_support_分配货物数量 = buyer_support.results.Sum(x => x.分配货物数量);
-                            var after_buyer_need_分配货物数量 = buyer_need.results.Sum(x => x.分配货物数量);
-                            if (before_buyer_need_分配货物数量 != after_buyer_need_分配货物数量)
-                            {
-                                throw new System.Exception("before_buyer_need_分配货物数量错误");
-                            }
-                            if (before_buyer_support_分配货物数量 != after_buyer_support_分配货物数量)
-                            {
-                                throw new System.Exception("before_buyer_support_分配货物数量错误");
-                            }
-                            Cnt++;
-                        }
+                        UpScore += up;
+                        System.Console.WriteLine("Up Score：" + UpScore);
                     }
                 }
             }
-        }
-        System.Console.WriteLine("调整买家数：" + Cnt);
+        });
+
+        //测评
         var T = new List<Result>();
         foreach (var item in buyers)
         {
@@ -286,7 +251,234 @@ public static class Adjust
         sellers = Seller.ReadSellerFile(path + "seller.csv").Where(x => x.品种 == strKbn).ToList(); ;
         CheckResult(T, buyers, sellers);   //检查结果
         Result.Score(T, buyers);           //计算得分
-        Result.WriteToCSV(path + "SR_G.csv", T);
+        Result.WriteToCSV(path + strKbn + "_G.csv", T);
+    }
+
+    /// <summary>
+    /// 是否进行交换
+    /// </summary>
+    /// <param name="buyer_need"></param>
+    /// /// <param name="buyer_support"></param>
+    private static int IsExchangeBuyerResult_V2(Buyer buyer_need, Buyer buyer_support)
+    {
+        //意向相同，同为锁定的，全部打开重排类型的
+
+        var before = buyer_need.Score + buyer_support.Score;
+        //打开所有的记录
+        var rs = new List<Result>();
+        rs.AddRange(buyer_need.results);
+        rs.AddRange(buyer_support.results);
+        //Result还原为sellers
+        var sellers = new List<Seller>();
+        var sellers2 = new List<Seller>();
+        foreach (var r in rs)
+        {
+            sellers.Add(new Seller(r));
+            sellers2.Add(new Seller(r));
+        }
+
+        var buyer_need_Clone = buyer_need.Clone();
+        var buyer_support_Clone = buyer_support.Clone();
+        buyer_need_Clone.results.Clear();
+        buyer_support_Clone.results.Clear();
+        buyer_need_Clone.已分配货物数量 = 0;
+        buyer_support_Clone.已分配货物数量 = 0;
+        //重新排
+        buyer_support_Clone.results = src.Program.AssignItem(buyer_support_Clone, sellers);
+        sellers = sellers.Where(x => !x.是否分配完毕).ToList();
+        buyer_need_Clone.results = src.Program.AssignItem(buyer_need_Clone, sellers);
+        var after_1 = buyer_need_Clone.Score + buyer_support_Clone.Score;
+
+
+        var buyer_need_Clone2 = buyer_need.Clone();
+        var buyer_support_Clone2 = buyer_support.Clone();
+        buyer_need_Clone2.results.Clear();
+        buyer_support_Clone2.results.Clear();
+        buyer_need_Clone2.已分配货物数量 = 0;
+        buyer_support_Clone2.已分配货物数量 = 0;
+        //重新排
+        buyer_need_Clone2.results = src.Program.AssignItem(buyer_need_Clone2, sellers2);
+        sellers2 = sellers2.Where(x => !x.是否分配完毕).ToList();
+        buyer_support_Clone2.results = src.Program.AssignItem(buyer_support_Clone2, sellers2);
+        var after_2 = buyer_need_Clone2.Score + buyer_support_Clone2.Score;
+
+        //保持满足和不满足状态
+        var Ok1 = true;
+        if (buyer_need.IsLockFirstHope && !buyer_need_Clone.IsFirstHopeSatisfy) Ok1 = false;
+        if (buyer_support.IsLockFirstHope && !buyer_support_Clone.IsFirstHopeSatisfy) Ok1 = false;
+        if (!buyer_need.IsLockFirstHope && buyer_need_Clone.IsContainFirstSatify) Ok1 = false;
+        if (!buyer_support.IsLockFirstHope && buyer_support_Clone.IsContainFirstSatify) Ok1 = false;
+
+
+        var Ok2 = true;
+        if (buyer_need.IsLockFirstHope && !buyer_need_Clone2.IsFirstHopeSatisfy) Ok2 = false;
+        if (buyer_support.IsLockFirstHope && !buyer_support_Clone2.IsFirstHopeSatisfy) Ok2 = false;
+        if (!buyer_need.IsLockFirstHope && buyer_need_Clone2.IsContainFirstSatify) Ok2 = false;
+        if (!buyer_support.IsLockFirstHope && buyer_support_Clone2.IsContainFirstSatify) Ok2 = false;
+
+        if (Ok1 && !Ok2)
+        {
+            double diff = after_1 - before;
+            if (diff > 0)
+            {
+                buyer_need.IsOptiomized = true;
+                buyer_support.IsOptiomized = true;
+                buyer_need.results = buyer_need_Clone.results;
+                buyer_support.results = buyer_support_Clone.results;
+                return (int)diff;
+            }
+        }
+
+        if (!Ok1 && Ok2)
+        {
+            double diff = after_2 - before;
+            if (diff > 0)
+            {
+                buyer_need.IsOptiomized = true;
+                buyer_support.IsOptiomized = true;
+                buyer_need.results = buyer_need_Clone2.results;
+                buyer_support.results = buyer_support_Clone2.results;
+                return (int)diff;
+            }
+        }
+
+        if (Ok1 && Ok2)
+        {
+            double diff1 = after_1 - before;
+            double diff2 = after_2 - before;
+            if (diff1 > diff2)
+            {
+                if (diff1 > 0)
+                {
+                    buyer_need.IsOptiomized = true;
+                    buyer_support.IsOptiomized = true;
+                    buyer_need.results = buyer_need_Clone.results;
+                    buyer_support.results = buyer_support_Clone.results;
+                    return (int)diff1;
+                }
+            }
+            else
+            {
+                if (diff2 > 0)
+                {
+                    buyer_need.IsOptiomized = true;
+                    buyer_support.IsOptiomized = true;
+                    buyer_need.results = buyer_need_Clone2.results;
+                    buyer_support.results = buyer_support_Clone2.results;
+                    return (int)diff2;
+                }
+            }
+        }
+        return 0;
+    }
+
+    private static int IsExchangeBuyerResult_V1(Buyer buyer_need, Buyer buyer_support)
+    {
+        //意向相同，同为锁定的，全部打开重排类型的
+        if (buyer_need.IsLockFirstHope && buyer_support.IsLockFirstHope)
+        {
+            if (buyer_need.第一意向 == buyer_support.第一意向)
+            {
+                var before = buyer_need.Score + buyer_support.Score;
+                //打开所有的记录
+                var rs = new List<Result>();
+                rs.AddRange(buyer_need.results);
+                rs.AddRange(buyer_support.results);
+                //Result还原为sellers
+                var sellers = new List<Seller>();
+                foreach (var r in rs)
+                {
+                    var seller = new Seller();
+                    var g = Goods.GoodsDict[r.货物编号];
+                    seller.产地 = g.产地;
+                    seller.仓库 = g.仓库;
+                    seller.品牌 = g.品牌;
+                    seller.品种 = g.品种;
+                    seller.年度 = g.年度;
+                    seller.等级 = g.等级;
+                    seller.类别 = g.类别;
+                    seller.货物编号 = r.货物编号;
+                    seller.货物数量 = r.分配货物数量;
+                    seller.卖方客户 = r.卖方客户;
+                    sellers.Add(seller);
+                }
+
+                var buyer_need_Clone = buyer_need.Clone();
+                var buyer_support_Clone = buyer_support.Clone();
+
+                buyer_need_Clone.results.Clear();
+                buyer_support_Clone.results.Clear();
+
+                buyer_need_Clone.已分配货物数量 = 0;
+                buyer_support_Clone.已分配货物数量 = 0;
+
+                //重新排
+                buyer_support_Clone.results = src.Program.AssignItem(buyer_support_Clone, sellers);
+                sellers = sellers.Where(x => !x.是否分配完毕).ToList();
+                buyer_need_Clone.results = src.Program.AssignItem(buyer_need_Clone, sellers);
+                var after = buyer_need_Clone.Score + buyer_support_Clone.Score;
+                var diff = after - before;
+                if (diff > 0)
+                {
+                    buyer_need.IsOptiomized = true;
+                    buyer_support.IsOptiomized = true;
+                    buyer_need.results = buyer_need_Clone.results;
+                    buyer_support.results = buyer_support_Clone.results;
+                    return (int)diff;
+                }
+                return 0;
+            }
+        }
+        return 0;
+    }
+
+    private static int IsExchangeBuyerResult_V0(Buyer buyer_need, Buyer buyer_support)
+    {
+        //单一仓库  无第一意向 有第一意向，不完美 
+        //如果该明细能够满足以下条件则进行交货
+        //0.意向得分不满的，多少可以拿点意向分
+        //1.防止交换之后，原来无法满意任何意向的记录，满足了第一意向，造成约束违反
+        //2.交换之后，意向顺序需要重置
+        //3.交换之后，双方总体分数增加（可能造成仓库问题）
+        //9.通过IsLockFirstHope判断是否可能违反约束
+        for (int i = 0; i < buyer_support.results.Count; i++)
+        {
+            var r = buyer_support.results[i];
+            if (Goods.GoodsDict[r.货物编号].GetHopeScore(buyer_need) == buyer_need.TotalHopeScore)
+            {
+                var before_buyer_support_分配货物数量 = buyer_support.results.Sum(x => x.分配货物数量);
+                var before_buyer_need_分配货物数量 = buyer_need.results.Sum(x => x.分配货物数量);
+
+                var new_rs = Exchange(r, buyer_need);
+                buyer_support.results.RemoveAt(i);
+                buyer_support.results.AddRange(new_rs);
+
+                //2.交换之后，意向顺序需要重置
+                foreach (var r_s in buyer_support.results)
+                {
+                    //供给方为无意向买家
+                    r_s.对应意向顺序 = "0";
+                    r_s.买方客户 = buyer_support.买方客户;
+                }
+                foreach (var r_n in buyer_need.results)
+                {
+                    r_n.对应意向顺序 = Result.GetHope(buyer_need, Goods.GoodsDict[r_n.货物编号]);
+                    r_n.买方客户 = buyer_need.买方客户;
+                }
+                //3.交换之后，双方总体分数增加（可能造成仓库问题）
+                var after_buyer_support_分配货物数量 = buyer_support.results.Sum(x => x.分配货物数量);
+                var after_buyer_need_分配货物数量 = buyer_need.results.Sum(x => x.分配货物数量);
+                if (before_buyer_need_分配货物数量 != after_buyer_need_分配货物数量)
+                {
+                    throw new System.Exception("before_buyer_need_分配货物数量错误");
+                }
+                if (before_buyer_support_分配货物数量 != after_buyer_support_分配货物数量)
+                {
+                    throw new System.Exception("before_buyer_support_分配货物数量错误");
+                }
+            }
+        }
+        return 0;
     }
 
     /// <summary>
