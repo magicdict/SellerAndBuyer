@@ -27,8 +27,9 @@ namespace src
             var IsAdjust = true;
             if (IsAdjust)
             {
-                Adjust.Optiomize(path, "result_SR_99.csv","SR");
-                Adjust.Optiomize(path, "result_CF_99.csv","CF");
+                //Summary.Run(path, "SR_G.csv");
+                Optiomize.OptiomizeInteractive(path, "result_SR_99.csv","SR");
+                Optiomize.OptiomizeInteractive(path, "result_CF_99.csv","CF");
                 return;
             }
             //按照品种进行分组
