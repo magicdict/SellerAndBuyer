@@ -27,9 +27,11 @@ namespace src
             var IsAdjust = true;
             if (IsAdjust)
             {
-                //Summary.Run(path, "SR_G.csv");
-                //Optiomize.ReAssignFirstHope(path, "CF_Inter.csv","CF");
+                //Summary.Run(path, "SR_ReHope.csv");
+                Optiomize.ReAssignFirstHope(path, "CF_Inter.csv","CF");
+                //Optiomize.ReAssignFirstHope(path, "SR_Inter.csv","SR");
                 //Optiomize.OptiomizeInteractive(path, "result_CF_99.csv","CF");
+                //Result.CompressResultFile(path + "SR_ReHope.csv");
                 return;
             }
             //按照品种进行分组

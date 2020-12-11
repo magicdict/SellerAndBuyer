@@ -37,7 +37,7 @@ public static partial class Optiomize
             var IsRun = true;
             if (grp.Key.hopeType == enmHope.无) IsRun = false;
             //CF只运行产地：新疆
-            if (strKbn == "CF" && !(grp.Key.hopeType == enmHope.产地 && grp.Key.hopeValue == "新疆")) IsRun = false;
+            //if (strKbn == "CF" && !(grp.Key.hopeType == enmHope.产地 && grp.Key.hopeValue == "新疆")) IsRun = false;
             if (IsRun)
             {
                 //先把已经满足分配的人全部挑选出来
@@ -73,7 +73,7 @@ public static partial class Optiomize
                 System.GC.Collect();
             }
         });
-        CheckScoreOutput(path, strKbn, buyers, "ReHope");
+        Result.CheckScoreOutput(path, strKbn, buyers, "ReHope");
     }
 
 
@@ -83,7 +83,17 @@ public static partial class Optiomize
     {
         //按照最大意向值进行排序
         var sellers_remain = sellers;
-        buyers.Sort((x, y) => { return y.TotalHopeScore - x.TotalHopeScore; });
+        buyers.Sort((x, y) =>
+        {
+            if (x.TotalHopeScore != y.TotalHopeScore)
+            {
+                return y.TotalHopeScore - x.TotalHopeScore;
+            }
+            else
+            {
+                return x.购买货物数量.CompareTo(y.购买货物数量);
+            }
+        });
         int cnt = 0;
         foreach (var buyer in buyers)
         {

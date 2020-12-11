@@ -134,5 +134,46 @@ public class Result
         }
         sw.Close();
     }
+    public static void OnlyOutPut(string path, string strKbn, List<Buyer> buyers, string midname)
+    {
+        //测评
+        var rs = new List<Result>();
+        foreach (var buyer in buyers)
+        {
+            rs.AddRange(buyer.results);
+        }
+        Result.WriteToCSV(path + strKbn + "_" + midname + ".csv", rs);
+    }
 
+    public static List<Seller> CheckScoreOutput(string path, string strKbn, List<Buyer> buyers, string midname)
+    {
+        //测评
+        var rs = new List<Result>();
+        foreach (var buyer in buyers)
+        {
+            rs.AddRange(buyer.results);
+        }
+        buyers = Buyer.ReadBuyerFile(path + "buyer.csv").Where(x => x.品种 == strKbn).ToList(); ;
+        var sellers = Seller.ReadSellerFile(path + "seller.csv").Where(x => x.品种 == strKbn).ToList(); ;
+        Summary.CheckResult(rs, buyers, sellers);   //检查结果
+        Result.Score(rs, buyers);           //计算得分
+        Result.WriteToCSV(path + strKbn + "_" + midname + ".csv", rs);
+        return sellers;
+    }
+
+    public static void CompressResultFile(string filename)
+    {
+        var rs = ReadFromCSV(filename);
+        System.Console.WriteLine("Before Count:" + rs.Count);
+        var grp = rs.GroupBy(x => x.买方客户 + x.仓库 + x.卖方客户 + x.品种 + x.货物编号);
+        var rs_compress = new List<Result>();
+        foreach (var item in grp)
+        {
+            var r = item.First();
+            r.分配货物数量 = item.Sum(x => x.分配货物数量);
+            rs_compress.Add(r);
+        }
+        System.Console.WriteLine("After Count:" + rs_compress.Count);
+        WriteToCSV(filename + "_z", rs_compress);
+    }
 }

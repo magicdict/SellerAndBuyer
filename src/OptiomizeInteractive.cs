@@ -78,7 +78,7 @@ public static partial class Optiomize
             if (need_idx % 10 == 0)
                 System.Console.WriteLine("need_idx：" + need_idx + " UpScore：" + UpScore.ToString());
             if (need_idx % 1000 == 0)
-                OnlyOutPut(path, strKbn, buyers, "Inter_" + UpScore.ToString());
+                Result.OnlyOutPut(path, strKbn, buyers, "Inter_" + UpScore.ToString());
             var buyer_need = buyer_target[need_idx];
             for (int support_idx = need_idx + 1; support_idx < buyer_target.Count; support_idx++)
             {
@@ -95,35 +95,10 @@ public static partial class Optiomize
                 }
             }
         }
-        CheckScoreOutput(path, strKbn, buyers, "Inter");
+        Result.CheckScoreOutput(path, strKbn, buyers, "Inter");
     }
 
-    private static void OnlyOutPut(string path, string strKbn, List<Buyer> buyers, string midname)
-    {
-        //测评
-        var rs = new List<Result>();
-        foreach (var buyer in buyers)
-        {
-            rs.AddRange(buyer.results);
-        }
-        Result.WriteToCSV(path + strKbn + "_" + midname + ".csv", rs);
-    }
-
-    private static List<Seller> CheckScoreOutput(string path, string strKbn, List<Buyer> buyers, string midname)
-    {
-        //测评
-        var rs = new List<Result>();
-        foreach (var buyer in buyers)
-        {
-            rs.AddRange(buyer.results);
-        }
-        buyers = Buyer.ReadBuyerFile(path + "buyer.csv").Where(x => x.品种 == strKbn).ToList(); ;
-        var sellers = Seller.ReadSellerFile(path + "seller.csv").Where(x => x.品种 == strKbn).ToList(); ;
-        Summary.CheckResult(rs, buyers, sellers);   //检查结果
-        Result.Score(rs, buyers);           //计算得分
-        Result.WriteToCSV(path + strKbn + "_" + midname + ".csv", rs);
-        return sellers;
-    }
+    
 
     /// <summary>
     /// 是否进行交换
