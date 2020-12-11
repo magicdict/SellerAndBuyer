@@ -27,8 +27,10 @@ namespace src
             var IsAdjust = true;
             if (IsAdjust)
             {
-                //Summary.Run(path, "SR_ReHope.csv");
-                Optiomize.ReAssignFirstHope(path, "CF_Inter.csv","CF");
+                //Summary.Run(args[0], args[1]);
+                //Summary.Run(path, "CF_Inter_49492.csv");
+                Optiomize.ReAssignFirstHope(path, args[0], "CF");
+                //Optiomize.ReAssignFirstHope(path, "CF_Inter.csv","CF");
                 //Optiomize.ReAssignFirstHope(path, "SR_Inter.csv","SR");
                 //Optiomize.OptiomizeInteractive(path, "result_CF_99.csv","CF");
                 //Result.CompressResultFile(path + "SR_ReHope.csv");

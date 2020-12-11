@@ -197,6 +197,16 @@ public class Buyer
             return results.Select(x => x.仓库).Distinct().Count();
         }
     }
+
+
+    public bool IsPerfectScore
+    {
+        get
+        {
+            return RepoCnt == 1 && IsAllHopeSatisfied;
+        }
+    }
+
     /// <summary>
     /// 是否第一意向被锁定
     /// </summary>

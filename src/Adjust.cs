@@ -134,6 +134,7 @@ public static class Summary
                     if (!isMatch)
                     {
                         System.Console.WriteLine(buyer.第一意向.hopeType + ":" + buyer.第一意向.hopeValue);
+                        System.Console.WriteLine("买方客户：" + buyer.买方客户);
                         return false;
                     }
                 }

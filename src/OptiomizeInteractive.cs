@@ -107,8 +107,8 @@ public static partial class Optiomize
     /// /// <param name="buyer_support"></param>
     private static int IsExchangeBuyerResult(Buyer buyer_need, Buyer buyer_support)
     {
-        //意向相同，同为锁定的，全部打开重排类型的
-        if (buyer_need.IsAllHopeSatisfied && buyer_support.IsAllHopeSatisfied) return 0;
+        //非完美的记录都重排
+        if (buyer_need.IsPerfectScore && buyer_support.IsPerfectScore) return 0;
         var before = buyer_need.Score + buyer_support.Score;
         //打开所有的记录
         var rs = new List<Result>();
