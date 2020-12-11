@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-public static class Optiomize
+public static partial class Optiomize
 {
     #region OptiomizeInteractive
     public static void OptiomizeInteractive(string path, string resultfilename, string strKbn)
@@ -70,18 +70,23 @@ public static class Optiomize
             x => (x.TotalHopeScore == 0) ||
                 (x.TotalHopeScore != 0 && !x.IsAllHopeSatisfied)
         ).ToList();
-        //按照仓库分组
+
+        //大规模交换
         int UpScore = 0;
         for (int need_idx = 0; need_idx < buyer_target.Count; need_idx++)
         {
+            if (need_idx % 10 == 0)
+                System.Console.WriteLine("need_idx：" + need_idx + " UpScore：" + UpScore.ToString());
+            if (need_idx % 1000 == 0)
+                OnlyOutPut(path, strKbn, buyers, "Inter_" + UpScore.ToString());
             var buyer_need = buyer_target[need_idx];
-            for (int support_idx = 0; support_idx < buyer_target.Count; support_idx++)
+            for (int support_idx = need_idx + 1; support_idx < buyer_target.Count; support_idx++)
             {
                 if (need_idx == support_idx) continue;   //自己不和自己交换
                 var buyer_support = buyer_target[support_idx];
                 buyer_support.Seller_Buyer_HopeScoreDic = new Dictionary<string, int>();
                 buyer_need.Seller_Buyer_HopeScoreDic = new Dictionary<string, int>(); ;
-                var up = IsExchangeBuyerResult_V2(buyer_need, buyer_support);
+                var up = IsExchangeBuyerResult(buyer_need, buyer_support);
                 if (up != 0)
                 {
                     UpScore += up;
@@ -90,19 +95,34 @@ public static class Optiomize
                 }
             }
         }
+        CheckScoreOutput(path, strKbn, buyers, "Inter");
+    }
 
-
+    private static void OnlyOutPut(string path, string strKbn, List<Buyer> buyers, string midname)
+    {
         //测评
-        var T = new List<Result>();
-        foreach (var item in buyers)
+        var rs = new List<Result>();
+        foreach (var buyer in buyers)
         {
-            T.AddRange(item.results);
+            rs.AddRange(buyer.results);
+        }
+        Result.WriteToCSV(path + strKbn + "_" + midname + ".csv", rs);
+    }
+
+    private static List<Seller> CheckScoreOutput(string path, string strKbn, List<Buyer> buyers, string midname)
+    {
+        //测评
+        var rs = new List<Result>();
+        foreach (var buyer in buyers)
+        {
+            rs.AddRange(buyer.results);
         }
         buyers = Buyer.ReadBuyerFile(path + "buyer.csv").Where(x => x.品种 == strKbn).ToList(); ;
-        sellers = Seller.ReadSellerFile(path + "seller.csv").Where(x => x.品种 == strKbn).ToList(); ;
-        Summary.CheckResult(T, buyers, sellers);   //检查结果
-        Result.Score(T, buyers);           //计算得分
-        Result.WriteToCSV(path + strKbn + "_G.csv", T);
+        var sellers = Seller.ReadSellerFile(path + "seller.csv").Where(x => x.品种 == strKbn).ToList(); ;
+        Summary.CheckResult(rs, buyers, sellers);   //检查结果
+        Result.Score(rs, buyers);           //计算得分
+        Result.WriteToCSV(path + strKbn + "_" + midname + ".csv", rs);
+        return sellers;
     }
 
     /// <summary>
@@ -110,10 +130,10 @@ public static class Optiomize
     /// </summary>
     /// <param name="buyer_need"></param>
     /// /// <param name="buyer_support"></param>
-    private static int IsExchangeBuyerResult_V2(Buyer buyer_need, Buyer buyer_support)
+    private static int IsExchangeBuyerResult(Buyer buyer_need, Buyer buyer_support)
     {
         //意向相同，同为锁定的，全部打开重排类型的
-
+        if (buyer_need.IsAllHopeSatisfied && buyer_support.IsAllHopeSatisfied) return 0;
         var before = buyer_need.Score + buyer_support.Score;
         //打开所有的记录
         var rs = new List<Result>();
@@ -135,9 +155,9 @@ public static class Optiomize
         buyer_need_Clone.已分配货物数量 = 0;
         buyer_support_Clone.已分配货物数量 = 0;
         //重新排
-        buyer_support_Clone.results = src.Program.AssignItem(buyer_support_Clone, sellers);
+        buyer_support_Clone.results = PreAssign.AssignItem(buyer_support_Clone, sellers);
         sellers = sellers.Where(x => !x.是否分配完毕).ToList();
-        buyer_need_Clone.results = src.Program.AssignItem(buyer_need_Clone, sellers);
+        buyer_need_Clone.results = PreAssign.AssignItem(buyer_need_Clone, sellers);
         var after_1 = buyer_need_Clone.Score + buyer_support_Clone.Score;
 
 
@@ -148,9 +168,9 @@ public static class Optiomize
         buyer_need_Clone2.已分配货物数量 = 0;
         buyer_support_Clone2.已分配货物数量 = 0;
         //重新排
-        buyer_need_Clone2.results = src.Program.AssignItem(buyer_need_Clone2, sellers2);
+        buyer_need_Clone2.results = PreAssign.AssignItem(buyer_need_Clone2, sellers2);
         sellers2 = sellers2.Where(x => !x.是否分配完毕).ToList();
-        buyer_support_Clone2.results = src.Program.AssignItem(buyer_support_Clone2, sellers2);
+        buyer_support_Clone2.results = PreAssign.AssignItem(buyer_support_Clone2, sellers2);
         var after_2 = buyer_need_Clone2.Score + buyer_support_Clone2.Score;
 
         //保持满足和不满足状态
@@ -222,68 +242,9 @@ public static class Optiomize
         }
         return 0;
     }
+    #endregion
 
-    private static int IsExchangeBuyerResult_V1(Buyer buyer_need, Buyer buyer_support)
-    {
-        //意向相同，同为锁定的，全部打开重排类型的
-        if (buyer_need.IsLockFirstHope && buyer_support.IsLockFirstHope)
-        {
-            if (buyer_need.第一意向 == buyer_support.第一意向)
-            {
-                var before = buyer_need.Score + buyer_support.Score;
-                //打开所有的记录
-                var rs = new List<Result>();
-                rs.AddRange(buyer_need.results);
-                rs.AddRange(buyer_support.results);
-                //Result还原为sellers
-                var sellers = new List<Seller>();
-                foreach (var r in rs)
-                {
-                    var seller = new Seller();
-                    var g = Goods.GoodsDict[r.货物编号];
-                    seller.产地 = g.产地;
-                    seller.仓库 = g.仓库;
-                    seller.品牌 = g.品牌;
-                    seller.品种 = g.品种;
-                    seller.年度 = g.年度;
-                    seller.等级 = g.等级;
-                    seller.类别 = g.类别;
-                    seller.货物编号 = r.货物编号;
-                    seller.货物数量 = r.分配货物数量;
-                    seller.卖方客户 = r.卖方客户;
-                    sellers.Add(seller);
-                }
-
-                var buyer_need_Clone = buyer_need.Clone();
-                var buyer_support_Clone = buyer_support.Clone();
-
-                buyer_need_Clone.results.Clear();
-                buyer_support_Clone.results.Clear();
-
-                buyer_need_Clone.已分配货物数量 = 0;
-                buyer_support_Clone.已分配货物数量 = 0;
-
-                //重新排
-                buyer_support_Clone.results = src.Program.AssignItem(buyer_support_Clone, sellers);
-                sellers = sellers.Where(x => !x.是否分配完毕).ToList();
-                buyer_need_Clone.results = src.Program.AssignItem(buyer_need_Clone, sellers);
-                var after = buyer_need_Clone.Score + buyer_support_Clone.Score;
-                var diff = after - before;
-                if (diff > 0)
-                {
-                    buyer_need.IsOptiomized = true;
-                    buyer_support.IsOptiomized = true;
-                    buyer_need.results = buyer_need_Clone.results;
-                    buyer_support.results = buyer_support_Clone.results;
-                    return (int)diff;
-                }
-                return 0;
-            }
-        }
-        return 0;
-    }
-
-    private static int IsExchangeBuyerResult_V0(Buyer buyer_need, Buyer buyer_support)
+    private static int IsDetailResult(Buyer buyer_need, Buyer buyer_support)
     {
         //单一仓库  无第一意向 有第一意向，不完美 
         //如果该明细能够满足以下条件则进行交货
@@ -417,5 +378,5 @@ public static class Optiomize
         }
         return new_support_results;
     }
-    #endregion
+
 }
