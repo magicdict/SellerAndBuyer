@@ -12,7 +12,7 @@ public class Result
     public string 仓库 { get; set; }
     public int 分配货物数量 { get; set; }
     public string 对应意向顺序 { get; set; }
-    public int hope_score { get; set; }
+    public double hope_score { get; set; }
 
     public static string GetHope(Buyer buyer, Goods goods)
     {
@@ -33,7 +33,7 @@ public class Result
 
     public static double Score(List<Result> results, Buyer buyer)
     {
-        int hope_score = results.Sum(x => x.hope_score);
+        double hope_score = results.Sum(x => x.hope_score);
         //按照卖方进行GroupBy，然后Distinct仓库号
         var repo = results.GroupBy(x => x.买方客户).Select(y => new { 品种 = y.First().品种, 仓库数 = y.Select(z => z.仓库).Distinct().Count() });
         int Diary_score = repo.Sum(x =>
@@ -49,14 +49,13 @@ public class Result
             }
             return score;
         });
-        int score = (int)(hope_score * 0.6 + Diary_score * 0.4);
-        return score;
+        return hope_score * 0.6 + Diary_score * 0.4;
     }
 
     public static double Score(List<Result> results, List<Buyer> buyers_Breed)
     {
         results.Sort((x, y) => { return (x.买方客户 + x.卖方客户).CompareTo(y.买方客户 + y.卖方客户); });
-        int hope_score = results.Sum(x => x.hope_score);
+        double hope_score = results.Sum(x => x.hope_score);
         //按照卖方进行GroupBy，然后Distinct仓库号
         var repo = results.GroupBy(x => x.买方客户).Select(y => new { 品种 = y.First().品种, 仓库数 = y.Select(z => z.仓库).Distinct().Count() });
         int Diary_score = repo.Sum(x =>
@@ -76,19 +75,9 @@ public class Result
         System.Console.WriteLine("==============================================================");
         System.Console.WriteLine("总体贸易分单数：" + results.Count);
         System.Console.WriteLine("==============================================================");
-        System.Console.WriteLine("获得意向分数：" + hope_score);
-        int totalhopescore = buyers_Breed.Sum(x => x.TotalHopeScore);
-        System.Console.WriteLine("最大意向分数：" + totalhopescore);
-        System.Console.WriteLine("意向得分率：" + (hope_score * 100 / totalhopescore) + "%");
-        System.Console.WriteLine("==============================================================");
-        System.Console.WriteLine("记录分数：" + Diary_score);
-        System.Console.WriteLine("最大记录分数：" + 100 * buyers_Breed.Count);
-        System.Console.WriteLine("记录得分率：" + (Diary_score / buyers_Breed.Count) + "%");
-        System.Console.WriteLine("==============================================================");
-        System.Console.WriteLine("总体分数：" + score);
-        System.Console.WriteLine("标准分数：" + (double)score / buyers_Breed.Count);
-        int score_stardard = buyers_Breed.Count * 100;
-        System.Console.WriteLine("得分率：" + (score * 100 / score_stardard) + "%");
+        int total_cnt = buyers_Breed.Sum(x=>x.购买货物数量);
+        double RealScore = buyers_Breed.Sum(x=>x.Score * x.购买货物数量/total_cnt);
+        System.Console.WriteLine("得分率：" + RealScore);
         System.Console.WriteLine("==============================================================");
         return score;
     }

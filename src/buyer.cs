@@ -110,12 +110,12 @@ public class Buyer
         if (is_filled_results_hopescore) return;
         foreach (var r in results)
         {
-            r.hope_score = Utility.ConvertHopeStr2Score(r.对应意向顺序, 品种) * r.分配货物数量 / 购买货物数量;
+            r.hope_score = Utility.ConvertHopeStr2Score(r.对应意向顺序, 品种) * (double)r.分配货物数量 / 购买货物数量;
         }
         is_filled_results_hopescore = true;
     }
 
-    public int Result_HopeScore
+    public double Result_HopeScore
     {
         get
         {
