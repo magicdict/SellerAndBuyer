@@ -79,7 +79,7 @@ public class Result
         double RealScore = buyers_Breed.Sum(x=>x.Score * x.购买货物数量/total_cnt);
         System.Console.WriteLine("得分率：" + RealScore);
         System.Console.WriteLine("==============================================================");
-        return score;
+        return RealScore;
     }
 
 

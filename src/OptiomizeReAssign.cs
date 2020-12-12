@@ -43,7 +43,8 @@ public static partial class Optiomize
                 //先把已经满足分配的人全部挑选出来
                 var satisfy = grp.ToList().Where(x => x.IsFirstHopeSatisfy).ToList();
                 System.Console.WriteLine("Start:" + grp.Key.hopeType + "-" + grp.Key.hopeValue + "(" + satisfy.Count() + ")");
-                var score_before = satisfy.Sum(x => x.Score);
+                var total_goods_quantities = satisfy.Sum(x=>x.购买货物数量);
+                var score_before = satisfy.Sum(x => x.Score * x.购买货物数量/total_goods_quantities);
                 //制作Clone对象
                 var Satisfy_Clone = new List<Buyer>();
                 var sellers = new List<Seller>();
@@ -57,7 +58,7 @@ public static partial class Optiomize
                 }
                 //重新打散之后重排
                 ReAssign(Satisfy_Clone, sellers);
-                var score_after = Satisfy_Clone.Sum(x => x.Score);
+                var score_after = Satisfy_Clone.Sum(x => x.Score * x.购买货物数量 / total_goods_quantities);
                 if (score_after > score_before)
                 {
                     //替换
@@ -75,9 +76,6 @@ public static partial class Optiomize
         });
         Result.CheckScoreOutput(path, strKbn, buyers, "ReHope");
     }
-
-
-
 
     private static void ReAssign(List<Buyer> buyers, List<Seller> sellers)
     {
