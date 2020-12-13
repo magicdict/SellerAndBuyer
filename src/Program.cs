@@ -28,12 +28,12 @@ namespace src
             if (IsAdjust)
             {
                 //Summary.Run(args[0], args[1]);
-                //Summary.Run(path, "CF_Inter_49492.csv");
+                //Summary.Run(path, "result1207.csv");
                 //Optiomize.ReAssignFirstHope(path, args[0], "CF");
-                //Optiomize.ReAssignFirstHope(path, "CF_Inter.csv","CF");
-                //Optiomize.ReAssignFirstHope(path, "SR_Inter.csv","SR");
-                Optiomize.OptiomizeInteractive(path, "result_SR_99.csv","SR");
-                Optiomize.OptiomizeInteractive(path, "result_CF_99.csv","CF");
+                //Optiomize.ReAssignFirstHope(path, "result_CF_99.csv","CF");
+                //Optiomize.ReAssignFirstHope(path, "result_SR_99.csv","SR");
+                //Optiomize.OptiomizeInteractive(path, "result_SR_99.csv","SR");
+                //Optiomize.OptiomizeInteractive(path, "result_CF_99.csv","CF");
                 //Result.CompressResultFile(path + "SR_ReHope.csv");
                 return;
             }

@@ -77,8 +77,9 @@ public static partial class Optiomize
         {
             if (need_idx % 10 == 0)
                 System.Console.WriteLine("need_idx：" + need_idx + " UpScore：" + UpScore.ToString());
-            if (need_idx % 1000 == 0)
-                Result.OnlyOutPut(path, strKbn, buyers, "Inter_" + UpScore.ToString());
+            if (need_idx % 1000 == 0){
+                Result.CheckScoreOutput(path, strKbn, buyers, "Inter_" + UpScore.ToString());
+            }
             var buyer_need = buyer_target[need_idx];
             for (int support_idx = need_idx + 1; support_idx < buyer_target.Count; support_idx++)
             {
@@ -110,8 +111,9 @@ public static partial class Optiomize
         //非完美的记录都重排
         if (buyer_need.IsPerfectScore && buyer_support.IsPerfectScore) return 0;
         var total_goods_quantities = buyer_need.购买货物数量 + buyer_support.购买货物数量;
-        var before = buyer_need.Score * (buyer_need.购买货物数量 / total_goods_quantities) +
-                     buyer_support.Score * (buyer_support.购买货物数量 / total_goods_quantities);
+        //var before = buyer_need.Score * (buyer_need.购买货物数量 / total_goods_quantities) +
+        //             buyer_support.Score * (buyer_support.购买货物数量 / total_goods_quantities);
+        var before = buyer_need.Score + buyer_support.Score;
         //打开所有的记录
         var rs = new List<Result>();
         rs.AddRange(buyer_need.results);
@@ -135,8 +137,9 @@ public static partial class Optiomize
         buyer_support_Clone.results = PreAssign.AssignItem(buyer_support_Clone, sellers);
         sellers = sellers.Where(x => !x.是否分配完毕).ToList();
         buyer_need_Clone.results = PreAssign.AssignItem(buyer_need_Clone, sellers);
-        var after_1 = buyer_need_Clone.Score * (buyer_need.购买货物数量 / total_goods_quantities) +
-                      buyer_support_Clone.Score * (buyer_support.购买货物数量 / total_goods_quantities);
+        //var after_1 = buyer_need_Clone.Score * (buyer_need.购买货物数量 / total_goods_quantities) +
+        //              buyer_support_Clone.Score * (buyer_support.购买货物数量 / total_goods_quantities);
+        var after_1 = buyer_need_Clone.Score + buyer_support_Clone.Score;
 
 
         var buyer_need_Clone2 = buyer_need.Clone();
@@ -149,8 +152,9 @@ public static partial class Optiomize
         buyer_need_Clone2.results = PreAssign.AssignItem(buyer_need_Clone2, sellers2);
         sellers2 = sellers2.Where(x => !x.是否分配完毕).ToList();
         buyer_support_Clone2.results = PreAssign.AssignItem(buyer_support_Clone2, sellers2);
-        var after_2 = buyer_need_Clone2.Score * (buyer_need.购买货物数量 / total_goods_quantities) +
-                      buyer_support_Clone2.Score * (buyer_support.购买货物数量 / total_goods_quantities);
+        //var after_2 = buyer_need_Clone2.Score * (buyer_need.购买货物数量 / total_goods_quantities) +
+        //              buyer_support_Clone2.Score * (buyer_support.购买货物数量 / total_goods_quantities);
+        var after_2 = buyer_need_Clone2.Score + buyer_support_Clone2.Score;
 
 
         //保持满足和不满足状态

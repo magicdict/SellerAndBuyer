@@ -115,7 +115,8 @@ public class Buyer
         is_filled_results_hopescore = true;
     }
 
-    public double Result_HopeScore
+
+    public double HopeScore
     {
         get
         {
@@ -186,7 +187,7 @@ public class Buyer
         get
         {
             fill_results_hopescore();
-            return Result.Score(results, this);
+            return Result.Score(this);
         }
     }
 
@@ -198,6 +199,22 @@ public class Buyer
         }
     }
 
+    public double Diary_score
+    {
+        get
+        {
+            int score = 100;
+            if (品种 == Utility.strCF)
+            {
+                score -= (RepoCnt - 1) * 20;
+            }
+            else
+            {
+                score -= (RepoCnt - 1) * 25;
+            }
+            return score;
+        }
+    }
 
     public bool IsPerfectScore
     {

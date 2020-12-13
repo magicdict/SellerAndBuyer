@@ -31,52 +31,23 @@ public class Result
         return this.MemberwiseClone() as Result;
     }
 
-    public static double Score(List<Result> results, Buyer buyer)
+    public static double Score(Buyer buyer)
     {
-        double hope_score = results.Sum(x => x.hope_score);
-        //按照卖方进行GroupBy，然后Distinct仓库号
-        var repo = results.GroupBy(x => x.买方客户).Select(y => new { 品种 = y.First().品种, 仓库数 = y.Select(z => z.仓库).Distinct().Count() });
-        int Diary_score = repo.Sum(x =>
-        {
-            int score = 100;
-            if (x.品种 == Utility.strCF)
-            {
-                score -= (x.仓库数 - 1) * 20;
-            }
-            else
-            {
-                score -= (x.仓库数 - 1) * 25;
-            }
-            return score;
-        });
-        return hope_score * 0.6 + Diary_score * 0.4;
+        return buyer.HopeScore * 0.6 + buyer.Diary_score * 0.4;
     }
 
     public static double Score(List<Result> results, List<Buyer> buyers_Breed)
     {
-        results.Sort((x, y) => { return (x.买方客户 + x.卖方客户).CompareTo(y.买方客户 + y.卖方客户); });
-        double hope_score = results.Sum(x => x.hope_score);
+        int total_cnt = buyers_Breed.Sum(x => x.购买货物数量);
+        double diary_score = buyers_Breed.Sum(x => x.Diary_score * x.购买货物数量 / total_cnt) * 0.4;
+        double hope_score = buyers_Breed.Sum(x => x.HopeScore * x.购买货物数量 / total_cnt) * 0.6;
         //按照卖方进行GroupBy，然后Distinct仓库号
-        var repo = results.GroupBy(x => x.买方客户).Select(y => new { 品种 = y.First().品种, 仓库数 = y.Select(z => z.仓库).Distinct().Count() });
-        int Diary_score = repo.Sum(x =>
-        {
-            int score = 100;
-            if (x.品种 == Utility.strCF)
-            {
-                score -= (x.仓库数 - 1) * 20;
-            }
-            else
-            {
-                score -= (x.仓库数 - 1) * 25;
-            }
-            return score;
-        });
-        int score = (int)(hope_score * 0.6 + Diary_score * 0.4);
         System.Console.WriteLine("==============================================================");
         System.Console.WriteLine("总体贸易分单数：" + results.Count);
         System.Console.WriteLine("==============================================================");
-        int total_cnt = buyers_Breed.Sum(x=>x.购买货物数量);
-        double RealScore = buyers_Breed.Sum(x=>x.Score * x.购买货物数量/total_cnt);
+        System.Console.WriteLine("仓库得分：" + diary_score);
+        System.Console.WriteLine("意向得分：" + hope_score);
+        double RealScore = buyers_Breed.Sum(x => x.Score * x.购买货物数量 / total_cnt);
         System.Console.WriteLine("得分率：" + RealScore);
         System.Console.WriteLine("==============================================================");
         return RealScore;
