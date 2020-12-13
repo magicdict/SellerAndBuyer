@@ -518,3 +518,2504 @@ CF数据太多，意向顺序标记检查 SKIP
 ==============================================================
 得分率：75.7048959000036
 ==============================================================
+买家件数：100000
+卖家件数：429679
+==============================================================
+总体贸易分单数：79337
+==============================================================
+仓库得分：39.91113666666756
+意向得分：39.4897440000006
+得分率：79.40088066666779
+==============================================================
+Start:仓库-435(421)
+Start:仓库-452(437)
+Start:品牌-高航(417)
+Start:仓库-437(414)
+Start:品牌-龙田(391)
+Start:仓库-112(415)
+Start:品牌-龙二(412)
+Start:品牌-银盛(443)
+Start:仓库-438(438)
+Start:品牌-仙人山(400)
+Start:品牌-黎山雪(422)
+Start:品牌-甘岭(382)
+Start:品牌-四方(395)
+Start:仓库-441(405)
+Start:品牌-伟恒(430)
+Start:仓库-445(417)
+Start:品牌-西沁(440)
+Start:仓库-449(410)
+Start:仓库-409(422)
+Start:仓库-428(438)
+Start:仓库-417(392)
+Start:品牌-桂兴(392)
+Start:品牌-大湾江(429)
+Start:仓库-450(438)
+Start:等级-2(2702)
+Start:年度-2020(2725)
+Start:年度-1920(2701)
+Start:等级-1(2745)
+Start:品牌-左江(1896)
+Start:品牌-中糖(1734)
+Start:品牌-骏马(2030)
+Start:品牌-蝶花(1674)
+Start:品牌-冷山(2206)
+Start:品牌-绿原(2071)
+End:品牌-甘岭
+Start:品牌-陆屋(424)
+End:品牌-龙田
+End:仓库-417
+Start:仓库-508(383)
+End:仓库-441
+Start:品牌-那彭(404)
+End:仓库-449
+End:品牌-仙人山
+End:仓库-112
+End:仓库-437
+End:品牌-四方
+End:仓库-445
+End:品牌-桂兴
+End:仓库-452
+End:品牌-黎山雪
+End:仓库-409
+End:品牌-龙二
+End:仓库-435
+End:仓库-450
+End:品牌-高航
+End:仓库-428
+End:品牌-银盛
+End:品牌-西沁
+End:仓库-438
+End:品牌-伟恒
+End:品牌-大湾江
+End:仓库-508
+End:品牌-那彭
+End:品牌-陆屋
+End:品牌-蝶花
+End:品牌-中糖
+End:品牌-左江
+End:品牌-骏马
+End:品牌-绿原
+End:品牌-冷山
+End:年度-1920
+End:年度-2020
+End:等级-2
+End:等级-1
+买家件数：100000
+卖家件数：429679
+意向顺序标记
+分配记录数和买家货物数
+买家货物和分配记录数
+==============================================================
+总体贸易分单数：90577
+==============================================================
+仓库得分：39.920836666667604
+意向得分：39.92142800000059
+得分率：79.84226466666829
+==============================================================
+买家件数：100000
+卖家件数：429679
+使用多个仓库的买家数：293
+意向得分为0的货物数：180857
+==============================================================
+总体贸易分单数：79337
+==============================================================
+仓库得分：39.91113666666756
+意向得分：39.4897440000006
+得分率：79.40088066666779
+==============================================================
+need_idx：0 UpScore：0
+买家件数：100000
+卖家件数：429679
+意向顺序标记
+分配记录数和买家货物数
+买家货物和分配记录数
+==============================================================
+总体贸易分单数：79337
+==============================================================
+仓库得分：39.91113666666756
+意向得分：39.4897440000006
+得分率：79.40088066666779
+==============================================================
+need_idx：10 UpScore：42
+need_idx：20 UpScore：42
+need_idx：30 UpScore：61
+need_idx：40 UpScore：87
+need_idx：50 UpScore：198
+need_idx：60 UpScore：224
+need_idx：70 UpScore：224
+need_idx：80 UpScore：224
+need_idx：90 UpScore：245
+need_idx：100 UpScore：249
+need_idx：110 UpScore：249
+need_idx：120 UpScore：335
+need_idx：130 UpScore：368
+need_idx：140 UpScore：376
+need_idx：150 UpScore：499
+need_idx：160 UpScore：503
+need_idx：170 UpScore：545
+need_idx：180 UpScore：553
+need_idx：190 UpScore：620
+need_idx：200 UpScore：682
+Up Score：700
+need_idx：210 UpScore：750
+need_idx：220 UpScore：790
+need_idx：230 UpScore：790
+need_idx：240 UpScore：807
+need_idx：250 UpScore：937
+need_idx：260 UpScore：937
+need_idx：270 UpScore：968
+need_idx：280 UpScore：983
+need_idx：290 UpScore：1012
+need_idx：300 UpScore：1012
+need_idx：310 UpScore：1072
+need_idx：320 UpScore：1142
+Up Score：1200
+need_idx：330 UpScore：1248
+need_idx：340 UpScore：1248
+need_idx：350 UpScore：1255
+need_idx：360 UpScore：1255
+need_idx：370 UpScore：1273
+need_idx：380 UpScore：1277
+need_idx：390 UpScore：1287
+Up Score：1300
+need_idx：400 UpScore：1374
+need_idx：410 UpScore：1384
+Up Score：1400
+need_idx：420 UpScore：1401
+need_idx：430 UpScore：1401
+need_idx：440 UpScore：1403
+need_idx：450 UpScore：1454
+need_idx：460 UpScore：1514
+need_idx：470 UpScore：1517
+need_idx：480 UpScore：1532
+need_idx：490 UpScore：1573
+need_idx：500 UpScore：1574
+need_idx：510 UpScore：1574
+need_idx：520 UpScore：1574
+need_idx：530 UpScore：1580
+need_idx：540 UpScore：1581
+Up Score：1600
+need_idx：550 UpScore：1624
+need_idx：560 UpScore：1650
+need_idx：570 UpScore：1654
+need_idx：580 UpScore：1655
+need_idx：590 UpScore：1710
+need_idx：600 UpScore：1710
+need_idx：610 UpScore：1710
+need_idx：620 UpScore：1710
+need_idx：630 UpScore：1715
+need_idx：640 UpScore：1736
+need_idx：650 UpScore：1747
+need_idx：660 UpScore：1751
+need_idx：670 UpScore：1751
+need_idx：680 UpScore：1760
+need_idx：690 UpScore：1804
+need_idx：700 UpScore：1872
+need_idx：710 UpScore：1897
+need_idx：720 UpScore：1919
+need_idx：730 UpScore：1969
+need_idx：740 UpScore：1985
+need_idx：750 UpScore：1985
+Up Score：2000
+need_idx：760 UpScore：2000
+need_idx：770 UpScore：2000
+need_idx：780 UpScore：2039
+need_idx：790 UpScore：2039
+need_idx：800 UpScore：2039
+need_idx：810 UpScore：2075
+need_idx：820 UpScore：2088
+need_idx：830 UpScore：2088
+need_idx：840 UpScore：2201
+need_idx：850 UpScore：2307
+need_idx：860 UpScore：2348
+Up Score：2400
+need_idx：870 UpScore：2410
+need_idx：880 UpScore：2417
+need_idx：890 UpScore：2467
+need_idx：900 UpScore：2499
+need_idx：910 UpScore：2499
+need_idx：920 UpScore：2599
+need_idx：930 UpScore：2599
+Up Score：2600
+need_idx：940 UpScore：2650
+need_idx：950 UpScore：2659
+need_idx：960 UpScore：2659
+need_idx：970 UpScore：2702
+need_idx：980 UpScore：2798
+need_idx：990 UpScore：2819
+need_idx：1000 UpScore：2835
+买家件数：100000
+卖家件数：429679
+意向顺序标记
+分配记录数和买家货物数
+买家货物和分配记录数
+==============================================================
+总体贸易分单数：80101
+==============================================================
+仓库得分：39.851993333334235
+意向得分：39.5473240000006
+得分率：79.3993173333346
+==============================================================
+need_idx：1010 UpScore：2849
+need_idx：1020 UpScore：2862
+need_idx：1030 UpScore：2879
+need_idx：1040 UpScore：2890
+need_idx：1050 UpScore：2926
+need_idx：1060 UpScore：2933
+need_idx：1070 UpScore：2940
+need_idx：1080 UpScore：2965
+need_idx：1090 UpScore：2975
+need_idx：1100 UpScore：2989
+need_idx：1110 UpScore：2989
+need_idx：1120 UpScore：3035
+need_idx：1130 UpScore：3046
+need_idx：1140 UpScore：3073
+need_idx：1150 UpScore：3076
+need_idx：1160 UpScore：3076
+need_idx：1170 UpScore：3155
+need_idx：1180 UpScore：3157
+need_idx：1190 UpScore：3157
+need_idx：1200 UpScore：3186
+need_idx：1210 UpScore：3186
+need_idx：1220 UpScore：3216
+need_idx：1230 UpScore：3218
+need_idx：1240 UpScore：3242
+need_idx：1250 UpScore：3253
+need_idx：1260 UpScore：3264
+Up Score：3300
+need_idx：1270 UpScore：3340
+need_idx：1280 UpScore：3364
+need_idx：1290 UpScore：3371
+need_idx：1300 UpScore：3389
+need_idx：1310 UpScore：3389
+need_idx：1320 UpScore：3409
+need_idx：1330 UpScore：3409
+need_idx：1340 UpScore：3409
+need_idx：1350 UpScore：3409
+need_idx：1360 UpScore：3409
+need_idx：1370 UpScore：3409
+need_idx：1380 UpScore：3409
+need_idx：1390 UpScore：3409
+need_idx：1400 UpScore：3446
+need_idx：1410 UpScore：3497
+need_idx：1420 UpScore：3513
+need_idx：1430 UpScore：3553
+need_idx：1440 UpScore：3553
+need_idx：1450 UpScore：3565
+need_idx：1460 UpScore：3565
+need_idx：1470 UpScore：3566
+need_idx：1480 UpScore：3566
+need_idx：1490 UpScore：3566
+need_idx：1500 UpScore：3569
+need_idx：1510 UpScore：3569
+need_idx：1520 UpScore：3577
+need_idx：1530 UpScore：3585
+need_idx：1540 UpScore：3585
+need_idx：1550 UpScore：3586
+need_idx：1560 UpScore：3586
+need_idx：1570 UpScore：3592
+need_idx：1580 UpScore：3596
+need_idx：1590 UpScore：3597
+Up Score：3600
+need_idx：1600 UpScore：3638
+need_idx：1610 UpScore：3642
+need_idx：1620 UpScore：3652
+need_idx：1630 UpScore：3652
+need_idx：1640 UpScore：3652
+need_idx：1650 UpScore：3670
+need_idx：1660 UpScore：3670
+need_idx：1670 UpScore：3670
+need_idx：1680 UpScore：3670
+need_idx：1690 UpScore：3671
+need_idx：1700 UpScore：3671
+need_idx：1710 UpScore：3671
+Up Score：3700
+need_idx：1720 UpScore：3700
+need_idx：1730 UpScore：3710
+need_idx：1740 UpScore：3711
+need_idx：1750 UpScore：3740
+need_idx：1760 UpScore：3754
+need_idx：1770 UpScore：3754
+need_idx：1780 UpScore：3759
+need_idx：1790 UpScore：3803
+need_idx：1800 UpScore：3840
+need_idx：1810 UpScore：3840
+need_idx：1820 UpScore：3840
+need_idx：1830 UpScore：3856
+need_idx：1840 UpScore：3862
+need_idx：1850 UpScore：3862
+need_idx：1860 UpScore：3862
+need_idx：1870 UpScore：3862
+need_idx：1880 UpScore：3862
+Up Score：3900
+need_idx：1890 UpScore：3900
+need_idx：1900 UpScore：3905
+need_idx：1910 UpScore：3907
+need_idx：1920 UpScore：3907
+need_idx：1930 UpScore：3917
+need_idx：1940 UpScore：3929
+need_idx：1950 UpScore：3932
+need_idx：1960 UpScore：3936
+need_idx：1970 UpScore：3942
+need_idx：1980 UpScore：3942
+need_idx：1990 UpScore：3964
+need_idx：2000 UpScore：3964
+买家件数：100000
+卖家件数：429679
+意向顺序标记
+分配记录数和买家货物数
+买家货物和分配记录数
+==============================================================
+总体贸易分单数：80476
+==============================================================
+仓库得分：39.83261000000092
+意向得分：39.581240000000605
+得分率：79.41385000000123
+==============================================================
+need_idx：2010 UpScore：3994
+need_idx：2020 UpScore：4001
+need_idx：2030 UpScore：4001
+need_idx：2040 UpScore：4007
+need_idx：2050 UpScore：4007
+need_idx：2060 UpScore：4044
+need_idx：2070 UpScore：4044
+need_idx：2080 UpScore：4044
+need_idx：2090 UpScore：4049
+need_idx：2100 UpScore：4072
+need_idx：2110 UpScore：4084
+Up Score：4100
+need_idx：2120 UpScore：4108
+need_idx：2130 UpScore：4108
+need_idx：2140 UpScore：4109
+need_idx：2150 UpScore：4109
+need_idx：2160 UpScore：4111
+need_idx：2170 UpScore：4111
+need_idx：2180 UpScore：4113
+need_idx：2190 UpScore：4113
+need_idx：2200 UpScore：4128
+need_idx：2210 UpScore：4131
+need_idx：2220 UpScore：4131
+need_idx：2230 UpScore：4131
+need_idx：2240 UpScore：4162
+need_idx：2250 UpScore：4162
+need_idx：2260 UpScore：4162
+need_idx：2270 UpScore：4172
+need_idx：2280 UpScore：4172
+need_idx：2290 UpScore：4186
+need_idx：2300 UpScore：4198
+need_idx：2310 UpScore：4198
+need_idx：2320 UpScore：4238
+need_idx：2330 UpScore：4238
+need_idx：2340 UpScore：4271
+need_idx：2350 UpScore：4271
+need_idx：2360 UpScore：4287
+need_idx：2370 UpScore：4287
+need_idx：2380 UpScore：4366
+need_idx：2390 UpScore：4366
+need_idx：2400 UpScore：4384
+need_idx：2410 UpScore：4384
+need_idx：2420 UpScore：4408
+need_idx：2430 UpScore：4508
+need_idx：2440 UpScore：4518
+need_idx：2450 UpScore：4527
+need_idx：2460 UpScore：4527
+need_idx：2470 UpScore：4530
+need_idx：2480 UpScore：4530
+need_idx：2490 UpScore：4530
+need_idx：2500 UpScore：4530
+need_idx：2510 UpScore：4553
+need_idx：2520 UpScore：4570
+need_idx：2530 UpScore：4570
+need_idx：2540 UpScore：4570
+need_idx：2550 UpScore：4570
+need_idx：2560 UpScore：4579
+need_idx：2570 UpScore：4579
+need_idx：2580 UpScore：4584
+need_idx：2590 UpScore：4593
+need_idx：2600 UpScore：4593
+need_idx：2610 UpScore：4594
+need_idx：2620 UpScore：4604
+need_idx：2630 UpScore：4607
+need_idx：2640 UpScore：4607
+need_idx：2650 UpScore：4623
+need_idx：2660 UpScore：4626
+need_idx：2670 UpScore：4646
+need_idx：2680 UpScore：4652
+need_idx：2690 UpScore：4660
+need_idx：2700 UpScore：4660
+need_idx：2710 UpScore：4713
+need_idx：2720 UpScore：4735
+need_idx：2730 UpScore：4735
+need_idx：2740 UpScore：4737
+need_idx：2750 UpScore：4744
+need_idx：2760 UpScore：4744
+need_idx：2770 UpScore：4767
+need_idx：2780 UpScore：4767
+need_idx：2790 UpScore：4778
+need_idx：2800 UpScore：4804
+need_idx：2810 UpScore：4823
+need_idx：2820 UpScore：4823
+need_idx：2830 UpScore：4823
+need_idx：2840 UpScore：4837
+need_idx：2850 UpScore：4855
+need_idx：2860 UpScore：4891
+need_idx：2870 UpScore：4920
+need_idx：2880 UpScore：4920
+need_idx：2890 UpScore：4920
+need_idx：2900 UpScore：4920
+need_idx：2910 UpScore：4958
+need_idx：2920 UpScore：4958
+need_idx：2930 UpScore：4958
+need_idx：2940 UpScore：4965
+need_idx：2950 UpScore：4965
+need_idx：2960 UpScore：5032
+need_idx：2970 UpScore：5032
+need_idx：2980 UpScore：5032
+need_idx：2990 UpScore：5037
+need_idx：3000 UpScore：5075
+买家件数：100000
+卖家件数：429679
+意向顺序标记
+分配记录数和买家货物数
+买家货物和分配记录数
+==============================================================
+总体贸易分单数：80813
+==============================================================
+仓库得分：39.82235666666756
+意向得分：39.6056960000006
+得分率：79.42805266666792
+==============================================================
+need_idx：3010 UpScore：5076
+need_idx：3020 UpScore：5095
+need_idx：3030 UpScore：5101
+need_idx：3040 UpScore：5137
+need_idx：3050 UpScore：5137
+need_idx：3060 UpScore：5158
+need_idx：3070 UpScore：5160
+need_idx：3080 UpScore：5183
+need_idx：3090 UpScore：5196
+need_idx：3100 UpScore：5202
+need_idx：3110 UpScore：5208
+need_idx：3120 UpScore：5208
+need_idx：3130 UpScore：5208
+need_idx：3140 UpScore：5214
+need_idx：3150 UpScore：5223
+need_idx：3160 UpScore：5223
+need_idx：3170 UpScore：5261
+need_idx：3180 UpScore：5262
+need_idx：3190 UpScore：5263
+need_idx：3200 UpScore：5282
+need_idx：3210 UpScore：5332
+need_idx：3220 UpScore：5362
+need_idx：3230 UpScore：5362
+need_idx：3240 UpScore：5387
+need_idx：3250 UpScore：5387
+need_idx：3260 UpScore：5387
+need_idx：3270 UpScore：5392
+need_idx：3280 UpScore：5392
+need_idx：3290 UpScore：5394
+need_idx：3300 UpScore：5394
+need_idx：3310 UpScore：5394
+Up Score：5400
+need_idx：3320 UpScore：5417
+need_idx：3330 UpScore：5417
+need_idx：3340 UpScore：5417
+need_idx：3350 UpScore：5418
+need_idx：3360 UpScore：5427
+need_idx：3370 UpScore：5427
+need_idx：3380 UpScore：5498
+need_idx：3390 UpScore：5546
+need_idx：3400 UpScore：5556
+need_idx：3410 UpScore：5556
+need_idx：3420 UpScore：5556
+need_idx：3430 UpScore：5556
+need_idx：3440 UpScore：5567
+need_idx：3450 UpScore：5575
+need_idx：3460 UpScore：5585
+need_idx：3470 UpScore：5585
+need_idx：3480 UpScore：5625
+need_idx：3490 UpScore：5627
+need_idx：3500 UpScore：5666
+need_idx：3510 UpScore：5666
+need_idx：3520 UpScore：5666
+need_idx：3530 UpScore：5738
+need_idx：3540 UpScore：5738
+need_idx：3550 UpScore：5739
+need_idx：3560 UpScore：5739
+need_idx：3570 UpScore：5750
+need_idx：3580 UpScore：5768
+need_idx：3590 UpScore：5799
+need_idx：3600 UpScore：5810
+need_idx：3610 UpScore：5810
+need_idx：3620 UpScore：5819
+need_idx：3630 UpScore：5819
+need_idx：3640 UpScore：5819
+need_idx：3650 UpScore：5841
+need_idx：3660 UpScore：5879
+need_idx：3670 UpScore：5880
+need_idx：3680 UpScore：5890
+need_idx：3690 UpScore：5891
+need_idx：3700 UpScore：5898
+need_idx：3710 UpScore：5902
+need_idx：3720 UpScore：5908
+need_idx：3730 UpScore：5908
+need_idx：3740 UpScore：5928
+need_idx：3750 UpScore：5931
+need_idx：3760 UpScore：5944
+need_idx：3770 UpScore：5970
+need_idx：3780 UpScore：5976
+need_idx：3790 UpScore：5976
+need_idx：3800 UpScore：5981
+need_idx：3810 UpScore：5982
+need_idx：3820 UpScore：5985
+need_idx：3830 UpScore：5987
+Up Score：6000
+need_idx：3840 UpScore：6016
+need_idx：3850 UpScore：6057
+need_idx：3860 UpScore：6065
+need_idx：3870 UpScore：6065
+need_idx：3880 UpScore：6101
+need_idx：3890 UpScore：6132
+need_idx：3900 UpScore：6142
+need_idx：3910 UpScore：6144
+need_idx：3920 UpScore：6154
+need_idx：3930 UpScore：6165
+need_idx：3940 UpScore：6165
+need_idx：3950 UpScore：6165
+need_idx：3960 UpScore：6165
+need_idx：3970 UpScore：6165
+need_idx：3980 UpScore：6165
+need_idx：3990 UpScore：6187
+need_idx：4000 UpScore：6188
+买家件数：100000
+卖家件数：429679
+意向顺序标记
+分配记录数和买家货物数
+买家货物和分配记录数
+==============================================================
+总体贸易分单数：81100
+==============================================================
+仓库得分：39.81704666666756
+意向得分：39.62952600000059
+得分率：79.4465726666678
+==============================================================
+need_idx：4010 UpScore：6188
+need_idx：4020 UpScore：6188
+need_idx：4030 UpScore：6188
+need_idx：4040 UpScore：6190
+need_idx：4050 UpScore：6204
+need_idx：4060 UpScore：6204
+need_idx：4070 UpScore：6204
+need_idx：4080 UpScore：6205
+need_idx：4090 UpScore：6205
+need_idx：4100 UpScore：6255
+need_idx：4110 UpScore：6268
+need_idx：4120 UpScore：6268
+need_idx：4130 UpScore：6278
+need_idx：4140 UpScore：6289
+Up Score：6300
+need_idx：4150 UpScore：6328
+need_idx：4160 UpScore：6352
+need_idx：4170 UpScore：6393
+need_idx：4180 UpScore：6393
+Up Score：6400
+need_idx：4190 UpScore：6408
+need_idx：4200 UpScore：6408
+need_idx：4210 UpScore：6408
+need_idx：4220 UpScore：6408
+need_idx：4230 UpScore：6421
+need_idx：4240 UpScore：6421
+need_idx：4250 UpScore：6474
+need_idx：4260 UpScore：6474
+need_idx：4270 UpScore：6474
+need_idx：4280 UpScore：6508
+need_idx：4290 UpScore：6508
+need_idx：4300 UpScore：6519
+need_idx：4310 UpScore：6519
+need_idx：4320 UpScore：6601
+need_idx：4330 UpScore：6628
+need_idx：4340 UpScore：6628
+need_idx：4350 UpScore：6628
+need_idx：4360 UpScore：6653
+need_idx：4370 UpScore：6659
+need_idx：4380 UpScore：6659
+need_idx：4390 UpScore：6659
+need_idx：4400 UpScore：6659
+need_idx：4410 UpScore：6683
+need_idx：4420 UpScore：6683
+Up Score：6700
+need_idx：4430 UpScore：6710
+need_idx：4440 UpScore：6715
+need_idx：4450 UpScore：6746
+need_idx：4460 UpScore：6746
+need_idx：4470 UpScore：6746
+need_idx：4480 UpScore：6756
+need_idx：4490 UpScore：6761
+need_idx：4500 UpScore：6777
+need_idx：4510 UpScore：6777
+need_idx：4520 UpScore：6777
+need_idx：4530 UpScore：6777
+need_idx：4540 UpScore：6777
+need_idx：4550 UpScore：6838
+need_idx：4560 UpScore：6859
+need_idx：4570 UpScore：6911
+need_idx：4580 UpScore：6919
+need_idx：4590 UpScore：6927
+need_idx：4600 UpScore：6938
+need_idx：4610 UpScore：6938
+need_idx：4620 UpScore：6949
+need_idx：4630 UpScore：6949
+need_idx：4640 UpScore：6952
+need_idx：4650 UpScore：6968
+need_idx：4660 UpScore：6968
+need_idx：4670 UpScore：6970
+need_idx：4680 UpScore：6982
+need_idx：4690 UpScore：6982
+need_idx：4700 UpScore：6982
+need_idx：4710 UpScore：6982
+need_idx：4720 UpScore：6982
+need_idx：4730 UpScore：6987
+need_idx：4740 UpScore：6987
+need_idx：4750 UpScore：6987
+need_idx：4760 UpScore：6994
+need_idx：4770 UpScore：7017
+need_idx：4780 UpScore：7037
+need_idx：4790 UpScore：7041
+need_idx：4800 UpScore：7041
+need_idx：4810 UpScore：7041
+need_idx：4820 UpScore：7041
+need_idx：4830 UpScore：7041
+need_idx：4840 UpScore：7054
+need_idx：4850 UpScore：7054
+need_idx：4860 UpScore：7054
+need_idx：4870 UpScore：7054
+need_idx：4880 UpScore：7058
+need_idx：4890 UpScore：7063
+need_idx：4900 UpScore：7063
+need_idx：4910 UpScore：7076
+need_idx：4920 UpScore：7097
+need_idx：4930 UpScore：7097
+need_idx：4940 UpScore：7120
+need_idx：4950 UpScore：7120
+need_idx：4960 UpScore：7125
+need_idx：4970 UpScore：7130
+need_idx：4980 UpScore：7130
+need_idx：4990 UpScore：7151
+need_idx：5000 UpScore：7151
+买家件数：100000
+卖家件数：429679
+意向顺序标记
+分配记录数和买家货物数
+买家货物和分配记录数
+==============================================================
+总体贸易分单数：81342
+==============================================================
+仓库得分：39.808156666667564
+意向得分：39.64906800000062
+得分率：79.45722466666777
+==============================================================
+need_idx：5010 UpScore：7151
+need_idx：5020 UpScore：7151
+need_idx：5030 UpScore：7157
+need_idx：5040 UpScore：7157
+need_idx：5050 UpScore：7163
+need_idx：5060 UpScore：7164
+need_idx：5070 UpScore：7164
+need_idx：5080 UpScore：7164
+need_idx：5090 UpScore：7182
+need_idx：5100 UpScore：7182
+need_idx：5110 UpScore：7182
+need_idx：5120 UpScore：7202
+need_idx：5130 UpScore：7202
+need_idx：5140 UpScore：7226
+need_idx：5150 UpScore：7254
+need_idx：5160 UpScore：7259
+need_idx：5170 UpScore：7267
+need_idx：5180 UpScore：7297
+need_idx：5190 UpScore：7297
+need_idx：5200 UpScore：7297
+need_idx：5210 UpScore：7297
+need_idx：5220 UpScore：7310
+need_idx：5230 UpScore：7331
+need_idx：5240 UpScore：7336
+need_idx：5250 UpScore：7339
+need_idx：5260 UpScore：7363
+need_idx：5270 UpScore：7368
+need_idx：5280 UpScore：7376
+need_idx：5290 UpScore：7377
+need_idx：5300 UpScore：7377
+need_idx：5310 UpScore：7379
+need_idx：5320 UpScore：7379
+need_idx：5330 UpScore：7385
+need_idx：5340 UpScore：7385
+need_idx：5350 UpScore：7385
+need_idx：5360 UpScore：7412
+need_idx：5370 UpScore：7412
+need_idx：5380 UpScore：7427
+need_idx：5390 UpScore：7440
+need_idx：5400 UpScore：7440
+need_idx：5410 UpScore：7446
+need_idx：5420 UpScore：7446
+need_idx：5430 UpScore：7455
+need_idx：5440 UpScore：7456
+need_idx：5450 UpScore：7456
+need_idx：5460 UpScore：7473
+need_idx：5470 UpScore：7473
+need_idx：5480 UpScore：7473
+need_idx：5490 UpScore：7479
+need_idx：5500 UpScore：7479
+need_idx：5510 UpScore：7479
+need_idx：5520 UpScore：7487
+need_idx：5530 UpScore：7564
+need_idx：5540 UpScore：7629
+need_idx：5550 UpScore：7630
+need_idx：5560 UpScore：7630
+need_idx：5570 UpScore：7630
+need_idx：5580 UpScore：7642
+need_idx：5590 UpScore：7653
+need_idx：5600 UpScore：7658
+need_idx：5610 UpScore：7658
+need_idx：5620 UpScore：7665
+need_idx：5630 UpScore：7675
+need_idx：5640 UpScore：7675
+need_idx：5650 UpScore：7703
+need_idx：5660 UpScore：7748
+need_idx：5670 UpScore：7748
+need_idx：5680 UpScore：7749
+need_idx：5690 UpScore：7750
+need_idx：5700 UpScore：7761
+need_idx：5710 UpScore：7775
+need_idx：5720 UpScore：7775
+need_idx：5730 UpScore：7777
+need_idx：5740 UpScore：7792
+need_idx：5750 UpScore：7798
+need_idx：5760 UpScore：7798
+need_idx：5770 UpScore：7807
+need_idx：5780 UpScore：7816
+need_idx：5790 UpScore：7822
+need_idx：5800 UpScore：7848
+need_idx：5810 UpScore：7848
+need_idx：5820 UpScore：7848
+need_idx：5830 UpScore：7848
+need_idx：5840 UpScore：7852
+need_idx：5850 UpScore：7852
+need_idx：5860 UpScore：7861
+need_idx：5870 UpScore：7861
+need_idx：5880 UpScore：7861
+need_idx：5890 UpScore：7862
+need_idx：5900 UpScore：7893
+need_idx：5910 UpScore：7893
+need_idx：5920 UpScore：7906
+need_idx：5930 UpScore：7906
+need_idx：5940 UpScore：7909
+need_idx：5950 UpScore：7909
+need_idx：5960 UpScore：7922
+need_idx：5970 UpScore：7922
+need_idx：5980 UpScore：7950
+need_idx：5990 UpScore：7951
+need_idx：6000 UpScore：7951
+买家件数：100000
+卖家件数：429679
+意向顺序标记
+分配记录数和买家货物数
+买家货物和分配记录数
+==============================================================
+总体贸易分单数：81562
+==============================================================
+仓库得分：39.80476000000089
+意向得分：39.66873200000063
+得分率：79.47349200000109
+==============================================================
+need_idx：6010 UpScore：7951
+need_idx：6020 UpScore：7952
+need_idx：6030 UpScore：7952
+need_idx：6040 UpScore：7955
+need_idx：6050 UpScore：7957
+need_idx：6060 UpScore：7957
+need_idx：6070 UpScore：7957
+need_idx：6080 UpScore：7957
+need_idx：6090 UpScore：7991
+need_idx：6100 UpScore：7995
+need_idx：6110 UpScore：7995
+need_idx：6120 UpScore：8030
+need_idx：6130 UpScore：8034
+need_idx：6140 UpScore：8046
+need_idx：6150 UpScore：8046
+need_idx：6160 UpScore：8064
+need_idx：6170 UpScore：8081
+need_idx：6180 UpScore：8088
+need_idx：6190 UpScore：8088
+need_idx：6200 UpScore：8103
+need_idx：6210 UpScore：8107
+need_idx：6220 UpScore：8108
+need_idx：6230 UpScore：8108
+need_idx：6240 UpScore：8108
+need_idx：6250 UpScore：8108
+need_idx：6260 UpScore：8112
+need_idx：6270 UpScore：8131
+need_idx：6280 UpScore：8132
+need_idx：6290 UpScore：8132
+need_idx：6300 UpScore：8134
+need_idx：6310 UpScore：8150
+need_idx：6320 UpScore：8150
+need_idx：6330 UpScore：8150
+need_idx：6340 UpScore：8152
+need_idx：6350 UpScore：8184
+need_idx：6360 UpScore：8187
+need_idx：6370 UpScore：8187
+need_idx：6380 UpScore：8187
+need_idx：6390 UpScore：8187
+need_idx：6400 UpScore：8187
+need_idx：6410 UpScore：8187
+need_idx：6420 UpScore：8195
+need_idx：6430 UpScore：8195
+need_idx：6440 UpScore：8195
+need_idx：6450 UpScore：8195
+Up Score：8200
+need_idx：6460 UpScore：8200
+need_idx：6470 UpScore：8231
+need_idx：6480 UpScore：8231
+need_idx：6490 UpScore：8237
+need_idx：6500 UpScore：8237
+need_idx：6510 UpScore：8246
+need_idx：6520 UpScore：8264
+need_idx：6530 UpScore：8264
+need_idx：6540 UpScore：8284
+need_idx：6550 UpScore：8284
+need_idx：6560 UpScore：8289
+need_idx：6570 UpScore：8289
+need_idx：6580 UpScore：8289
+need_idx：6590 UpScore：8297
+need_idx：6600 UpScore：8297
+need_idx：6610 UpScore：8297
+need_idx：6620 UpScore：8297
+need_idx：6630 UpScore：8301
+need_idx：6640 UpScore：8301
+need_idx：6650 UpScore：8301
+need_idx：6660 UpScore：8337
+need_idx：6670 UpScore：8337
+need_idx：6680 UpScore：8337
+need_idx：6690 UpScore：8337
+need_idx：6700 UpScore：8363
+need_idx：6710 UpScore：8369
+need_idx：6720 UpScore：8369
+need_idx：6730 UpScore：8374
+need_idx：6740 UpScore：8379
+need_idx：6750 UpScore：8379
+need_idx：6760 UpScore：8379
+need_idx：6770 UpScore：8379
+need_idx：6780 UpScore：8379
+need_idx：6790 UpScore：8382
+need_idx：6800 UpScore：8382
+need_idx：6810 UpScore：8382
+need_idx：6820 UpScore：8382
+need_idx：6830 UpScore：8395
+need_idx：6840 UpScore：8409
+need_idx：6850 UpScore：8409
+need_idx：6860 UpScore：8409
+need_idx：6870 UpScore：8441
+need_idx：6880 UpScore：8456
+need_idx：6890 UpScore：8460
+need_idx：6900 UpScore：8460
+need_idx：6910 UpScore：8460
+need_idx：6920 UpScore：8477
+need_idx：6930 UpScore：8492
+need_idx：6940 UpScore：8502
+need_idx：6950 UpScore：8502
+need_idx：6960 UpScore：8508
+need_idx：6970 UpScore：8520
+need_idx：6980 UpScore：8525
+need_idx：6990 UpScore：8525
+need_idx：7000 UpScore：8532
+买家件数：100000
+卖家件数：429679
+意向顺序标记
+分配记录数和买家货物数
+买家货物和分配记录数
+==============================================================
+总体贸易分单数：81730
+==============================================================
+仓库得分：39.80269000000086
+意向得分：39.68400200000061
+得分率：79.4866920000011
+==============================================================
+need_idx：7010 UpScore：8532
+need_idx：7020 UpScore：8552
+need_idx：7030 UpScore：8552
+need_idx：7040 UpScore：8552
+need_idx：7050 UpScore：8570
+need_idx：7060 UpScore：8570
+need_idx：7070 UpScore：8570
+need_idx：7080 UpScore：8584
+need_idx：7090 UpScore：8584
+need_idx：7100 UpScore：8584
+need_idx：7110 UpScore：8590
+need_idx：7120 UpScore：8593
+need_idx：7130 UpScore：8593
+need_idx：7140 UpScore：8599
+need_idx：7150 UpScore：8599
+need_idx：7160 UpScore：8599
+need_idx：7170 UpScore：8610
+need_idx：7180 UpScore：8617
+need_idx：7190 UpScore：8617
+need_idx：7200 UpScore：8623
+need_idx：7210 UpScore：8623
+need_idx：7220 UpScore：8623
+need_idx：7230 UpScore：8623
+need_idx：7240 UpScore：8623
+need_idx：7250 UpScore：8623
+need_idx：7260 UpScore：8642
+need_idx：7270 UpScore：8655
+need_idx：7280 UpScore：8664
+need_idx：7290 UpScore：8664
+need_idx：7300 UpScore：8664
+need_idx：7310 UpScore：8664
+need_idx：7320 UpScore：8664
+need_idx：7330 UpScore：8664
+need_idx：7340 UpScore：8664
+need_idx：7350 UpScore：8672
+need_idx：7360 UpScore：8694
+need_idx：7370 UpScore：8694
+need_idx：7380 UpScore：8721
+need_idx：7390 UpScore：8725
+need_idx：7400 UpScore：8725
+need_idx：7410 UpScore：8732
+need_idx：7420 UpScore：8744
+need_idx：7430 UpScore：8744
+need_idx：7440 UpScore：8747
+need_idx：7450 UpScore：8758
+need_idx：7460 UpScore：8758
+need_idx：7470 UpScore：8758
+need_idx：7480 UpScore：8780
+need_idx：7490 UpScore：8780
+need_idx：7500 UpScore：8780
+need_idx：7510 UpScore：8796
+need_idx：7520 UpScore：8796
+need_idx：7530 UpScore：8809
+need_idx：7540 UpScore：8825
+need_idx：7550 UpScore：8825
+need_idx：7560 UpScore：8825
+need_idx：7570 UpScore：8843
+need_idx：7580 UpScore：8857
+need_idx：7590 UpScore：8871
+need_idx：7600 UpScore：8871
+need_idx：7610 UpScore：8871
+need_idx：7620 UpScore：8871
+need_idx：7630 UpScore：8873
+need_idx：7640 UpScore：8873
+need_idx：7650 UpScore：8873
+need_idx：7660 UpScore：8873
+need_idx：7670 UpScore：8875
+need_idx：7680 UpScore：8875
+need_idx：7690 UpScore：8875
+need_idx：7700 UpScore：8891
+need_idx：7710 UpScore：8891
+need_idx：7720 UpScore：8891
+need_idx：7730 UpScore：8891
+Up Score：8900
+need_idx：7740 UpScore：8900
+need_idx：7750 UpScore：8905
+need_idx：7760 UpScore：8910
+need_idx：7770 UpScore：8911
+need_idx：7780 UpScore：8915
+need_idx：7790 UpScore：8915
+need_idx：7800 UpScore：8919
+need_idx：7810 UpScore：8932
+need_idx：7820 UpScore：8932
+need_idx：7830 UpScore：8932
+need_idx：7840 UpScore：8932
+need_idx：7850 UpScore：8932
+need_idx：7860 UpScore：8948
+need_idx：7870 UpScore：8950
+need_idx：7880 UpScore：8950
+need_idx：7890 UpScore：8967
+need_idx：7900 UpScore：8967
+need_idx：7910 UpScore：8967
+need_idx：7920 UpScore：8967
+need_idx：7930 UpScore：8967
+need_idx：7940 UpScore：8967
+need_idx：7950 UpScore：8976
+need_idx：7960 UpScore：8976
+need_idx：7970 UpScore：8976
+need_idx：7980 UpScore：8976
+need_idx：7990 UpScore：8976
+need_idx：8000 UpScore：8982
+买家件数：100000
+卖家件数：429679
+意向顺序标记
+分配记录数和买家货物数
+买家货物和分配记录数
+==============================================================
+总体贸易分单数：81866
+==============================================================
+仓库得分：39.79845666666754
+意向得分：39.69602600000061
+得分率：79.49448266666775
+==============================================================
+need_idx：8010 UpScore：8997
+need_idx：8020 UpScore：8997
+need_idx：8030 UpScore：8999
+need_idx：8040 UpScore：9014
+need_idx：8050 UpScore：9014
+need_idx：8060 UpScore：9017
+need_idx：8070 UpScore：9024
+need_idx：8080 UpScore：9048
+need_idx：8090 UpScore：9048
+need_idx：8100 UpScore：9053
+need_idx：8110 UpScore：9054
+need_idx：8120 UpScore：9054
+need_idx：8130 UpScore：9054
+need_idx：8140 UpScore：9057
+need_idx：8150 UpScore：9061
+need_idx：8160 UpScore：9061
+need_idx：8170 UpScore：9061
+need_idx：8180 UpScore：9061
+need_idx：8190 UpScore：9061
+need_idx：8200 UpScore：9061
+need_idx：8210 UpScore：9118
+need_idx：8220 UpScore：9136
+need_idx：8230 UpScore：9136
+need_idx：8240 UpScore：9158
+need_idx：8250 UpScore：9158
+need_idx：8260 UpScore：9158
+need_idx：8270 UpScore：9167
+need_idx：8280 UpScore：9173
+need_idx：8290 UpScore：9173
+need_idx：8300 UpScore：9173
+need_idx：8310 UpScore：9173
+need_idx：8320 UpScore：9173
+need_idx：8330 UpScore：9173
+need_idx：8340 UpScore：9173
+Up Score：9200
+need_idx：8350 UpScore：9201
+need_idx：8360 UpScore：9201
+need_idx：8370 UpScore：9201
+need_idx：8380 UpScore：9201
+need_idx：8390 UpScore：9201
+need_idx：8400 UpScore：9206
+need_idx：8410 UpScore：9213
+need_idx：8420 UpScore：9213
+need_idx：8430 UpScore：9230
+need_idx：8440 UpScore：9237
+need_idx：8450 UpScore：9248
+need_idx：8460 UpScore：9248
+need_idx：8470 UpScore：9276
+need_idx：8480 UpScore：9276
+need_idx：8490 UpScore：9276
+need_idx：8500 UpScore：9297
+need_idx：8510 UpScore：9297
+need_idx：8520 UpScore：9297
+need_idx：8530 UpScore：9303
+need_idx：8540 UpScore：9304
+need_idx：8550 UpScore：9309
+need_idx：8560 UpScore：9309
+need_idx：8570 UpScore：9319
+need_idx：8580 UpScore：9319
+need_idx：8590 UpScore：9334
+need_idx：8600 UpScore：9348
+need_idx：8610 UpScore：9348
+need_idx：8620 UpScore：9348
+need_idx：8630 UpScore：9348
+need_idx：8640 UpScore：9348
+need_idx：8650 UpScore：9350
+need_idx：8660 UpScore：9372
+need_idx：8670 UpScore：9380
+need_idx：8680 UpScore：9402
+need_idx：8690 UpScore：9402
+need_idx：8700 UpScore：9408
+need_idx：8710 UpScore：9408
+need_idx：8720 UpScore：9422
+need_idx：8730 UpScore：9426
+need_idx：8740 UpScore：9426
+need_idx：8750 UpScore：9426
+need_idx：8760 UpScore：9428
+need_idx：8770 UpScore：9428
+need_idx：8780 UpScore：9428
+need_idx：8790 UpScore：9466
+need_idx：8800 UpScore：9467
+need_idx：8810 UpScore：9467
+need_idx：8820 UpScore：9467
+need_idx：8830 UpScore：9467
+need_idx：8840 UpScore：9499
+need_idx：8850 UpScore：9499
+need_idx：8860 UpScore：9499
+Up Score：9500
+need_idx：8870 UpScore：9500
+need_idx：8880 UpScore：9500
+need_idx：8890 UpScore：9500
+need_idx：8900 UpScore：9500
+need_idx：8910 UpScore：9504
+need_idx：8920 UpScore：9507
+need_idx：8930 UpScore：9510
+need_idx：8940 UpScore：9511
+need_idx：8950 UpScore：9521
+need_idx：8960 UpScore：9521
+need_idx：8970 UpScore：9534
+need_idx：8980 UpScore：9545
+need_idx：8990 UpScore：9553
+need_idx：9000 UpScore：9553
+买家件数：100000
+卖家件数：429679
+意向顺序标记
+分配记录数和买家货物数
+买家货物和分配记录数
+==============================================================
+总体贸易分单数：82024
+==============================================================
+仓库得分：39.79966333333424
+意向得分：39.70986600000061
+得分率：79.50952933333438
+==============================================================
+need_idx：9010 UpScore：9557
+need_idx：9020 UpScore：9557
+need_idx：9030 UpScore：9558
+need_idx：9040 UpScore：9563
+need_idx：9050 UpScore：9564
+need_idx：9060 UpScore：9564
+need_idx：9070 UpScore：9564
+need_idx：9080 UpScore：9565
+need_idx：9090 UpScore：9568
+need_idx：9100 UpScore：9568
+need_idx：9110 UpScore：9568
+need_idx：9120 UpScore：9568
+need_idx：9130 UpScore：9568
+need_idx：9140 UpScore：9577
+need_idx：9150 UpScore：9577
+need_idx：9160 UpScore：9589
+need_idx：9170 UpScore：9597
+need_idx：9180 UpScore：9597
+need_idx：9190 UpScore：9597
+need_idx：9200 UpScore：9597
+Up Score：9600
+need_idx：9210 UpScore：9600
+need_idx：9220 UpScore：9600
+need_idx：9230 UpScore：9604
+need_idx：9240 UpScore：9613
+need_idx：9250 UpScore：9613
+need_idx：9260 UpScore：9637
+need_idx：9270 UpScore：9637
+need_idx：9280 UpScore：9637
+need_idx：9290 UpScore：9637
+need_idx：9300 UpScore：9667
+need_idx：9310 UpScore：9667
+need_idx：9320 UpScore：9667
+need_idx：9330 UpScore：9667
+need_idx：9340 UpScore：9683
+need_idx：9350 UpScore：9683
+need_idx：9360 UpScore：9683
+need_idx：9370 UpScore：9705
+need_idx：9380 UpScore：9705
+need_idx：9390 UpScore：9705
+need_idx：9400 UpScore：9705
+need_idx：9410 UpScore：9705
+need_idx：9420 UpScore：9709
+need_idx：9430 UpScore：9709
+need_idx：9440 UpScore：9709
+need_idx：9450 UpScore：9711
+need_idx：9460 UpScore：9711
+need_idx：9470 UpScore：9711
+need_idx：9480 UpScore：9730
+need_idx：9490 UpScore：9730
+need_idx：9500 UpScore：9730
+need_idx：9510 UpScore：9799
+need_idx：9520 UpScore：9821
+need_idx：9530 UpScore：9834
+need_idx：9540 UpScore：9834
+need_idx：9550 UpScore：9834
+need_idx：9560 UpScore：9835
+need_idx：9570 UpScore：9835
+need_idx：9580 UpScore：9835
+need_idx：9590 UpScore：9836
+need_idx：9600 UpScore：9838
+need_idx：9610 UpScore：9878
+need_idx：9620 UpScore：9878
+need_idx：9630 UpScore：9878
+need_idx：9640 UpScore：9887
+need_idx：9650 UpScore：9887
+need_idx：9660 UpScore：9896
+need_idx：9670 UpScore：9896
+need_idx：9680 UpScore：9896
+need_idx：9690 UpScore：9896
+need_idx：9700 UpScore：9896
+Up Score：9900
+need_idx：9710 UpScore：9903
+need_idx：9720 UpScore：9903
+need_idx：9730 UpScore：9903
+need_idx：9740 UpScore：9903
+need_idx：9750 UpScore：9962
+need_idx：9760 UpScore：9962
+need_idx：9770 UpScore：9962
+need_idx：9780 UpScore：9965
+need_idx：9790 UpScore：9974
+Up Score：10000
+need_idx：9800 UpScore：10007
+need_idx：9810 UpScore：10007
+need_idx：9820 UpScore：10007
+need_idx：9830 UpScore：10011
+need_idx：9840 UpScore：10011
+need_idx：9850 UpScore：10013
+need_idx：9860 UpScore：10014
+need_idx：9870 UpScore：10014
+need_idx：9880 UpScore：10014
+need_idx：9890 UpScore：10014
+need_idx：9900 UpScore：10035
+need_idx：9910 UpScore：10036
+need_idx：9920 UpScore：10036
+need_idx：9930 UpScore：10036
+need_idx：9940 UpScore：10036
+need_idx：9950 UpScore：10043
+need_idx：9960 UpScore：10043
+need_idx：9970 UpScore：10043
+need_idx：9980 UpScore：10043
+need_idx：9990 UpScore：10070
+need_idx：10000 UpScore：10072
+买家件数：100000
+卖家件数：429679
+意向顺序标记
+分配记录数和买家货物数
+买家货物和分配记录数
+==============================================================
+总体贸易分单数：82167
+==============================================================
+仓库得分：39.79663666666756
+意向得分：39.724672000000595
+得分率：79.52130866666774
+==============================================================
+need_idx：10010 UpScore：10072
+need_idx：10020 UpScore：10072
+need_idx：10030 UpScore：10072
+need_idx：10040 UpScore：10072
+need_idx：10050 UpScore：10072
+need_idx：10060 UpScore：10072
+need_idx：10070 UpScore：10072
+need_idx：10080 UpScore：10072
+need_idx：10090 UpScore：10072
+need_idx：10100 UpScore：10072
+need_idx：10110 UpScore：10072
+need_idx：10120 UpScore：10072
+need_idx：10130 UpScore：10098
+need_idx：10140 UpScore：10098
+need_idx：10150 UpScore：10105
+need_idx：10160 UpScore：10105
+need_idx：10170 UpScore：10107
+need_idx：10180 UpScore：10107
+need_idx：10190 UpScore：10107
+need_idx：10200 UpScore：10109
+need_idx：10210 UpScore：10109
+need_idx：10220 UpScore：10109
+need_idx：10230 UpScore：10115
+need_idx：10240 UpScore：10115
+need_idx：10250 UpScore：10115
+need_idx：10260 UpScore：10115
+need_idx：10270 UpScore：10115
+need_idx：10280 UpScore：10121
+need_idx：10290 UpScore：10123
+need_idx：10300 UpScore：10128
+need_idx：10310 UpScore：10128
+need_idx：10320 UpScore：10128
+need_idx：10330 UpScore：10138
+need_idx：10340 UpScore：10138
+need_idx：10350 UpScore：10161
+need_idx：10360 UpScore：10161
+need_idx：10370 UpScore：10226
+need_idx：10380 UpScore：10226
+need_idx：10390 UpScore：10242
+need_idx：10400 UpScore：10242
+need_idx：10410 UpScore：10242
+need_idx：10420 UpScore：10242
+need_idx：10430 UpScore：10242
+need_idx：10440 UpScore：10251
+need_idx：10450 UpScore：10251
+need_idx：10460 UpScore：10263
+need_idx：10470 UpScore：10263
+need_idx：10480 UpScore：10289
+need_idx：10490 UpScore：10296
+need_idx：10500 UpScore：10302
+need_idx：10510 UpScore：10310
+need_idx：10520 UpScore：10310
+need_idx：10530 UpScore：10310
+need_idx：10540 UpScore：10310
+need_idx：10550 UpScore：10344
+need_idx：10560 UpScore：10359
+need_idx：10570 UpScore：10359
+need_idx：10580 UpScore：10359
+need_idx：10590 UpScore：10359
+need_idx：10600 UpScore：10359
+need_idx：10610 UpScore：10359
+need_idx：10620 UpScore：10359
+need_idx：10630 UpScore：10359
+need_idx：10640 UpScore：10359
+need_idx：10650 UpScore：10364
+need_idx：10660 UpScore：10364
+need_idx：10670 UpScore：10364
+need_idx：10680 UpScore：10373
+need_idx：10690 UpScore：10373
+need_idx：10700 UpScore：10374
+need_idx：10710 UpScore：10374
+need_idx：10720 UpScore：10380
+need_idx：10730 UpScore：10381
+need_idx：10740 UpScore：10391
+need_idx：10750 UpScore：10391
+need_idx：10760 UpScore：10391
+need_idx：10770 UpScore：10391
+need_idx：10780 UpScore：10396
+need_idx：10790 UpScore：10398
+need_idx：10800 UpScore：10436
+need_idx：10810 UpScore：10436
+need_idx：10820 UpScore：10436
+need_idx：10830 UpScore：10436
+need_idx：10840 UpScore：10446
+need_idx：10850 UpScore：10446
+need_idx：10860 UpScore：10446
+need_idx：10870 UpScore：10446
+need_idx：10880 UpScore：10447
+need_idx：10890 UpScore：10447
+need_idx：10900 UpScore：10453
+need_idx：10910 UpScore：10453
+need_idx：10920 UpScore：10453
+need_idx：10930 UpScore：10453
+need_idx：10940 UpScore：10457
+need_idx：10950 UpScore：10466
+need_idx：10960 UpScore：10466
+need_idx：10970 UpScore：10466
+need_idx：10980 UpScore：10466
+need_idx：10990 UpScore：10466
+need_idx：11000 UpScore：10471
+买家件数：100000
+卖家件数：429679
+意向顺序标记
+分配记录数和买家货物数
+买家货物和分配记录数
+==============================================================
+总体贸易分单数：82266
+==============================================================
+仓库得分：39.795566666667554
+意向得分：39.735582000000626
+得分率：79.53114866666779
+==============================================================
+need_idx：11010 UpScore：10471
+need_idx：11020 UpScore：10471
+need_idx：11030 UpScore：10477
+need_idx：11040 UpScore：10491
+need_idx：11050 UpScore：10492
+need_idx：11060 UpScore：10492
+need_idx：11070 UpScore：10492
+need_idx：11080 UpScore：10507
+need_idx：11090 UpScore：10512
+need_idx：11100 UpScore：10512
+need_idx：11110 UpScore：10512
+need_idx：11120 UpScore：10512
+need_idx：11130 UpScore：10512
+need_idx：11140 UpScore：10512
+need_idx：11150 UpScore：10512
+need_idx：11160 UpScore：10512
+need_idx：11170 UpScore：10517
+need_idx：11180 UpScore：10517
+need_idx：11190 UpScore：10525
+need_idx：11200 UpScore：10554
+need_idx：11210 UpScore：10557
+need_idx：11220 UpScore：10557
+need_idx：11230 UpScore：10557
+need_idx：11240 UpScore：10557
+need_idx：11250 UpScore：10558
+need_idx：11260 UpScore：10563
+need_idx：11270 UpScore：10563
+need_idx：11280 UpScore：10564
+need_idx：11290 UpScore：10564
+need_idx：11300 UpScore：10564
+need_idx：11310 UpScore：10564
+need_idx：11320 UpScore：10564
+need_idx：11330 UpScore：10564
+need_idx：11340 UpScore：10581
+need_idx：11350 UpScore：10581
+need_idx：11360 UpScore：10581
+need_idx：11370 UpScore：10581
+need_idx：11380 UpScore：10581
+need_idx：11390 UpScore：10581
+need_idx：11400 UpScore：10581
+need_idx：11410 UpScore：10584
+need_idx：11420 UpScore：10633
+need_idx：11430 UpScore：10633
+need_idx：11440 UpScore：10633
+need_idx：11450 UpScore：10633
+need_idx：11460 UpScore：10651
+need_idx：11470 UpScore：10659
+need_idx：11480 UpScore：10660
+need_idx：11490 UpScore：10664
+need_idx：11500 UpScore：10664
+need_idx：11510 UpScore：10668
+need_idx：11520 UpScore：10668
+need_idx：11530 UpScore：10673
+need_idx：11540 UpScore：10673
+need_idx：11550 UpScore：10675
+need_idx：11560 UpScore：10675
+买家件数：100000
+卖家件数：429679
+使用多个仓库的买家数：293
+意向得分为0的货物数：180857
+==============================================================
+总体贸易分单数：79337
+==============================================================
+仓库得分：39.91113666666756
+意向得分：39.4897440000006
+得分率：79.40088066666779
+==============================================================
+need_idx：0 UpScore：0
+need_idx：10 UpScore：21
+need_idx：20 UpScore：21
+need_idx：30 UpScore：24
+need_idx：40 UpScore：32
+need_idx：50 UpScore：38
+need_idx：60 UpScore：44
+need_idx：70 UpScore：44
+need_idx：80 UpScore：44
+need_idx：90 UpScore：55
+need_idx：100 UpScore：56
+need_idx：110 UpScore：56
+need_idx：120 UpScore：73
+need_idx：130 UpScore：90
+need_idx：140 UpScore：98
+need_idx：150 UpScore：117
+need_idx：160 UpScore：117
+need_idx：170 UpScore：129
+need_idx：180 UpScore：145
+need_idx：190 UpScore：145
+need_idx：200 UpScore：147
+need_idx：210 UpScore：153
+need_idx：220 UpScore：170
+need_idx：230 UpScore：170
+need_idx：240 UpScore：173
+need_idx：250 UpScore：182
+need_idx：260 UpScore：182
+need_idx：270 UpScore：184
+need_idx：280 UpScore：190
+need_idx：290 UpScore：191
+need_idx：300 UpScore：198
+Up Score：200
+need_idx：310 UpScore：206
+need_idx：320 UpScore：218
+need_idx：330 UpScore：227
+need_idx：340 UpScore：227
+need_idx：350 UpScore：234
+need_idx：360 UpScore：234
+need_idx：370 UpScore：243
+need_idx：380 UpScore：263
+need_idx：390 UpScore：278
+need_idx：400 UpScore：281
+need_idx：410 UpScore：283
+need_idx：420 UpScore：283
+need_idx：430 UpScore：283
+need_idx：440 UpScore：294
+need_idx：450 UpScore：307
+need_idx：460 UpScore：309
+need_idx：470 UpScore：327
+need_idx：480 UpScore：327
+need_idx：490 UpScore：356
+need_idx：500 UpScore：373
+need_idx：510 UpScore：373
+need_idx：520 UpScore：373
+need_idx：530 UpScore：374
+need_idx：540 UpScore：405
+need_idx：550 UpScore：421
+need_idx：560 UpScore：429
+need_idx：570 UpScore：429
+need_idx：580 UpScore：430
+need_idx：590 UpScore：453
+need_idx：600 UpScore：453
+need_idx：610 UpScore：453
+need_idx：620 UpScore：453
+need_idx：630 UpScore：457
+need_idx：640 UpScore：459
+need_idx：650 UpScore：472
+need_idx：660 UpScore：472
+need_idx：670 UpScore：472
+need_idx：680 UpScore：481
+need_idx：690 UpScore：481
+Up Score：500
+need_idx：700 UpScore：500
+need_idx：710 UpScore：502
+need_idx：720 UpScore：508
+need_idx：730 UpScore：508
+need_idx：740 UpScore：520
+need_idx：750 UpScore：520
+need_idx：760 UpScore：531
+need_idx：770 UpScore：533
+need_idx：780 UpScore：535
+need_idx：790 UpScore：535
+need_idx：800 UpScore：535
+need_idx：810 UpScore：551
+need_idx：820 UpScore：551
+need_idx：830 UpScore：551
+need_idx：840 UpScore：562
+need_idx：850 UpScore：562
+need_idx：860 UpScore：565
+need_idx：870 UpScore：579
+need_idx：880 UpScore：597
+need_idx：890 UpScore：597
+Up Score：600
+need_idx：900 UpScore：601
+need_idx：910 UpScore：604
+need_idx：920 UpScore：604
+need_idx：930 UpScore：604
+need_idx：940 UpScore：613
+need_idx：950 UpScore：623
+need_idx：960 UpScore：628
+need_idx：970 UpScore：644
+need_idx：980 UpScore：696
+need_idx：990 UpScore：701
+need_idx：1000 UpScore：702
+买家件数：100000
+卖家件数：429679
+意向顺序标记
+分配记录数和买家货物数
+买家货物和分配记录数
+==============================================================
+总体贸易分单数：79775
+==============================================================
+仓库得分：39.91056666666756
+意向得分：39.52429600000061
+得分率：79.43486266666783
+==============================================================
+need_idx：1010 UpScore：715
+need_idx：1020 UpScore：715
+need_idx：1030 UpScore：721
+need_idx：1040 UpScore：721
+need_idx：1050 UpScore：726
+need_idx：1060 UpScore：733
+need_idx：1070 UpScore：764
+need_idx：1080 UpScore：769
+need_idx：1090 UpScore：781
+need_idx：1100 UpScore：795
+need_idx：1110 UpScore：795
+need_idx：1120 UpScore：829
+need_idx：1130 UpScore：829
+need_idx：1140 UpScore：849
+need_idx：1150 UpScore：874
+need_idx：1160 UpScore：877
+need_idx：1170 UpScore：894
+Up Score：900
+need_idx：1180 UpScore：912
+need_idx：1190 UpScore：912
+need_idx：1200 UpScore：951
+need_idx：1210 UpScore：951
+need_idx：1220 UpScore：951
+need_idx：1230 UpScore：955
+need_idx：1240 UpScore：966
+need_idx：1250 UpScore：988
+need_idx：1260 UpScore：994
+need_idx：1270 UpScore：1022
+need_idx：1280 UpScore：1023
+need_idx：1290 UpScore：1025
+need_idx：1300 UpScore：1038
+need_idx：1310 UpScore：1041
+need_idx：1320 UpScore：1045
+need_idx：1330 UpScore：1052
+need_idx：1340 UpScore：1052
+need_idx：1350 UpScore：1052
+need_idx：1360 UpScore：1052
+need_idx：1370 UpScore：1052
+need_idx：1380 UpScore：1052
+need_idx：1390 UpScore：1070
+need_idx：1400 UpScore：1080
+need_idx：1410 UpScore：1082
+need_idx：1420 UpScore：1082
+need_idx：1430 UpScore：1097
+need_idx：1440 UpScore：1097
+need_idx：1450 UpScore：1104
+need_idx：1460 UpScore：1104
+need_idx：1470 UpScore：1107
+need_idx：1480 UpScore：1107
+need_idx：1490 UpScore：1107
+need_idx：1500 UpScore：1116
+need_idx：1510 UpScore：1116
+need_idx：1520 UpScore：1120
+need_idx：1530 UpScore：1120
+need_idx：1540 UpScore：1120
+need_idx：1550 UpScore：1121
+need_idx：1560 UpScore：1121
+need_idx：1570 UpScore：1121
+need_idx：1580 UpScore：1129
+need_idx：1590 UpScore：1129
+need_idx：1600 UpScore：1135
+need_idx：1610 UpScore：1144
+need_idx：1620 UpScore：1153
+need_idx：1630 UpScore：1153
+need_idx：1640 UpScore：1153
+need_idx：1650 UpScore：1156
+need_idx：1660 UpScore：1156
+need_idx：1670 UpScore：1156
+need_idx：1680 UpScore：1167
+need_idx：1690 UpScore：1172
+need_idx：1700 UpScore：1172
+need_idx：1710 UpScore：1172
+need_idx：1720 UpScore：1174
+need_idx：1730 UpScore：1174
+need_idx：1740 UpScore：1183
+need_idx：1750 UpScore：1186
+need_idx：1760 UpScore：1186
+need_idx：1770 UpScore：1186
+need_idx：1780 UpScore：1197
+Up Score：1200
+need_idx：1790 UpScore：1202
+need_idx：1800 UpScore：1203
+need_idx：1810 UpScore：1203
+need_idx：1820 UpScore：1203
+need_idx：1830 UpScore：1215
+need_idx：1840 UpScore：1216
+need_idx：1850 UpScore：1216
+need_idx：1860 UpScore：1216
+need_idx：1870 UpScore：1216
+need_idx：1880 UpScore：1216
+need_idx：1890 UpScore：1225
+need_idx：1900 UpScore：1231
+need_idx：1910 UpScore：1239
+need_idx：1920 UpScore：1239
+need_idx：1930 UpScore：1242
+need_idx：1940 UpScore：1249
+need_idx：1950 UpScore：1251
+need_idx：1960 UpScore：1251
+need_idx：1970 UpScore：1251
+need_idx：1980 UpScore：1258
+need_idx：1990 UpScore：1281
+need_idx：2000 UpScore：1309
+买家件数：100000
+卖家件数：429679
+意向顺序标记
+分配记录数和买家货物数
+买家货物和分配记录数
+==============================================================
+总体贸易分单数：80097
+==============================================================
+仓库得分：39.91224666666757
+意向得分：39.55062400000062
+得分率：79.46287066666777
+==============================================================
+need_idx：2010 UpScore：1323
+need_idx：2020 UpScore：1324
+need_idx：2030 UpScore：1330
+need_idx：2040 UpScore：1330
+need_idx：2050 UpScore：1330
+need_idx：2060 UpScore：1335
+need_idx：2070 UpScore：1335
+need_idx：2080 UpScore：1335
+need_idx：2090 UpScore：1336
+need_idx：2100 UpScore：1342
+need_idx：2110 UpScore：1348
+need_idx：2120 UpScore：1351
+need_idx：2130 UpScore：1355
+need_idx：2140 UpScore：1368
+need_idx：2150 UpScore：1368
+need_idx：2160 UpScore：1368
+need_idx：2170 UpScore：1374
+need_idx：2180 UpScore：1374
+need_idx：2190 UpScore：1374
+need_idx：2200 UpScore：1374
+need_idx：2210 UpScore：1374
+need_idx：2220 UpScore：1374
+need_idx：2230 UpScore：1374
+need_idx：2240 UpScore：1389
+need_idx：2250 UpScore：1389
+need_idx：2260 UpScore：1389
+need_idx：2270 UpScore：1389
+need_idx：2280 UpScore：1389
+Up Score：1400
+need_idx：2290 UpScore：1411
+need_idx：2300 UpScore：1411
+need_idx：2310 UpScore：1411
+need_idx：2320 UpScore：1422
+need_idx：2330 UpScore：1422
+need_idx：2340 UpScore：1423
+need_idx：2350 UpScore：1423
+need_idx：2360 UpScore：1448
+need_idx：2370 UpScore：1448
+need_idx：2380 UpScore：1474
+need_idx：2390 UpScore：1474
+need_idx：2400 UpScore：1479
+need_idx：2410 UpScore：1495
+need_idx：2420 UpScore：1495
+need_idx：2430 UpScore：1499
+need_idx：2440 UpScore：1509
+need_idx：2450 UpScore：1509
+need_idx：2460 UpScore：1510
+need_idx：2470 UpScore：1510
+need_idx：2480 UpScore：1510
+need_idx：2490 UpScore：1515
+need_idx：2500 UpScore：1515
+need_idx：2510 UpScore：1526
+need_idx：2520 UpScore：1554
+need_idx：2530 UpScore：1554
+need_idx：2540 UpScore：1572
+need_idx：2550 UpScore：1572
+need_idx：2560 UpScore：1598
+Up Score：1600
+need_idx：2570 UpScore：1600
+need_idx：2580 UpScore：1600
+need_idx：2590 UpScore：1618
+need_idx：2600 UpScore：1620
+need_idx：2610 UpScore：1644
+need_idx：2620 UpScore：1656
+need_idx：2630 UpScore：1661
+need_idx：2640 UpScore：1661
+need_idx：2650 UpScore：1668
+need_idx：2660 UpScore：1670
+need_idx：2670 UpScore：1670
+need_idx：2680 UpScore：1699
+need_idx：2690 UpScore：1699
+need_idx：2700 UpScore：1699
+need_idx：2710 UpScore：1727
+need_idx：2720 UpScore：1727
+need_idx：2730 UpScore：1730
+need_idx：2740 UpScore：1735
+need_idx：2750 UpScore：1741
+need_idx：2760 UpScore：1741
+need_idx：2770 UpScore：1763
+need_idx：2780 UpScore：1783
+need_idx：2790 UpScore：1784
+need_idx：2800 UpScore：1790
+Up Score：1800
+need_idx：2810 UpScore：1812
+need_idx：2820 UpScore：1812
+need_idx：2830 UpScore：1812
+need_idx：2840 UpScore：1828
+need_idx：2850 UpScore：1836
+need_idx：2860 UpScore：1877
+need_idx：2870 UpScore：1883
+need_idx：2880 UpScore：1884
+need_idx：2890 UpScore：1884
+need_idx：2900 UpScore：1884
+need_idx：2910 UpScore：1892
+need_idx：2920 UpScore：1892
+need_idx：2930 UpScore：1894
+need_idx：2940 UpScore：1898
+need_idx：2950 UpScore：1898
+need_idx：2960 UpScore：1909
+need_idx：2970 UpScore：1909
+need_idx：2980 UpScore：1910
+need_idx：2990 UpScore：1916
+need_idx：3000 UpScore：1938
+买家件数：100000
+卖家件数：429679
+意向顺序标记
+分配记录数和买家货物数
+买家货物和分配记录数
+==============================================================
+总体贸易分单数：80487
+==============================================================
+仓库得分：39.916910000000925
+意向得分：39.57352000000063
+得分率：79.49043000000117
+==============================================================
+need_idx：3010 UpScore：1938
+need_idx：3020 UpScore：1938
+need_idx：3030 UpScore：1942
+need_idx：3040 UpScore：1982
+need_idx：3050 UpScore：1982
+need_idx：3060 UpScore：1983
+need_idx：3070 UpScore：1991
+need_idx：3080 UpScore：1991
+need_idx：3090 UpScore：1991
+need_idx：3100 UpScore：1997
+need_idx：3110 UpScore：1997
+need_idx：3120 UpScore：1997
+need_idx：3130 UpScore：1999
+need_idx：3140 UpScore：2010
+need_idx：3150 UpScore：2023
+need_idx：3160 UpScore：2023
+need_idx：3170 UpScore：2051
+need_idx：3180 UpScore：2051
+need_idx：3190 UpScore：2063
+need_idx：3200 UpScore：2065
+need_idx：3210 UpScore：2065
+need_idx：3220 UpScore：2070
+need_idx：3230 UpScore：2085
+need_idx：3240 UpScore：2090
+need_idx：3250 UpScore：2090
+need_idx：3260 UpScore：2090
+need_idx：3270 UpScore：2092
+need_idx：3280 UpScore：2092
+need_idx：3290 UpScore：2093
+need_idx：3300 UpScore：2094
+need_idx：3310 UpScore：2097
+need_idx：3320 UpScore：2103
+need_idx：3330 UpScore：2103
+need_idx：3340 UpScore：2116
+need_idx：3350 UpScore：2118
+need_idx：3360 UpScore：2119
+need_idx：3370 UpScore：2119
+need_idx：3380 UpScore：2130
+need_idx：3390 UpScore：2148
+need_idx：3400 UpScore：2156
+need_idx：3410 UpScore：2156
+need_idx：3420 UpScore：2158
+need_idx：3430 UpScore：2158
+need_idx：3440 UpScore：2183
+need_idx：3450 UpScore：2191
+need_idx：3460 UpScore：2226
+need_idx：3470 UpScore：2239
+need_idx：3480 UpScore：2256
+need_idx：3490 UpScore：2256
+need_idx：3500 UpScore：2256
+need_idx：3510 UpScore：2257
+need_idx：3520 UpScore：2257
+need_idx：3530 UpScore：2265
+need_idx：3540 UpScore：2265
+need_idx：3550 UpScore：2275
+need_idx：3560 UpScore：2301
+need_idx：3570 UpScore：2311
+need_idx：3580 UpScore：2326
+need_idx：3590 UpScore：2337
+need_idx：3600 UpScore：2338
+need_idx：3610 UpScore：2338
+need_idx：3620 UpScore：2344
+need_idx：3630 UpScore：2344
+need_idx：3640 UpScore：2344
+need_idx：3650 UpScore：2344
+need_idx：3660 UpScore：2389
+need_idx：3670 UpScore：2389
+need_idx：3680 UpScore：2389
+need_idx：3690 UpScore：2391
+need_idx：3700 UpScore：2404
+need_idx：3710 UpScore：2434
+need_idx：3720 UpScore：2440
+need_idx：3730 UpScore：2440
+need_idx：3740 UpScore：2466
+need_idx：3750 UpScore：2483
+need_idx：3760 UpScore：2488
+need_idx：3770 UpScore：2490
+need_idx：3780 UpScore：2491
+need_idx：3790 UpScore：2491
+need_idx：3800 UpScore：2496
+need_idx：3810 UpScore：2496
+need_idx：3820 UpScore：2496
+need_idx：3830 UpScore：2496
+Up Score：2500
+need_idx：3840 UpScore：2500
+need_idx：3850 UpScore：2507
+need_idx：3860 UpScore：2507
+need_idx：3870 UpScore：2507
+need_idx：3880 UpScore：2507
+need_idx：3890 UpScore：2511
+need_idx：3900 UpScore：2511
+need_idx：3910 UpScore：2511
+need_idx：3920 UpScore：2511
+need_idx：3930 UpScore：2517
+need_idx：3940 UpScore：2517
+need_idx：3950 UpScore：2517
+need_idx：3960 UpScore：2517
+need_idx：3970 UpScore：2517
+need_idx：3980 UpScore：2529
+need_idx：3990 UpScore：2533
+need_idx：4000 UpScore：2533
+买家件数：100000
+卖家件数：429679
+意向顺序标记
+分配记录数和买家货物数
+买家货物和分配记录数
+==============================================================
+总体贸易分单数：80807
+==============================================================
+仓库得分：39.920513333334235
+意向得分：39.59285800000062
+得分率：79.5133713333345
+==============================================================
+need_idx：4010 UpScore：2533
+need_idx：4020 UpScore：2541
+need_idx：4030 UpScore：2541
+need_idx：4040 UpScore：2542
+need_idx：4050 UpScore：2542
+need_idx：4060 UpScore：2544
+need_idx：4070 UpScore：2545
+need_idx：4080 UpScore：2551
+need_idx：4090 UpScore：2555
+need_idx：4100 UpScore：2559
+need_idx：4110 UpScore：2562
+need_idx：4120 UpScore：2562
+need_idx：4130 UpScore：2566
+need_idx：4140 UpScore：2582
+need_idx：4150 UpScore：2593
+need_idx：4160 UpScore：2594
+Up Score：2600
+need_idx：4170 UpScore：2602
+need_idx：4180 UpScore：2602
+need_idx：4190 UpScore：2641
+need_idx：4200 UpScore：2641
+need_idx：4210 UpScore：2641
+need_idx：4220 UpScore：2641
+need_idx：4230 UpScore：2676
+need_idx：4240 UpScore：2686
+need_idx：4250 UpScore：2699
+need_idx：4260 UpScore：2699
+need_idx：4270 UpScore：2699
+Up Score：2700
+need_idx：4280 UpScore：2700
+need_idx：4290 UpScore：2708
+need_idx：4300 UpScore：2708
+need_idx：4310 UpScore：2708
+need_idx：4320 UpScore：2713
+need_idx：4330 UpScore：2716
+need_idx：4340 UpScore：2729
+need_idx：4350 UpScore：2730
+need_idx：4360 UpScore：2737
+need_idx：4370 UpScore：2737
+need_idx：4380 UpScore：2737
+need_idx：4390 UpScore：2741
+need_idx：4400 UpScore：2741
+need_idx：4410 UpScore：2751
+need_idx：4420 UpScore：2759
+need_idx：4430 UpScore：2773
+need_idx：4440 UpScore：2782
+need_idx：4450 UpScore：2792
+Up Score：2800
+need_idx：4460 UpScore：2803
+need_idx：4470 UpScore：2803
+need_idx：4480 UpScore：2812
+need_idx：4490 UpScore：2812
+need_idx：4500 UpScore：2819
+need_idx：4510 UpScore：2819
+need_idx：4520 UpScore：2819
+need_idx：4530 UpScore：2829
+need_idx：4540 UpScore：2829
+need_idx：4550 UpScore：2841
+need_idx：4560 UpScore：2851
+need_idx：4570 UpScore：2854
+need_idx：4580 UpScore：2866
+need_idx：4590 UpScore：2877
+need_idx：4600 UpScore：2879
+Up Score：2900
+need_idx：4610 UpScore：2944
+need_idx：4620 UpScore：2957
+need_idx：4630 UpScore：2957
+need_idx：4640 UpScore：2959
+need_idx：4650 UpScore：2959
+need_idx：4660 UpScore：2959
+need_idx：4670 UpScore：2959
+need_idx：4680 UpScore：2963
+need_idx：4690 UpScore：2963
+need_idx：4700 UpScore：2978
+need_idx：4710 UpScore：2978
+need_idx：4720 UpScore：2978
+need_idx：4730 UpScore：2978
+need_idx：4740 UpScore：2978
+need_idx：4750 UpScore：2979
+need_idx：4760 UpScore：2979
+need_idx：4770 UpScore：2993
+Up Score：3000
+need_idx：4780 UpScore：3009
+need_idx：4790 UpScore：3036
+need_idx：4800 UpScore：3036
+need_idx：4810 UpScore：3036
+need_idx：4820 UpScore：3036
+need_idx：4830 UpScore：3036
+need_idx：4840 UpScore：3036
+need_idx：4850 UpScore：3044
+need_idx：4860 UpScore：3044
+need_idx：4870 UpScore：3044
+need_idx：4880 UpScore：3047
+need_idx：4890 UpScore：3054
+need_idx：4900 UpScore：3059
+need_idx：4910 UpScore：3067
+need_idx：4920 UpScore：3096
+need_idx：4930 UpScore：3096
+need_idx：4940 UpScore：3097
+need_idx：4950 UpScore：3097
+need_idx：4960 UpScore：3113
+need_idx：4970 UpScore：3120
+need_idx：4980 UpScore：3120
+need_idx：4990 UpScore：3126
+need_idx：5000 UpScore：3126
+买家件数：100000
+卖家件数：429679
+意向顺序标记
+分配记录数和买家货物数
+买家货物和分配记录数
+==============================================================
+总体贸易分单数：81099
+==============================================================
+仓库得分：39.922810000000915
+意向得分：39.61136200000063
+得分率：79.5341720000012
+==============================================================
+need_idx：5010 UpScore：3126
+need_idx：5020 UpScore：3126
+need_idx：5030 UpScore：3134
+need_idx：5040 UpScore：3143
+need_idx：5050 UpScore：3143
+need_idx：5060 UpScore：3143
+need_idx：5070 UpScore：3143
+need_idx：5080 UpScore：3143
+need_idx：5090 UpScore：3148
+need_idx：5100 UpScore：3148
+need_idx：5110 UpScore：3148
+need_idx：5120 UpScore：3148
+need_idx：5130 UpScore：3148
+need_idx：5140 UpScore：3157
+need_idx：5150 UpScore：3157
+need_idx：5160 UpScore：3161
+need_idx：5170 UpScore：3161
+need_idx：5180 UpScore：3177
+need_idx：5190 UpScore：3177
+need_idx：5200 UpScore：3196
+need_idx：5210 UpScore：3196
+need_idx：5220 UpScore：3197
+need_idx：5230 UpScore：3198
+need_idx：5240 UpScore：3199
+need_idx：5250 UpScore：3214
+need_idx：5260 UpScore：3219
+need_idx：5270 UpScore：3223
+need_idx：5280 UpScore：3227
+need_idx：5290 UpScore：3230
+need_idx：5300 UpScore：3230
+need_idx：5310 UpScore：3238
+need_idx：5320 UpScore：3255
+need_idx：5330 UpScore：3262
+need_idx：5340 UpScore：3262
+need_idx：5350 UpScore：3263
+need_idx：5360 UpScore：3281
+need_idx：5370 UpScore：3281
+need_idx：5380 UpScore：3284
+need_idx：5390 UpScore：3284
+need_idx：5400 UpScore：3284
+need_idx：5410 UpScore：3284
+need_idx：5420 UpScore：3284
+need_idx：5430 UpScore：3286
+need_idx：5440 UpScore：3286
+need_idx：5450 UpScore：3286
+need_idx：5460 UpScore：3294
+need_idx：5470 UpScore：3294
+need_idx：5480 UpScore：3294
+Up Score：3300
+need_idx：5490 UpScore：3309
+need_idx：5500 UpScore：3309
+need_idx：5510 UpScore：3309
+need_idx：5520 UpScore：3311
+need_idx：5530 UpScore：3333
+need_idx：5540 UpScore：3338
+need_idx：5550 UpScore：3353
+need_idx：5560 UpScore：3353
+need_idx：5570 UpScore：3363
+need_idx：5580 UpScore：3381
+need_idx：5590 UpScore：3389
+need_idx：5600 UpScore：3415
+need_idx：5610 UpScore：3415
+need_idx：5620 UpScore：3415
+need_idx：5630 UpScore：3445
+need_idx：5640 UpScore：3464
+need_idx：5650 UpScore：3473
+need_idx：5660 UpScore：3474
+need_idx：5670 UpScore：3474
+need_idx：5680 UpScore：3482
+need_idx：5690 UpScore：3485
+need_idx：5700 UpScore：3485
+need_idx：5710 UpScore：3494
+need_idx：5720 UpScore：3499
+need_idx：5730 UpScore：3520
+need_idx：5740 UpScore：3520
+need_idx：5750 UpScore：3530
+need_idx：5760 UpScore：3530
+need_idx：5770 UpScore：3532
+need_idx：5780 UpScore：3532
+need_idx：5790 UpScore：3540
+need_idx：5800 UpScore：3540
+need_idx：5810 UpScore：3541
+need_idx：5820 UpScore：3541
+need_idx：5830 UpScore：3541
+need_idx：5840 UpScore：3556
+need_idx：5850 UpScore：3556
+need_idx：5860 UpScore：3556
+need_idx：5870 UpScore：3556
+need_idx：5880 UpScore：3556
+need_idx：5890 UpScore：3563
+need_idx：5900 UpScore：3568
+need_idx：5910 UpScore：3568
+need_idx：5920 UpScore：3579
+need_idx：5930 UpScore：3579
+need_idx：5940 UpScore：3579
+need_idx：5950 UpScore：3579
+need_idx：5960 UpScore：3579
+need_idx：5970 UpScore：3579
+need_idx：5980 UpScore：3595
+need_idx：5990 UpScore：3595
+need_idx：6000 UpScore：3595
+买家件数：100000
+卖家件数：429679
+意向顺序标记
+分配记录数和买家货物数
+买家货物和分配记录数
+==============================================================
+总体贸易分单数：81337
+==============================================================
+仓库得分：39.92405000000093
+意向得分：39.62834400000063
+得分率：79.5523940000012
+==============================================================
+need_idx：6010 UpScore：3595
+need_idx：6020 UpScore：3595
+need_idx：6030 UpScore：3599
+need_idx：6040 UpScore：3601
+need_idx：6050 UpScore：3601
+need_idx：6060 UpScore：3607
+need_idx：6070 UpScore：3607
+need_idx：6080 UpScore：3607
+need_idx：6090 UpScore：3610
+need_idx：6100 UpScore：3613
+need_idx：6110 UpScore：3613
+need_idx：6120 UpScore：3629
+need_idx：6130 UpScore：3629
+need_idx：6140 UpScore：3629
+need_idx：6150 UpScore：3629
+need_idx：6160 UpScore：3638
+need_idx：6170 UpScore：3638
+need_idx：6180 UpScore：3638
+need_idx：6190 UpScore：3638
+need_idx：6200 UpScore：3638
+need_idx：6210 UpScore：3638
+need_idx：6220 UpScore：3641
+need_idx：6230 UpScore：3641
+need_idx：6240 UpScore：3643
+need_idx：6250 UpScore：3643
+need_idx：6260 UpScore：3643
+need_idx：6270 UpScore：3658
+need_idx：6280 UpScore：3671
+need_idx：6290 UpScore：3675
+need_idx：6300 UpScore：3680
+need_idx：6310 UpScore：3694
+need_idx：6320 UpScore：3694
+need_idx：6330 UpScore：3698
+need_idx：6340 UpScore：3706
+need_idx：6350 UpScore：3710
+need_idx：6360 UpScore：3710
+need_idx：6370 UpScore：3712
+need_idx：6380 UpScore：3712
+need_idx：6390 UpScore：3712
+need_idx：6400 UpScore：3712
+need_idx：6410 UpScore：3716
+need_idx：6420 UpScore：3718
+need_idx：6430 UpScore：3718
+need_idx：6440 UpScore：3768
+need_idx：6450 UpScore：3768
+need_idx：6460 UpScore：3768
+need_idx：6470 UpScore：3769
+need_idx：6480 UpScore：3769
+need_idx：6490 UpScore：3777
+need_idx：6500 UpScore：3777
+need_idx：6510 UpScore：3777
+need_idx：6520 UpScore：3778
+need_idx：6530 UpScore：3778
+need_idx：6540 UpScore：3794
+need_idx：6550 UpScore：3794
+need_idx：6560 UpScore：3794
+need_idx：6570 UpScore：3794
+need_idx：6580 UpScore：3797
+need_idx：6590 UpScore：3797
+need_idx：6600 UpScore：3797
+need_idx：6610 UpScore：3797
+Up Score：3800
+need_idx：6620 UpScore：3808
+need_idx：6630 UpScore：3809
+need_idx：6640 UpScore：3809
+need_idx：6650 UpScore：3809
+need_idx：6660 UpScore：3818
+need_idx：6670 UpScore：3818
+need_idx：6680 UpScore：3823
+need_idx：6690 UpScore：3825
+need_idx：6700 UpScore：3838
+need_idx：6710 UpScore：3838
+need_idx：6720 UpScore：3838
+need_idx：6730 UpScore：3843
+need_idx：6740 UpScore：3843
+need_idx：6750 UpScore：3843
+need_idx：6760 UpScore：3843
+need_idx：6770 UpScore：3843
+need_idx：6780 UpScore：3853
+need_idx：6790 UpScore：3855
+need_idx：6800 UpScore：3862
+need_idx：6810 UpScore：3862
+need_idx：6820 UpScore：3866
+need_idx：6830 UpScore：3866
+need_idx：6840 UpScore：3873
+need_idx：6850 UpScore：3874
+need_idx：6860 UpScore：3874
+need_idx：6870 UpScore：3875
+need_idx：6880 UpScore：3875
+need_idx：6890 UpScore：3875
+need_idx：6900 UpScore：3881
+need_idx：6910 UpScore：3889
+need_idx：6920 UpScore：3893
+need_idx：6930 UpScore：3896
+need_idx：6940 UpScore：3896
+need_idx：6950 UpScore：3898
+need_idx：6960 UpScore：3906
+need_idx：6970 UpScore：3906
+need_idx：6980 UpScore：3911
+need_idx：6990 UpScore：3923
+need_idx：7000 UpScore：3923
+买家件数：100000
+卖家件数：429679
+意向顺序标记
+分配记录数和买家货物数
+买家货物和分配记录数
+==============================================================
+总体贸易分单数：81524
+==============================================================
+仓库得分：39.925033333334284
+意向得分：39.64098800000061
+得分率：79.56602133333452
+==============================================================
+need_idx：7010 UpScore：3923
+need_idx：7020 UpScore：3928
+need_idx：7030 UpScore：3928
+need_idx：7040 UpScore：3943
+need_idx：7050 UpScore：3950
+need_idx：7060 UpScore：3951
+need_idx：7070 UpScore：3951
+need_idx：7080 UpScore：3954
+need_idx：7090 UpScore：3954
+need_idx：7100 UpScore：3954
+need_idx：7110 UpScore：3959
+need_idx：7120 UpScore：3967
+need_idx：7130 UpScore：3985
+need_idx：7140 UpScore：3985
+need_idx：7150 UpScore：3988
+need_idx：7160 UpScore：3991
+need_idx：7170 UpScore：3991
+need_idx：7180 UpScore：3991
+need_idx：7190 UpScore：3991
+need_idx：7200 UpScore：4007
+need_idx：7210 UpScore：4007
+need_idx：7220 UpScore：4007
+need_idx：7230 UpScore：4007
+need_idx：7240 UpScore：4009
+need_idx：7250 UpScore：4009
+need_idx：7260 UpScore：4013
+need_idx：7270 UpScore：4015
+need_idx：7280 UpScore：4027
+need_idx：7290 UpScore：4027
+need_idx：7300 UpScore：4027
+need_idx：7310 UpScore：4027
+need_idx：7320 UpScore：4027
+need_idx：7330 UpScore：4038
+need_idx：7340 UpScore：4038
+need_idx：7350 UpScore：4040
+need_idx：7360 UpScore：4068
+need_idx：7370 UpScore：4068
+need_idx：7380 UpScore：4086
+need_idx：7390 UpScore：4086
+need_idx：7400 UpScore：4086
+need_idx：7410 UpScore：4089
+need_idx：7420 UpScore：4089
+need_idx：7430 UpScore：4095
+need_idx：7440 UpScore：4095
+need_idx：7450 UpScore：4095
+need_idx：7460 UpScore：4095
+need_idx：7470 UpScore：4102
+need_idx：7480 UpScore：4105
+need_idx：7490 UpScore：4105
+need_idx：7500 UpScore：4105
+need_idx：7510 UpScore：4112
+need_idx：7520 UpScore：4112
+need_idx：7530 UpScore：4112
+need_idx：7540 UpScore：4130
+need_idx：7550 UpScore：4130
+need_idx：7560 UpScore：4153
+need_idx：7570 UpScore：4153
+need_idx：7580 UpScore：4164
+need_idx：7590 UpScore：4168
+need_idx：7600 UpScore：4168
+need_idx：7610 UpScore：4168
+need_idx：7620 UpScore：4168
+need_idx：7630 UpScore：4170
+need_idx：7640 UpScore：4170
+need_idx：7650 UpScore：4176
+need_idx：7660 UpScore：4181
+need_idx：7670 UpScore：4185
+need_idx：7680 UpScore：4187
+Up Score：4200
+need_idx：7690 UpScore：4228
+need_idx：7700 UpScore：4228
+need_idx：7710 UpScore：4228
+need_idx：7720 UpScore：4228
+need_idx：7730 UpScore：4228
+need_idx：7740 UpScore：4228
+need_idx：7750 UpScore：4229
+need_idx：7760 UpScore：4232
+need_idx：7770 UpScore：4245
+need_idx：7780 UpScore：4259
+need_idx：7790 UpScore：4259
+need_idx：7800 UpScore：4259
+need_idx：7810 UpScore：4265
+need_idx：7820 UpScore：4265
+need_idx：7830 UpScore：4265
+need_idx：7840 UpScore：4265
+need_idx：7850 UpScore：4265
+need_idx：7860 UpScore：4283
+need_idx：7870 UpScore：4286
+need_idx：7880 UpScore：4295
+need_idx：7890 UpScore：4298
+need_idx：7900 UpScore：4298
+need_idx：7910 UpScore：4298
+need_idx：7920 UpScore：4298
+need_idx：7930 UpScore：4298
+need_idx：7940 UpScore：4298
+need_idx：7950 UpScore：4298
+need_idx：7960 UpScore：4299
+need_idx：7970 UpScore：4299
+need_idx：7980 UpScore：4299
+need_idx：7990 UpScore：4299
+Up Score：4300
+need_idx：8000 UpScore：4302
+买家件数：100000
+卖家件数：429679
+意向顺序标记
+分配记录数和买家货物数
+买家货物和分配记录数
+==============================================================
+总体贸易分单数：81732
+==============================================================
+仓库得分：39.927136666667614
+意向得分：39.65455000000063
+得分率：79.58168666666779
+==============================================================
+need_idx：8010 UpScore：4302
+need_idx：8020 UpScore：4302
+need_idx：8030 UpScore：4310
+need_idx：8040 UpScore：4312
+need_idx：8050 UpScore：4312
+need_idx：8060 UpScore：4312
+need_idx：8070 UpScore：4319
+need_idx：8080 UpScore：4323
+need_idx：8090 UpScore：4323
+need_idx：8100 UpScore：4323
+need_idx：8110 UpScore：4323
+need_idx：8120 UpScore：4323
+need_idx：8130 UpScore：4323
+need_idx：8140 UpScore：4323
+need_idx：8150 UpScore：4334
+need_idx：8160 UpScore：4334
+need_idx：8170 UpScore：4337
+need_idx：8180 UpScore：4339
+need_idx：8190 UpScore：4339
+need_idx：8200 UpScore：4351
+need_idx：8210 UpScore：4358
+need_idx：8220 UpScore：4358
+need_idx：8230 UpScore：4358
+need_idx：8240 UpScore：4364
+need_idx：8250 UpScore：4375
+need_idx：8260 UpScore：4375
+need_idx：8270 UpScore：4387
+need_idx：8280 UpScore：4387
+need_idx：8290 UpScore：4387
+need_idx：8300 UpScore：4388
+need_idx：8310 UpScore：4388
+need_idx：8320 UpScore：4388
+need_idx：8330 UpScore：4391
+need_idx：8340 UpScore：4391
+need_idx：8350 UpScore：4391
+need_idx：8360 UpScore：4397
+need_idx：8370 UpScore：4397
+need_idx：8380 UpScore：4397
+need_idx：8390 UpScore：4397
+need_idx：8400 UpScore：4397
+need_idx：8410 UpScore：4397
+need_idx：8420 UpScore：4406
+need_idx：8430 UpScore：4408
+need_idx：8440 UpScore：4408
+need_idx：8450 UpScore：4413
+need_idx：8460 UpScore：4413
+need_idx：8470 UpScore：4421
+need_idx：8480 UpScore：4431
+need_idx：8490 UpScore：4431
+need_idx：8500 UpScore：4431
+need_idx：8510 UpScore：4431
+need_idx：8520 UpScore：4431
+need_idx：8530 UpScore：4431
+need_idx：8540 UpScore：4439
+need_idx：8550 UpScore：4455
+need_idx：8560 UpScore：4455
+need_idx：8570 UpScore：4461
+need_idx：8580 UpScore：4461
+need_idx：8590 UpScore：4462
+need_idx：8600 UpScore：4463
+need_idx：8610 UpScore：4463
+need_idx：8620 UpScore：4469
+need_idx：8630 UpScore：4470
+need_idx：8640 UpScore：4470
+need_idx：8650 UpScore：4470
+need_idx：8660 UpScore：4490
+need_idx：8670 UpScore：4499
+need_idx：8680 UpScore：4499
+need_idx：8690 UpScore：4505
+need_idx：8700 UpScore：4508
+need_idx：8710 UpScore：4508
+need_idx：8720 UpScore：4508
+need_idx：8730 UpScore：4537
+need_idx：8740 UpScore：4537
+need_idx：8750 UpScore：4537
+need_idx：8760 UpScore：4545
+need_idx：8770 UpScore：4549
+need_idx：8780 UpScore：4549
+need_idx：8790 UpScore：4550
+need_idx：8800 UpScore：4550
+need_idx：8810 UpScore：4580
+need_idx：8820 UpScore：4580
+need_idx：8830 UpScore：4580
+need_idx：8840 UpScore：4590
+need_idx：8850 UpScore：4590
+need_idx：8860 UpScore：4590
+need_idx：8870 UpScore：4594
+need_idx：8880 UpScore：4602
+need_idx：8890 UpScore：4605
+need_idx：8900 UpScore：4605
+need_idx：8910 UpScore：4605
+need_idx：8920 UpScore：4614
+need_idx：8930 UpScore：4614
+need_idx：8940 UpScore：4616
+need_idx：8950 UpScore：4621
+need_idx：8960 UpScore：4621
+need_idx：8970 UpScore：4626
+need_idx：8980 UpScore：4626
+need_idx：8990 UpScore：4629
+need_idx：9000 UpScore：4629
+买家件数：100000
+卖家件数：429679
+意向顺序标记
+分配记录数和买家货物数
+买家货物和分配记录数
+==============================================================
+总体贸易分单数：81913
+==============================================================
+仓库得分：39.927213333334265
+意向得分：39.6689260000006
+得分率：79.59613933333448
+==============================================================
+need_idx：9010 UpScore：4629
+need_idx：9020 UpScore：4646
+need_idx：9030 UpScore：4649
+need_idx：9040 UpScore：4653
+need_idx：9050 UpScore：4653
+need_idx：9060 UpScore：4656
+need_idx：9070 UpScore：4656
+need_idx：9080 UpScore：4660
+need_idx：9090 UpScore：4660
+need_idx：9100 UpScore：4660
+need_idx：9110 UpScore：4660
+need_idx：9120 UpScore：4660
+need_idx：9130 UpScore：4660
+need_idx：9140 UpScore：4665
+need_idx：9150 UpScore：4670
+need_idx：9160 UpScore：4672
+need_idx：9170 UpScore：4672
+need_idx：9180 UpScore：4680
+need_idx：9190 UpScore：4680
+need_idx：9200 UpScore：4680
+need_idx：9210 UpScore：4687
+need_idx：9220 UpScore：4687
+need_idx：9230 UpScore：4687
+need_idx：9240 UpScore：4690
+need_idx：9250 UpScore：4690
+need_idx：9260 UpScore：4706
+need_idx：9270 UpScore：4706
+need_idx：9280 UpScore：4714
+need_idx：9290 UpScore：4714
+need_idx：9300 UpScore：4728
+need_idx：9310 UpScore：4744
