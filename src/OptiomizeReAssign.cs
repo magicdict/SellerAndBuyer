@@ -43,8 +43,8 @@ public static partial class Optiomize
                 //先把已经满足分配的人全部挑选出来
                 var satisfy = grp.ToList().Where(x => x.IsFirstHopeSatisfy).ToList();
                 System.Console.WriteLine("Start:" + grp.Key.hopeType + "-" + grp.Key.hopeValue + "(" + satisfy.Count() + ")");
-                var total_goods_quantities = satisfy.Sum(x=>x.购买货物数量);
-                var score_before = satisfy.Sum(x => x.Score * x.购买货物数量/total_goods_quantities);
+                var total_goods_quantities = satisfy.Sum(x => x.购买货物数量);
+                var score_before = satisfy.Sum(x => x.Score * x.购买货物数量 / total_goods_quantities);
                 //制作Clone对象
                 var Satisfy_Clone = new List<Buyer>();
                 var sellers = new List<Seller>();
@@ -67,6 +67,7 @@ public static partial class Optiomize
                         var buyer = buyers.Where(x => x.买方客户 == buyer_c.买方客户).First();
                         buyer.results = buyer_c.results;
                     }
+                    System.Console.WriteLine("Up:" + (score_after-score_before));
                 }
                 System.Console.WriteLine("End:" + grp.Key.hopeType + "-" + grp.Key.hopeValue);
                 Satisfy_Clone = null;
@@ -89,7 +90,7 @@ public static partial class Optiomize
             }
             else
             {
-                return x.购买货物数量.CompareTo(y.购买货物数量);
+                return y.购买货物数量.CompareTo(x.购买货物数量);
             }
         });
         int cnt = 0;
