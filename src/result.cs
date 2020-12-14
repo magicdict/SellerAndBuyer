@@ -75,6 +75,7 @@ public class Result
             r.对应意向顺序 = info[6];
             results.Add(r);
         }
+        sr.Close();
         return results;
     }
     public static void WriteToCSV(string filename, List<Result> results)
@@ -134,6 +135,6 @@ public class Result
             rs_compress.Add(r);
         }
         System.Console.WriteLine("After Count:" + rs_compress.Count);
-        WriteToCSV(filename + "_z", rs_compress);
+        WriteToCSV(filename , rs_compress);
     }
 }

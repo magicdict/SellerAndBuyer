@@ -71,7 +71,7 @@ public static partial class Optiomize
         {
             if (need_idx % 10 == 0)
                 System.Console.WriteLine("need_idx：" + need_idx + " UpScore：" + UpScore.ToString());
-            if (need_idx % 1000 == 0 && need_idx !=0)
+            if (need_idx % 1000 == 0 && need_idx != 0)
             {
                 Result.CheckScoreOutput(path, strKbn, buyers, "Inter_" + UpScore.ToString());
             }
@@ -276,7 +276,7 @@ public static partial class Optiomize
     /// <param name="r"></param>
     /// <param name="buyer"></param>
     /// <returns></returns>
-    private static List<Result> Exchange(Result r, Buyer buyer)
+    public static List<Result> Exchange(Result r, Buyer buyer)
     {
         //原来提供者的Result将被替换
         var new_support_results = new List<Result>();

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -31,14 +30,17 @@ namespace src
                 //Summary.Run(path, "CF_Inter_49492.csv"); return;
                 //Optiomize.ReAssignFirstHope(path, args[0], "CF");
                 //Optiomize.ReAssignFirstHope(path, "result_CF_99.csv","CF");
+                Summary.Run(path, "result.csv");
                 //Summary.Run(path, "SR_ReHope.csv");
 
                 //Optiomize.OptiomizeInteractive(path, "result_SR_99.csv","SR");
                 //Optiomize.ReAssignFirstHope(path, "SR_Inter.csv","SR");
-                
+
                 //Optiomize.OptiomizeInteractive(path, "result_CF_99.csv","CF");
-                Optiomize.ReAssignFirstHope(path, "CF_Inter_3954.csv","CF");
-                
+                //Optiomize.ReAssignFirstHope(path, "CF_Inter_3954.csv","CF");
+                //Result.CompressResultFile(path + "CF_Inter_4211.csv");
+                //Optiomize.OptiomizeRepo(path, "CF_Inter_4211.csv", "CF");
+
                 //Result.CompressResultFile(path + "SR_ReHope.csv");
                 return;
             }

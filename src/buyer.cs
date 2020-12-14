@@ -199,6 +199,14 @@ public class Buyer
         }
     }
 
+    public string MainRepo
+    {
+        get
+        {
+            return results.First().仓库;
+        }
+    }
+
     public double Diary_score
     {
         get
