@@ -64,7 +64,8 @@ public static partial class Optiomize
         }
 
         //单一仓库  无第一意向 有第一意向，不完美 
-        var buyer_target = buyers.Where(x => !x.IsPerfectScore).ToList();
+        //var buyer_target = buyers.Where(x => !x.IsPerfectScore).ToList();
+        var buyer_target = buyers;
         //大规模交换
         int UpScore = 0;
         for (int need_idx = 0; need_idx < buyer_target.Count; need_idx++)
@@ -80,6 +81,7 @@ public static partial class Optiomize
             {
                 if (need_idx == support_idx) continue;   //自己不和自己交换
                 var buyer_support = buyer_target[support_idx];
+                if (buyer_support.IsPerfectScore && buyer_need.IsPerfectScore) continue;
                 buyer_support.Seller_Buyer_HopeScoreDic = new Dictionary<string, int>();
                 buyer_need.Seller_Buyer_HopeScoreDic = new Dictionary<string, int>(); ;
                 var up = IsExchangeBuyerResult(buyer_need, buyer_support);

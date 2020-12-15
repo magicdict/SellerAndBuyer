@@ -136,7 +136,7 @@ public static class PreAssign{
                 }
                 else
                 {
-                    return x.购买货物数量.CompareTo(y.购买货物数量);
+                    return y.购买货物数量.CompareTo(x.购买货物数量);
                 }
             });
             int total_cnt = buyers.Count;

@@ -29,32 +29,34 @@ namespace src
                 //Summary.Run(args[0], args[1]);
                 //Summary.Run(path, "CF_Inter_49492.csv"); return;
                 //Optiomize.ReAssignFirstHope(path, args[0], "CF");
-                //Optiomize.ReAssignFirstHope(path, "result_CF_99.csv","CF");
-                Summary.Run(path, "result.csv");
-                //Summary.Run(path, "SR_ReHope.csv");
 
-                //Optiomize.OptiomizeInteractive(path, "result_SR_99.csv","SR");
-                //Optiomize.ReAssignFirstHope(path, "SR_Inter.csv","SR");
+                //Summary.Run(path, "result.csv");
+                //Summary.Run(path, "SR_Result.csv"); 
+
+                //Optiomize.OptiomizeInteractive(path, "CF_Result.csv", "CF");
+                //Optiomize.ReAssignFirstHope(path, "CF_Inter.csv", "CF");
+
+                Optiomize.OptiomizeInteractive(path, "CF_Result.csv", "CF");
+                Optiomize.ReAssignFirstHope(path, "CF_Inter.csv", "CF");
 
                 //Optiomize.OptiomizeInteractive(path, "result_CF_99.csv","CF");
-                //Optiomize.ReAssignFirstHope(path, "CF_Inter_3954.csv","CF");
+                //Optiomize.ReAssignFirstHope(path, "CF_Inter_4686.csv","CF");
                 //Result.CompressResultFile(path + "CF_Inter_4211.csv");
                 //Optiomize.OptiomizeRepo(path, "CF_Inter_4211.csv", "CF");
-
                 //Result.CompressResultFile(path + "SR_ReHope.csv");
                 return;
             }
             //按照品种进行分组
-            var strategylist = new int[] { 1, 2 };
+            var strategylist = new int[] { 99 };
             var kblist = new string[] { "CF" };
 
             foreach (var strategy in strategylist)
             {
                 foreach (var strKb in kblist)
                 {
-                    bool RunFirstStep = true;
-                    bool RunSecondStep = true;
-                    bool RunThreeStep = true;
+                    bool RunHopeWithGapStep = true;
+                    bool RunHopeStep = true;
+                    bool RunOtherStep = true;
                     var sellers = Seller.ReadSellerFile(path + "seller.csv");
                     var buyers = Buyer.ReadBuyerFile(path + "buyer.csv");
                     var sellers_Breed = sellers.Where(x => x.品种 == strKb).ToList();
@@ -67,11 +69,10 @@ namespace src
                     System.Console.WriteLine("具有第五意向的客户数：" + buyers_Breed.Count(x => x.第五意向.hopeType != enmHope.无));
                     System.Console.WriteLine("卖家数：" + sellers_Breed.Count);
                     System.Console.WriteLine("买家数：" + buyers_Breed.Count);
-                    List<Result> results = Assign(sellers_Breed, buyers_Breed, RunFirstStep, RunSecondStep, RunThreeStep, strategy);
+                    List<Result> results = Assign(sellers_Breed, buyers_Breed, RunHopeWithGapStep, RunHopeStep, RunOtherStep, strategy);
                     System.Console.WriteLine("======策略号:" + strategy);
                     System.Console.WriteLine("======区分:" + strKb);
-                    Result.Score(results, buyers_Breed);
-                    if (RunThreeStep) Result.WriteToCSV(path + "result_" + strKb + "_" + strategy + ".csv", results);
+                    if (RunOtherStep) Result.WriteToCSV(path + strKb + "_Result.csv", results);
                     System.GC.Collect();
                 }
             }
