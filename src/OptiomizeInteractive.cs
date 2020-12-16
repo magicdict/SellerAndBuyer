@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -82,8 +83,8 @@ public static partial class Optiomize
                 if (need_idx == support_idx) continue;   //自己不和自己交换
                 var buyer_support = buyer_target[support_idx];
                 if (buyer_support.IsPerfectScore && buyer_need.IsPerfectScore) continue;
-                buyer_support.Seller_Buyer_HopeScoreDic = new Dictionary<string, int>();
-                buyer_need.Seller_Buyer_HopeScoreDic = new Dictionary<string, int>(); ;
+                buyer_support.Seller_Buyer_HopeScoreDic = new ConcurrentDictionary<string, int>();
+                buyer_need.Seller_Buyer_HopeScoreDic = new ConcurrentDictionary<string, int>(); ;
                 var up = IsExchangeBuyerResult(buyer_need, buyer_support);
                 if (up != 0)
                 {

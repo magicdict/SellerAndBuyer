@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+
 public record Seller : Goods
 {
     //卖方客户
@@ -23,8 +25,9 @@ public record Seller : Goods
             return 剩余货物数量 == 0;
         }
     }
-    public Seller(){
-        
+    public Seller()
+    {
+
     }
     public Seller(Result r)
     {
@@ -91,5 +94,17 @@ public record Seller : Goods
         return rtn;
     }
 
+    public Seller Copy()
+    {
+        var clone = this.MemberwiseClone() as Seller;
+        return clone;
+    }
 
+    public double Antiffy;
+
+    public void SetAntiffy(List<Buyer> buyers)
+    {
+        buyers = buyers.Where(x => x.第一意向.hopeType != enmHope.无 && this.IsMatchHope(x.第一意向)).ToList();
+        Antiffy = buyers.Average(x => x.GetHopeScore(this));
+    }
 }

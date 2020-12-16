@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,7 +15,7 @@ public class Buyer
     public (enmHope hopeType, string hopeValue) 第四意向 { get; set; }
     public (enmHope hopeType, string hopeValue) 第五意向 { get; set; }
 
-    public Dictionary<string, int> Seller_Buyer_HopeScoreDic = new Dictionary<string, int>(1024);
+    public ConcurrentDictionary<string, int> Seller_Buyer_HopeScoreDic = new ConcurrentDictionary<string, int>();
 
     public Buyer Clone()
     {
@@ -47,7 +48,7 @@ public class Buyer
             if (seller.IsMatchHope(第三意向)) score += 20;
             if (seller.IsMatchHope(第四意向)) score += 10;
         }
-        Seller_Buyer_HopeScoreDic.Add(seller.货物编号, score);
+        Seller_Buyer_HopeScoreDic.TryAdd(seller.货物编号, score);
         return score;
     }
 
@@ -331,5 +332,34 @@ public class Buyer
         }
     };
 
+    #endregion
+
+    #region Rare
+    public double MinRare;
+
+    public double ComboRare;
+
+    public double AvgRare;
+
+    public void SetRare(List<Seller> sellers)
+    {
+        MinRare = double.MaxValue;
+        ComboRare = 1.0;
+        AvgRare = 0;
+        var hopes = new (enmHope, string)[] { this.第一意向, this.第二意向, this.第三意向, this.第四意向, this.第五意向 };
+        int hopecnt = 0;
+        double totalrate = 0;
+        foreach (var hope in hopes)
+        {
+            if (hope.Item1 != enmHope.无)
+            {
+                if (Goods.GlobalSupportNeedRateDict[hope] < MinRare) MinRare = Goods.GlobalSupportNeedRateDict[hope];
+                ComboRare *= Goods.GlobalSupportNeedRateDict[hope];
+                totalrate += Goods.GlobalSupportNeedRateDict[hope];
+                hopecnt++;
+            }
+        }
+        if (hopecnt != 0) AvgRare = totalrate / hopecnt;
+    }
     #endregion
 }

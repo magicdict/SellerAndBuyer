@@ -1,9 +1,10 @@
 
 using System.Collections.Generic;
+using System.Linq;
 
 public record Goods
 {
-    public static Dictionary<string,Goods> GoodsDict = new Dictionary<string, Goods>();
+    public static Dictionary<string, Goods> GoodsDict = new Dictionary<string, Goods>();
     public string 品种 { get; set; }
     public string 货物编号 { get; set; }
     //仓库
@@ -62,5 +63,59 @@ public record Goods
                 return EmptyAsTrue;
         }
     }
+    /// <summary>
+    /// 各个意向剩余量
+    /// </summary>
+    public static Dictionary<(enmHope hopeType, string hopeValue), int> RemainDict = new Dictionary<(enmHope hopeType, string hopeValue), int>();
+    public static Dictionary<(enmHope hopeType, string hopeValue), int> GlobalNeedDict = new Dictionary<(enmHope hopeType, string hopeValue), int>();
+    public static Dictionary<(enmHope hopeType, string hopeValue), int> GlobalSupportDict = new Dictionary<(enmHope hopeType, string hopeValue), int>();
 
+    public static Dictionary<(enmHope hopeType, string hopeValue), double> GlobalSupportNeedRateDict = new Dictionary<(enmHope hopeType, string hopeValue), double>();
+
+    public static void Init(string path, string strKb)
+    {
+        var sellers = Seller.ReadSellerFile(path + "seller.csv");
+        var buyers = Buyer.ReadBuyerFile(path + "buyer.csv");
+        var sellers_Breed = sellers.Where(x => x.品种 == strKb).ToList();
+        var buyers_Breed = buyers.Where(x => x.品种 == strKb).ToList();
+        //货物属性字典的建立
+        Goods.GoodsDict.Clear();
+        var goods_grp = sellers.GroupBy(x => x.货物编号);
+        foreach (var item in goods_grp)
+        {
+            Goods.GoodsDict.Add(item.Key, item.First());
+        }
+
+        GlobalNeedDict.Clear();
+        GlobalSupportDict.Clear();
+        GlobalSupportNeedRateDict.Clear();
+        foreach (var buyer in buyers)
+        {
+            var hopes = new (enmHope, string)[] { buyer.第一意向, buyer.第二意向, buyer.第三意向, buyer.第四意向, buyer.第五意向 };
+            foreach (var hope in hopes)
+            {
+                if (hope.Item1 != enmHope.无)
+                {
+                    if (!GlobalNeedDict.ContainsKey(hope))
+                    {
+                        GlobalNeedDict.Add(hope, 0);
+                        GlobalSupportDict.Add(hope, 0);
+                        GlobalSupportNeedRateDict.Add(hope, 0);
+                    }
+                    GlobalNeedDict[hope] += buyer.购买货物数量;
+                }
+            }
+        }
+        foreach (var seller in sellers)
+        {
+            foreach (var support in GlobalSupportDict)
+            {
+                if (seller.IsMatchHope(support.Key)) GlobalSupportDict[support.Key] += seller.货物数量;
+            }
+        }
+        foreach (var rate in GlobalSupportNeedRateDict)
+        {
+            GlobalSupportNeedRateDict[rate.Key] = (double)GlobalSupportDict[rate.Key] / GlobalNeedDict[rate.Key];
+        }
+    }
 }

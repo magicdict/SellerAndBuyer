@@ -3,10 +3,7 @@ using System.Linq;
 
 public class BuyerGroup
 {
-    /// <summary>
-    /// 各个意向剩余量
-    /// </summary>
-    public Dictionary<(enmHope hopeType, string hopeValue), int> RemainDict;
+
     Stack<Buyer> lines = new Stack<Buyer>();
     /// <summary>
     /// 供求比例
@@ -42,7 +39,7 @@ public class BuyerGroup
 
     private int match_count
     {
-        get { return RemainDict[hope]; }
+        get { return Goods.RemainDict[hope]; }
     }
 
     public int RemainBuyerCnt
@@ -80,20 +77,52 @@ public class BuyerGroup
     }
 
 
-    public static System.Comparison<BuyerGroup> Evalute_1 = (x, y) =>
+    public static System.Comparison<BuyerGroup> BuyerMinRare = (x, y) =>
     {
-        return y.RemainBuyerCnt.CompareTo(x.RemainBuyerCnt);
+        Buyer b_x = x.EvaluateBuyer();
+        Buyer b_y = y.EvaluateBuyer();
+        return b_x.MinRare.CompareTo(b_y.MinRare);
     };
-    public static System.Comparison<BuyerGroup> Evalute_2 = (x, y) =>
-       {
-           //SR:79.30704
-           //CF:73.72274
-           return y.TotalHopeScore_AVG.CompareTo(x.TotalHopeScore_AVG);
-       };
+
+    public static System.Comparison<BuyerGroup> BuyerAvgRare = (x, y) =>
+    {
+        //SR:79.453647333334
+        Buyer b_x = x.EvaluateBuyer();
+        Buyer b_y = y.EvaluateBuyer();
+        return b_x.AvgRare.CompareTo(b_y.AvgRare);
+    };
+
+    public static System.Comparison<BuyerGroup> BuyerComboRare = (x, y) =>
+    {
+        Buyer b_x = x.EvaluateBuyer();
+        Buyer b_y = y.EvaluateBuyer();
+        return b_x.ComboRare.CompareTo(b_y.ComboRare);
+    };
+
     public static System.Comparison<BuyerGroup> Evalute_Best = (x, y) =>
-       {
-           //SR:79.30704
-           //CF:73.72274
-           return x.SupportNeedRate.CompareTo(y.SupportNeedRate);
-       };
+    {
+        //SR:79.30704
+        //CF:75.71092
+        return x.SupportNeedRate.CompareTo(y.SupportNeedRate);
+    };
+
+
+    public static System.Comparison<BuyerGroup> BuyerAvgRare2 = (x, y) =>
+    {
+        //SR:79.44453933333409
+        Buyer b_x = x.EvaluateBuyer();
+        Buyer b_y = y.EvaluateBuyer();
+        return (b_x.AvgRare + x.SupportNeedRate).CompareTo(b_y.AvgRare +  + y.SupportNeedRate);
+    };       
+
+    public static System.Comparison<BuyerGroup> BuyerMix = (x, y) =>
+    {
+        //SR:
+        Buyer b_x = x.EvaluateBuyer();
+        Buyer b_y = y.EvaluateBuyer();
+        return (b_x.AvgRare * 0.7 + b_x.ComboRare * 0.2 + b_x.MinRare * 0.1 )
+               .CompareTo(b_y.AvgRare * 0.7 + b_y.ComboRare * 0.2 + b_y.MinRare * 0.1 );
+    };       
+
+
 }
