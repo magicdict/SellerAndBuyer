@@ -23,17 +23,18 @@ namespace src
                 path = "/Users/hu/Downloads/SellerAndBuyer-master/";
             }
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-            var IsAdjust = false;
+            var IsAdjust = true;
             if (IsAdjust)
             {
                 //Summary.Run(args[0], args[1]);
-                //Summary.Run(path, "CF_Inter_49492.csv"); return;
+                //Result.CompressResultFile(path + "SR_Inter_80.0831_windows.csv");
+                //Summary.Run(path, "SR_Inter_80.0831_windows.csv"); return;
                 //Optiomize.ReAssignFirstHope(path, args[0], "CF");
 
                 //Summary.Run(path, "result.csv");
-                //Summary.Run(path, "SR_Result.csv"); 
+                //Summary.Run(path, "CF_Inter_281.csv"); 
 
-                //Optiomize.OptiomizeInteractive(path, "SR_Result.csv", "SR");
+                Optiomize.OptiomizeInteractive(path, "SR_Inter_80.0831_windows.csv", "SR");
                 //Optiomize.ReAssignFirstHope(path, "SR_Inter.csv", "SR");
 
                 //Optiomize.OptiomizeInteractive(path, "CF_Result.csv", "CF");
@@ -50,7 +51,7 @@ namespace src
             {
                 //按照品种进行分组
                 var strategylist = new int[] { 3 };
-                var kblist = new string[] { "CF" };
+                var kblist = new string[] { "SR" };
                 foreach (var strKb in kblist)
                 {
                     Goods.Init(path, strKb);

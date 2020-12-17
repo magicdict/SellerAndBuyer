@@ -4,8 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 public static class PreAssign
 {
-
-
     public static List<Result> AssignFirstHope_Gap(List<Seller> sellers, List<Buyer> buyers)
     {
         //按照第一意向 + 值 进行分组
@@ -35,7 +33,7 @@ public static class PreAssign
                 //如果没有的话，按照其他意愿来分配,这个第一意向组不用再做了
                 if (sellers_remain.Count == 0) break;
                 //如果有的话，按照顺序
-                foreach (var r in AssignItem(buyer, sellers_remain))
+                foreach (var r in AssignItemWithRepo(buyer, sellers_remain))
                 {
                     results.Add(r);
                 }
@@ -164,11 +162,10 @@ public static class PreAssign
     public static List<Result> AssignItemWithRepo(Buyer buyer, List<Seller> sellers_remain)
     {
         if (buyer.results == null) buyer.results = new List<Result>();
-        var rs = new List<Result>();
         var repos = sellers_remain.GroupBy(x => x.仓库).ToList();
         var BestScore = 0d;
         var BestRepo = "";
-
+        var BestBuyer = new Buyer();
         Parallel.ForEach(repos, repo =>
         {
             var buyer_Clone = buyer.Clone();
@@ -182,6 +179,7 @@ public static class PreAssign
             {
                 BestRepo = repo.Key;
                 BestScore = buyer_Clone.Score;
+                BestBuyer = buyer_Clone;
             }
         });
 
@@ -192,7 +190,22 @@ public static class PreAssign
             seller_Clone2.Add(seller.Copy());
         }
         buyer_Clone2.results = AssignItem(buyer_Clone2, seller_Clone2);
-        if (buyer_Clone2.Score >= BestScore) return AssignItem(buyer, sellers_remain);
+        //如果一个大的单子，但是只有第一意向时候，第一意向是33，但是分仓库的话极端情况就是40，所以这里可能产生
+        //大的单子应该优先获取第一意向的，变成了宁可不分单子，而集中在一个仓库中的情况。造成违反规则！
+
+        //是否有第一意向
+        var isRoleOK = true;
+        if (buyer.第一意向.hopeType != enmHope.无)
+        {
+            //标准做法使得结果有第一意向或者第一意向可以满足，仓库别做法必须要保证同样的结果
+            if (buyer_Clone2.IsFirstHopeSatisfy && !BestBuyer.IsFirstHopeSatisfy) isRoleOK = false;
+            if (buyer_Clone2.IsContainFirstSatify && !BestBuyer.IsContainFirstSatify) isRoleOK = false;
+        }
+        if (!isRoleOK)
+        {
+            System.Console.WriteLine("Found Err:" + buyer.买方客户);
+        }
+        if (buyer_Clone2.Score >= BestScore || (!isRoleOK)) return AssignItem(buyer, sellers_remain);
         return AssignItem(buyer, sellers_remain.Where(x => x.仓库 == BestRepo).ToList().ToList());
     }
 

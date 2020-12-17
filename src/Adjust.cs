@@ -116,7 +116,9 @@ public static class Summary
             //按照持仓时间排序
             var same_hope_buyers = grp.ToList();
             same_hope_buyers.Sort((x, y) => { return y.平均持仓时间.CompareTo(x.平均持仓时间); });
-            var isMatch = true;
+
+            var LastUnMatchHolderTime = 0;
+            var PreRecIsMatch = true;
             foreach (var buyer in same_hope_buyers)
             {
                 var isSingleAllMatch = true;
@@ -131,19 +133,30 @@ public static class Summary
                 if (isSingleAllMatch)
                 {
                     //整条记录都满足
-                    if (!isMatch)
+                    if (!PreRecIsMatch)
                     {
-                        System.Console.WriteLine(buyer.第一意向.hopeType + ":" + buyer.第一意向.hopeValue);
-                        System.Console.WriteLine("买方客户：" + buyer.买方客户);
-                        return false;
+                        //前面有不满足的情况，但是这里却满足了，但是可能是相同时间的不满组，这种情况作为正确处理
+                        if (LastUnMatchHolderTime != buyer.平均持仓时间)
+                        {
+                            System.Console.WriteLine(buyer.第一意向.hopeType + ":" + buyer.第一意向.hopeValue);
+                            System.Console.WriteLine("买方客户：" + buyer.买方客户 + ":" + buyer.平均持仓时间);
+                            return false;
+                        }
+                        else
+                        {
+                            System.Console.WriteLine(buyer.第一意向.hopeType + ":" + buyer.第一意向.hopeValue);
+                            System.Console.WriteLine("相同持仓时间不满足 - 买方客户：" + buyer.买方客户 + ":" + buyer.平均持仓时间);
+                        }
                     }
                 }
                 else
                 {
-                    //出现了不满足的情况
-                    if (isMatch)
-                    {
-                        isMatch = false;
+                    if (PreRecIsMatch){
+                        //出现了不满足的情况
+                        System.Console.WriteLine(buyer.第一意向.hopeType + ":" + buyer.第一意向.hopeValue);
+                        System.Console.WriteLine("持仓缺失 - 买方客户：" + buyer.买方客户 + ":" + buyer.平均持仓时间);
+                        PreRecIsMatch = false;
+                        LastUnMatchHolderTime = buyer.平均持仓时间;
                     }
                 }
             }

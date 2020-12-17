@@ -148,7 +148,7 @@ public class Buyer
         {
             foreach (var r in results)
             {
-                if (!r.对应意向顺序.StartsWith("1")) return true;
+                if (r.对应意向顺序.StartsWith("1")) return true;
             }
             return false;
         }
