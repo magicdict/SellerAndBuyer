@@ -96,7 +96,7 @@ public static partial class Optiomize
         int cnt = 0;
         foreach (var buyer in buyers)
         {
-            buyer.results = PreAssign.AssignItem(buyer, sellers_remain);
+            buyer.results = PreAssign.AssignItemWithRepo(buyer, sellers_remain);
             buyer.fill_results_hopescore();
             sellers_remain = sellers_remain.Where(x => !x.是否分配完毕).ToList();
             cnt++;

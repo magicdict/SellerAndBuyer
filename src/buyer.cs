@@ -314,7 +314,7 @@ public class Buyer
         }
         else
         {
-            return Hope_comparison(x, y);
+            return x.AvgRare.CompareTo(y.AvgRare);
         }
     };
 
@@ -341,25 +341,35 @@ public class Buyer
 
     public double AvgRare;
 
-    public void SetRare(List<Seller> sellers)
+    public double AvgRareWithWeight;
+
+    public void SetRare()
     {
         MinRare = double.MaxValue;
         ComboRare = 1.0;
         AvgRare = 0;
         var hopes = new (enmHope, string)[] { this.第一意向, this.第二意向, this.第三意向, this.第四意向, this.第五意向 };
+        var hopesweight_SR = new int[] { 40, 30, 20, 10, 0 };
+        var hopesweight_CF = new int[] { 33, 27, 20, 13, 7 };
         int hopecnt = 0;
         double totalrate = 0;
-        foreach (var hope in hopes)
+        double totalrate_weight = 0;
+        for (int i = 0; i < 5; i++)
         {
+            var hope = hopes[i];
+            var weight = this.品种 == Utility.strSR ? hopesweight_SR[i] : hopesweight_CF[i];
             if (hope.Item1 != enmHope.无)
             {
                 if (Goods.GlobalSupportNeedRateDict[hope] < MinRare) MinRare = Goods.GlobalSupportNeedRateDict[hope];
                 ComboRare *= Goods.GlobalSupportNeedRateDict[hope];
                 totalrate += Goods.GlobalSupportNeedRateDict[hope];
+                totalrate_weight += Goods.GlobalSupportNeedRateDict[hope] * weight;
                 hopecnt++;
             }
         }
+
         if (hopecnt != 0) AvgRare = totalrate / hopecnt;
+        if (hopecnt != 0) AvgRareWithWeight = totalrate_weight / hopecnt;
     }
     #endregion
 }

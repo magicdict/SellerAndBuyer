@@ -114,6 +114,11 @@ public static class PreAssign
             assign_cnt++;
             if (assign_cnt % 500 == 0)
             {
+                Goods.Update(buyers_remain,sellers_remain); 
+                foreach (var b in buyers_remain)
+                {
+                    b.SetRare();
+                }
                 System.Console.WriteLine(assign_cnt + "/" + buyers.Count);
             }
         }
@@ -197,9 +202,16 @@ public static class PreAssign
         var isRoleOK = true;
         if (buyer.第一意向.hopeType != enmHope.无)
         {
-            //标准做法使得结果有第一意向或者第一意向可以满足，仓库别做法必须要保证同样的结果
-            if (buyer_Clone2.IsFirstHopeSatisfy && !BestBuyer.IsFirstHopeSatisfy) isRoleOK = false;
-            if (buyer_Clone2.IsContainFirstSatify && !BestBuyer.IsContainFirstSatify) isRoleOK = false;
+            if (BestBuyer.results != null)
+            {
+                //标准做法使得结果有第一意向或者第一意向可以满足，仓库别做法必须要保证同样的结果
+                if (buyer_Clone2.IsFirstHopeSatisfy && !BestBuyer.IsFirstHopeSatisfy) isRoleOK = false;
+                if (buyer_Clone2.IsContainFirstSatify && !BestBuyer.IsContainFirstSatify) isRoleOK = false;
+            }
+            else
+            {
+                isRoleOK = false;
+            }
         }
         if (!isRoleOK)
         {

@@ -112,17 +112,17 @@ public class BuyerGroup
         //SR:79.44453933333409
         Buyer b_x = x.EvaluateBuyer();
         Buyer b_y = y.EvaluateBuyer();
-        return (b_x.AvgRare + x.SupportNeedRate).CompareTo(b_y.AvgRare +  + y.SupportNeedRate);
-    };       
+        return (b_x.AvgRare + x.SupportNeedRate).CompareTo(b_y.AvgRare + +y.SupportNeedRate);
+    };
 
     public static System.Comparison<BuyerGroup> BuyerMix = (x, y) =>
     {
         //SR:
         Buyer b_x = x.EvaluateBuyer();
         Buyer b_y = y.EvaluateBuyer();
-        return (b_x.AvgRare * 0.7 + b_x.ComboRare * 0.2 + b_x.MinRare * 0.1 )
-               .CompareTo(b_y.AvgRare * 0.7 + b_y.ComboRare * 0.2 + b_y.MinRare * 0.1 );
-    };       
+        return (b_x.AvgRare * 0.7 + b_x.ComboRare * 0.2 + b_x.MinRare * 0.1)
+               .CompareTo(b_y.AvgRare * 0.7 + b_y.ComboRare * 0.2 + b_y.MinRare * 0.1);
+    };
 
 
 }

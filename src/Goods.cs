@@ -85,7 +85,11 @@ public record Goods
         {
             Goods.GoodsDict.Add(item.Key, item.First());
         }
+        Update(buyers,sellers);
 
+    }
+    public static void Update(List<Buyer> buyers,List<Seller> sellers)
+    {
         GlobalNeedDict.Clear();
         GlobalSupportDict.Clear();
         GlobalSupportNeedRateDict.Clear();
@@ -102,7 +106,7 @@ public record Goods
                         GlobalSupportDict.Add(hope, 0);
                         GlobalSupportNeedRateDict.Add(hope, 0);
                     }
-                    GlobalNeedDict[hope] += buyer.购买货物数量;
+                    GlobalNeedDict[hope] += buyer.剩余货物数量;
                 }
             }
         }
@@ -110,7 +114,7 @@ public record Goods
         {
             foreach (var support in GlobalSupportDict)
             {
-                if (seller.IsMatchHope(support.Key)) GlobalSupportDict[support.Key] += seller.货物数量;
+                if (seller.IsMatchHope(support.Key)) GlobalSupportDict[support.Key] += seller.剩余货物数量;
             }
         }
         foreach (var rate in GlobalSupportNeedRateDict)

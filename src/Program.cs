@@ -23,70 +23,45 @@ namespace src
                 path = "/Users/hu/Downloads/SellerAndBuyer-master/";
             }
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-            var IsAdjust = true;
-            if (IsAdjust)
+
+            //按照品种进行分组
+            var strategylist = new int[] { 3 };
+            var kblist = new string[] { args[0] };
+            foreach (var strKb in kblist)
             {
-                //Summary.Run(args[0], args[1]);
-                //Result.CompressResultFile(path + "SR_Inter_80.0831_windows.csv");
-                //Summary.Run(path, "SR_Inter_80.0831_windows.csv"); return;
-                //Optiomize.ReAssignFirstHope(path, args[0], "CF");
-
-                //Summary.Run(path, "result.csv");
-                //Summary.Run(path, "CF_Inter_281.csv"); 
-
-                Optiomize.OptiomizeInteractive(path, "SR_Inter_80.0831_windows.csv", "SR");
-                //Optiomize.ReAssignFirstHope(path, "SR_Inter.csv", "SR");
-
-                //Optiomize.OptiomizeInteractive(path, "CF_Result.csv", "CF");
-                //Optiomize.ReAssignFirstHope(path, "CF_Inter.csv", "CF");
-
-                //Optiomize.OptiomizeInteractive(path, "result_CF_99.csv","CF");
-                //Optiomize.ReAssignFirstHope(path, "CF_Inter_4686.csv","CF");
-                //Result.CompressResultFile(path + "CF_Inter_4211.csv");
-                //Optiomize.OptiomizeRepo(path, "CF_Inter_4211.csv", "CF");
-                //Result.CompressResultFile(path + "SR_ReHope.csv");
-                return;
-            }
-            else
-            {
-                //按照品种进行分组
-                var strategylist = new int[] { 3 };
-                var kblist = new string[] { "SR" };
-                foreach (var strKb in kblist)
+                Goods.Init(path, strKb);
+                foreach (var strategy in strategylist)
                 {
-                    Goods.Init(path, strKb);
-                    foreach (var strategy in strategylist)
+                    bool RunHopeWithGapStep = true;
+                    bool RunHopeStep = true;
+                    bool RunOtherStep = true;
+                    var sellers = Seller.ReadSellerFile(path + "seller.csv");
+                    var buyers = Buyer.ReadBuyerFile(path + "buyer.csv");
+                    var sellers_Breed = sellers.Where(x => x.品种 == strKb).ToList();
+                    var buyers_Breed = buyers.Where(x => x.品种 == strKb).ToList();
+                    System.Console.WriteLine("品种：" + strKb);
+                    System.Console.WriteLine("具有第一意向的客户数：" + buyers_Breed.Count(x => x.第一意向.hopeType != enmHope.无));
+                    System.Console.WriteLine("具有第二意向的客户数：" + buyers_Breed.Count(x => x.第二意向.hopeType != enmHope.无));
+                    System.Console.WriteLine("具有第三意向的客户数：" + buyers_Breed.Count(x => x.第三意向.hopeType != enmHope.无));
+                    System.Console.WriteLine("具有第四意向的客户数：" + buyers_Breed.Count(x => x.第四意向.hopeType != enmHope.无));
+                    System.Console.WriteLine("具有第五意向的客户数：" + buyers_Breed.Count(x => x.第五意向.hopeType != enmHope.无));
+                    System.Console.WriteLine("卖家数：" + sellers_Breed.Count);
+                    System.Console.WriteLine("买家数：" + buyers_Breed.Count);
+                    //稀有度的设定
+                    foreach (var buyer in buyers)
                     {
-                        bool RunHopeWithGapStep = true;
-                        bool RunHopeStep = true;
-                        bool RunOtherStep = true;
-                        var sellers = Seller.ReadSellerFile(path + "seller.csv");
-                        var buyers = Buyer.ReadBuyerFile(path + "buyer.csv");
-                        var sellers_Breed = sellers.Where(x => x.品种 == strKb).ToList();
-                        var buyers_Breed = buyers.Where(x => x.品种 == strKb).ToList();
-                        System.Console.WriteLine("品种：" + strKb);
-                        System.Console.WriteLine("具有第一意向的客户数：" + buyers_Breed.Count(x => x.第一意向.hopeType != enmHope.无));
-                        System.Console.WriteLine("具有第二意向的客户数：" + buyers_Breed.Count(x => x.第二意向.hopeType != enmHope.无));
-                        System.Console.WriteLine("具有第三意向的客户数：" + buyers_Breed.Count(x => x.第三意向.hopeType != enmHope.无));
-                        System.Console.WriteLine("具有第四意向的客户数：" + buyers_Breed.Count(x => x.第四意向.hopeType != enmHope.无));
-                        System.Console.WriteLine("具有第五意向的客户数：" + buyers_Breed.Count(x => x.第五意向.hopeType != enmHope.无));
-                        System.Console.WriteLine("卖家数：" + sellers_Breed.Count);
-                        System.Console.WriteLine("买家数：" + buyers_Breed.Count);
-                        //稀有度的设定
-                        foreach (var buyer in buyers)
-                        {
-                            buyer.SetRare(sellers);
-                        }
-                        List<Result> results = Assign(sellers_Breed, buyers_Breed, RunHopeWithGapStep, RunHopeStep, RunOtherStep, strategy);
-                        System.Console.WriteLine("======策略号:" + strategy);
-                        System.Console.WriteLine("======区分:" + strKb);
-                        if (RunOtherStep) Result.WriteToCSV(path + strKb + "_Result.csv", results);
-                        Summary.Run(path, strKb + "_Result.csv");
-                        System.GC.Collect();
+                        buyer.SetRare();
                     }
+                    List<Result> results = Assign(sellers_Breed, buyers_Breed, RunHopeWithGapStep, RunHopeStep, RunOtherStep, strategy);
+                    System.Console.WriteLine("======策略号:" + strategy);
+                    System.Console.WriteLine("======区分:" + strKb);
+                    if (RunOtherStep) Result.WriteToCSV(path + strKb + "_Result.csv", results);
+                    Summary.Run(path, strKb + "_Result.csv");
+                    Optiomize.OptiomizeInteractive(path, strKb + "_Result.csv", strKb);
+                    Optiomize.ReAssignFirstHope(path, strKb + "_Inter.csv", strKb);
+                    System.GC.Collect();
                 }
             }
-
         }
 
         static void MyHandler(object sender, UnhandledExceptionEventArgs args)
