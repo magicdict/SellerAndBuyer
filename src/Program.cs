@@ -24,6 +24,17 @@ namespace src
             }
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 
+            var filenameforOptiomize = "result19_1_6_1.txt";
+            Summary.Run(path, filenameforOptiomize);
+            Optiomize.OptiomizeInteractive(path, filenameforOptiomize, Utility.strSR);
+            //CF做到10000人，防止时间过久
+            Optiomize.OptiomizeInteractive(path, filenameforOptiomize, Utility.strCF, 10_000);
+            var rs_RS = Result.ReadFromCSV(path + "SR_Inter.csv");
+            var rs_CF = Result.ReadFromCSV(path + "CF_Inter.csv");
+            rs_RS.AddRange(rs_CF);
+            Result.WriteToCSV(path + "Result.csv", rs_RS);
+            return;
+
             //按照品种进行分组
             var strategylist = new int[] { 3 };
             var kblist = new string[] { args[0] };

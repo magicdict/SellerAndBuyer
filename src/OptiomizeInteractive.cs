@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 public static partial class Optiomize
 {
     #region OptiomizeInteractive
-    public static void OptiomizeInteractive(string path, string resultfilename, string strKbn)
+    public static void OptiomizeInteractive(string path, string resultfilename, string strKbn, int Uplimit = -1)
     {
         var buyers = Buyer.ReadBuyerFile(path + "buyer.csv").Where(x => x.品种 == strKbn).ToList(); ;
-        var sellers = Seller.ReadSellerFile(path + "seller.csv").Where(x => x.品种 == strKbn).ToList(); ;
-        var rs = Result.ReadFromCSV(path + resultfilename);
+        var sellers = Seller.ReadSellerFile(path + "seller.csv").Where(x => x.品种 == strKbn).ToList();
+        var rs = Result.ReadFromCSV(path + resultfilename).Where(x => x.品种 == strKbn).ToList();
         var rs_buyers = rs.GroupBy(x => x.买方客户);
         //使用多个仓库的买家数
         var multi_repo_cnt = rs_buyers.Count(x => x.ToList().Select(x => x.仓库).Distinct().Count() > 1);
@@ -76,6 +76,7 @@ public static partial class Optiomize
             if (need_idx % 1000 == 0 && need_idx != 0)
             {
                 Result.CheckScoreOutput(path, strKbn, buyers, "Inter_" + UpScore.ToString());
+                if (need_idx == Uplimit) break; //提前退出
             }
             var buyer_need = buyer_target[need_idx];
             for (int support_idx = need_idx + 1; support_idx < buyer_target.Count; support_idx++)

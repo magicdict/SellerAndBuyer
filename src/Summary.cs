@@ -74,7 +74,7 @@ public static class Summary
                 buyer.fill_results_hopescore();
                 if (buyer.购买货物数量 != buyer.results.Sum(x => x.分配货物数量))
                 {
-                    System.Console.WriteLine(buyer.买方客户 + ":分配记录数和买家货物数不匹配");
+                    System.Console.WriteLine("Err:" + buyer.买方客户 + ":分配记录数和买家货物数不匹配");
                     isOk = false;
                 }
             }
@@ -139,7 +139,7 @@ public static class Summary
                         if (LastUnMatchHolderTime != buyer.平均持仓时间)
                         {
                             System.Console.WriteLine(buyer.第一意向.hopeType + ":" + buyer.第一意向.hopeValue);
-                            System.Console.WriteLine("买方客户：" + buyer.买方客户 + ":" + buyer.平均持仓时间);
+                            System.Console.WriteLine("Err:买方客户：" + buyer.买方客户 + ":" + buyer.平均持仓时间);
                             return false;
                         }
                         else
